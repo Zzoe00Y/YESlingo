@@ -12,13 +12,13 @@ Yuchen Zhao(emily-zhao-zz)
 
 The Translator Application is a platform that provides users with translation capabilities across various mediums. It supports:
 * **Text Translation**: Allows users to translate text into a specified language.
-* **Image Translation**: Enables users to upload images, extract text, and translate it (example usages can be reading signs, menus, and documents).
+* **Image Translation**: Enables users to upload images, extract text, and translate them (example usage can be reading signs, menus, and documents).
 * **Speech Translation**: Uses voice input to recognize and translate spoken language.
 
 The application also includes:
 * A **Phrasebook** for saving words or sentences based on user preference, designed for review and study purposes.
 * Translation **History** to track and manage previous translations.
-* A **Chatbot** feature for users to practice and study language in an interactive way.
+* A **Chatbot** feature for users to practice and study language interactively.
 
 
 ## Entities
@@ -35,10 +35,11 @@ The project has been organized into distinct use cases that cover all core funct
 
 ### User Management Use Cases
 
-_Login:_ Handles user authentication.
-_Logout:_ Manages user logout and session termination.
 _Signup:_ Registers new users.
+_Login:_ Handles user authentication.
 _ChangePassword:_ Allows users to update their passwords.
+_SetPreferredLanguage:_ Set default output language.
+_CheckHistory:_ Check translation history.
 
 ### Translation Use Cases
 
@@ -58,7 +59,7 @@ _DeleteSingleHistory_: Deletes individual entries from the translation history.
 
 ChatbotInteraction: Manages interactions between users and the chatbot, providing language practice and study support.
 Additional Use Cases
-CopyOutput: Enables users to copy translated text to the clipboard.
+CopyOutput: Enables users to copy the translated text to the clipboard.
 SwitchToHomepage: Manages navigation back to the homepage.
 
 ## Views
@@ -75,6 +76,6 @@ Navigation is handled by _ViewManager_, which manages transitions between views,
 
 API:
 1. Text to Text Translation: https://libretranslate.com/
-2. Image to Text api key: https://app.nanonets.com/#keys 33a63559-9ed3-11ef-9412-8ac686cb80af
+2. Image to Text API key: https://app.nanonets.com/#keys 33a63559-9ed3-11ef-9412-8ac686cb80af
 3. 
 
