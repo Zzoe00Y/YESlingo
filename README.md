@@ -2,21 +2,20 @@
 CSC207 final project
 
 ## Team members(github username):
-Yucan Miao(heibaihaiermao),
-Zhuxin Sun(juliexsun),
-Ying Zhang(Zzoe00Y),
-Jiner Zhang(jinerfreya),
+Yucan Miao(heibaihaiermao),\
+Zhuxin Sun(juliexsun),\
+Ying Zhang(Zzoe00Y),\
+Jiner Zhang(jinerfreya),\
 Yuchen Zhao(emily-zhao-zz)
 
 ## Project Description
 
-The Translator Application is a platform that provides users with translation capabilities across various mediums. It supports:
+YESlingo is a Translator Application platform that provides users with translation capabilities across various mediums. It supports:
 * **Text Translation**: Allows users to translate text into a specified language.
-* **Image Translation**: Enables users to upload images, extract text, and translate them (example usage can be reading signs, menus, and documents).
+* **Image Translation**: Enables users to upload images, extract text, and translate them (such as reading signs, menus, and documents).
 * **Speech Translation**: Uses voice input to recognize and translate spoken language.
 
 The application also includes:
-* A **Phrasebook** for saving words or sentences based on user preference, designed for review and study purposes.
 * Translation **History** to track and manage previous translations.
 * A **Chatbot** feature for users to practice and study language interactively.
 
@@ -37,9 +36,9 @@ The project has been organized into distinct use cases that cover all core funct
 
 _Signup:_ Registers new users.
 _Login:_ Handles user authentication.
+_CheckProfile:_ Allows users to check their profiles.
 _ChangePassword:_ Allows users to update their passwords.
 _SetPreferredLanguage:_ Set default output language.
-_CheckHistory:_ Check translation history.
 
 ### Translation Use Cases
 
@@ -47,17 +46,14 @@ _ProcessTextTranslation:_ Handles the text translation feature.
 _ProcessImageTranslation:_ Manages text extraction from images and subsequent translation.
 _ProcessSpeechTranslation:_ Manages voice recognition and translation.
 
-### Phrasebook and History Use Cases
+### History Use Cases
 
-_SaveToPhraseBook:_ Adds a word/sentence to the user's phrasebook.
-_DeleteFromPhraseBook:_ Removes a word/sentence from the phrasebook.
-_SaveTranslationHistory:_ Stores completed translations in the user's history.
 _ClearTranslationHistory:_ Clears all entries from the translation history.
 _DeleteSingleHistory_: Deletes individual entries from the translation history.
 
 ### Chatbot Use Case
 
-ChatbotInteraction: Manages interactions between users and the chatbot, providing language practice and study support.
+ChatbotInteraction: Manages user interactions and the chatbot, providing language practice and study support.
 Additional Use Cases
 CopyOutput: Enables users to copy the translated text to the clipboard.
 SwitchToHomepage: Manages navigation back to the homepage.
@@ -66,9 +62,13 @@ SwitchToHomepage: Manages navigation back to the homepage.
 
 The application has a well-defined set of views that guide the user through various features:
 
-_LoggedInView:_ Main dashboard for logged-in users.
+_SignUpView:_ 
+_LogInView:_ 
+_HomepageView:_ Main dashboard for logged-in users.
+_ProfileView:_ 
+_ChangePasswordView:_ 
+_SetPreferredLanguageView:_ 
 _HistoryView:_ Shows saved translations in the user's history.
-_PhrasebookView:_ Displays the user's saved phrases and translations.
 _ChatbotView:_ Provides an interactive interface for the chatbot.
 Navigation is handled by _ViewManager_, which manages transitions between views, providing a seamless user experience.
 
