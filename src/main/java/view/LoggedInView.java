@@ -4,6 +4,9 @@ import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.logout.LogoutController;
+import interface_adapter.translation.TextTranslationController;
+import interface_adapter.translation.ImageTranslationController;
+import interface_adapter.translation.VoiceTranslationController;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -19,16 +22,21 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     private final String viewName = "logged in";
     private final LoggedInViewModel loggedInViewModel;
-    private final JLabel passwordErrorField = new JLabel();
-    private ChangePasswordController changePasswordController;
-    private LogoutController logoutController;
 
     private final JLabel username;
 
-    private final JButton logOut;
-
     private final JTextField textInputField = new JTextField(15);
-    private final JButton changePassword;
+
+    private final JComboBox<String> inputLanguageComboBox;
+    private final JComboBox<String> outputLanguageComboBox;
+    private final JTextArea textArea;
+    private final JButton imageUploadButton;
+    private final JButton voiceInputButton;
+    private final JButton translateButton;
+    private final JLabel translationLabel;
+    private final JButton profileButton;
+    private final JButton historyButton;
+    private final JButton chatBoxButton;
 
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
         this.loggedInViewModel = loggedInViewModel;
@@ -36,102 +44,79 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
         final JLabel title = new JLabel("Hi, ");
         username = new JLabel();
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.add(title);
+        title.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        final LabelTextPanel passwordInfo = new LabelTextPanel(
-                new JLabel("text: "), textInputField);
+        final JPanel topButtons = new JPanel();
+        profileButton = new JButton("Profile");
+        topButtons.add(profileButton);
+        historyButton = new JButton("History");
+        topButtons.add(historyButton);
+        this.add(topButtons);
 
-        final JPanel buttons = new JPanel();
-        logOut = new JButton("Log Out");
-        buttons.add(logOut);
-
-        changePassword = new JButton("Change Password");
-        buttons.add(changePassword);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        textInputField.getDocument().addDocumentListener(new DocumentListener() {
+        inputLanguageComboBox = new JComboBox<>(new String[]{"English", "Spanish", "French"});
+        outputLanguageComboBox = new JComboBox<>(new String[]{"English", "Spanish", "French"});
 
-            //TODO text input
-            private void documentListenerHelper() {
-                final LoggedInState currentState = loggedInViewModel.getState();
-                currentState.setPassword(textInputField.getText());
-                loggedInViewModel.setState(currentState);
-            }
+        JPanel languagePanel = new JPanel(new FlowLayout());
+        languagePanel.add(new JLabel("Input Language:"));
+        languagePanel.add(inputLanguageComboBox);
+        languagePanel.add(new JLabel("Output Language:"));
+        languagePanel.add(outputLanguageComboBox);
+        this.add(languagePanel);
 
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
+        textArea = new JTextArea(3, 20);
+        add(new JLabel("Text:"));
+        add(new JScrollPane(textArea));
 
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
+        JPanel inputOptionsPanel = new JPanel();
+        imageUploadButton = new JButton("Image Upload");
+        voiceInputButton = new JButton("Voice Input");
+        translateButton = new JButton("Translate");
+        inputOptionsPanel.add(imageUploadButton);
+        inputOptionsPanel.add(voiceInputButton);
+        inputOptionsPanel.add(translateButton);
 
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-        });
+        translationLabel = new JLabel("Translation will appear here:");
+        JPanel resultPanel = new JPanel();
+        resultPanel.add(translationLabel);
+        this.add(resultPanel);
 
-        changePassword.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
-                evt -> {
-                    if (evt.getSource().equals(changePassword)) {
-                        final LoggedInState currentState = loggedInViewModel.getState();
+        chatBoxButton = new JButton("ChatBox");
+        inputOptionsPanel.add(chatBoxButton);
+        this.add(chatBoxButton);
 
-                        this.changePasswordController.execute(
-                                currentState.getUsername(),
-                                currentState.getPassword()
-                        );
-                    }
-                }
-        );
-
-        logOut.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
-                evt -> {
-                    if (evt.getSource().equals(logOut)) {
-                        // execute the logout use case through the Controller
-                        // 1. get the state out of the loggedInViewModel. It contains the username.
-                        final LoggedInState currentState = loggedInViewModel.getState();
-                        // 2. Execute the logout Controller.
-                        logoutController.execute(currentState.getUsername());
-                    }
-                }
-        );
-
-        this.add(title);
-        this.add(username);
-
-        this.add(passwordInfo);
-        this.add(passwordErrorField);
-        this.add(buttons);
     }
-
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("state")) {
             final LoggedInState state = (LoggedInState) evt.getNewValue();
             username.setText(state.getUsername());
         }
-        else if (evt.getPropertyName().equals("password")) {
-            final LoggedInState state = (LoggedInState) evt.getNewValue();
-            JOptionPane.showMessageDialog(null, "password updated for " + state.getUsername());
+        if ("state".equals(evt.getPropertyName())) {
+            LoggedInState state = (LoggedInState) evt.getNewValue();
+            username.setText("Hi, " + state.getUsername());
         }
+        if ("translation".equals(evt.getPropertyName())) {
+            translationLabel.setText((String) evt.getNewValue());
+        }}
 
-    }
-
-    public String getViewName() {
+    public String getViewName(){
         return viewName;
     }
 
-    public void setChangePasswordController(ChangePasswordController changePasswordController) {
-        this.changePasswordController = changePasswordController;
-    }
+//        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-    public void setLogoutController(LogoutController logoutController) {
-        this.logoutController = logoutController;
+//        this.add(usernameLabel);
+//        this.add(topButtonPanel);
+//        this.add(languagePanel);
+//        this.add(textPanel);
+//        this.add(inputOptionsPanel);
+//        this.add(resultPanel);
+//        this.add(chatBoxButton);
+//        this.add(logOutButton);
+
+
     }
-}
