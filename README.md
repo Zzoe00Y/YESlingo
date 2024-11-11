@@ -23,9 +23,8 @@ The application also includes:
 ## Entities
 
 The primary entities within the application include:
-* User: Base class for all users with basic profile information and preferred language.
-* TranslationHistory: Represents a record of past translations, containing details such as source text and translated text.
-* PhraseBookEntry: Represents an entry in the user's phrasebook, containing a saved phrase and its translation.
+* User: Base class for all users with basic profile information and preferred language.\
+* TranslationHistory: Represents a record of past translations, containing details such as source text and translated text.\
 * ChatMessage: Represents messages exchanged in the chatbot feature.
 
 ## Use Cases
@@ -34,42 +33,43 @@ The project has been organized into distinct use cases that cover all core funct
 
 ### User Management Use Cases
 
-_Signup:_ Registers new users.
-_Login:_ Handles user authentication.
-_CheckProfile:_ Allows users to check their profiles.
-_ChangePassword:_ Allows users to update their passwords.
+_Signup:_ Registers new users.\
+_Login:_ Handles user authentication.\
+_CheckProfile:_ Allows users to check their profiles.\
+_ChangePassword:_ Allows users to update their passwords.\
 _SetPreferredLanguage:_ Set default output language.
+_Logout:_ 
 
 ### Translation Use Cases
 
-_ProcessTextTranslation:_ Handles the text translation feature.
-_ProcessImageTranslation:_ Manages text extraction from images and subsequent translation.
+_ProcessTextTranslation:_ Handles the text translation feature.\
+_ProcessImageTranslation:_ Manages text extraction from images and subsequent translation.\
 _ProcessSpeechTranslation:_ Manages voice recognition and translation.
 
 ### History Use Cases
 
-_ClearTranslationHistory:_ Clears all entries from the translation history.
+_ClearTranslationHistory:_ Clears all entries from the translation history.\
 _DeleteSingleHistory_: Deletes individual entries from the translation history.
 
 ### Chatbot Use Case
 
-ChatbotInteraction: Manages user interactions and the chatbot, providing language practice and study support.
-Additional Use Cases
-CopyOutput: Enables users to copy the translated text to the clipboard.
-SwitchToHomepage: Manages navigation back to the homepage.
+ChatbotInteraction: Manages user interactions and the chatbot, providing language practice and study support.\
+Additional Use Cases\
+CopyOutput: Enables users to copy the translated text to the clipboard.\
+SwitchToHomepage: Manages navigation back to the homepage.\
 
 ## Views
 
 The application has a well-defined set of views that guide the user through various features:
 
-_SignUpView:_ 
-_LogInView:_ 
-_HomepageView:_ Main dashboard for logged-in users.
-_ProfileView:_ 
-_ChangePasswordView:_ 
-_SetPreferredLanguageView:_ 
-_HistoryView:_ Shows saved translations in the user's history.
-_ChatbotView:_ Provides an interactive interface for the chatbot.
+_SignUpView:_ \
+_LogInView:_ \
+_HomepageView:_ Main dashboard for logged-in users.\
+_ProfileView:_ \
+_ChangePasswordView:_ \
+_SetPreferredLanguageView:_ \
+_HistoryView:_ Shows saved translations in the user's history.\
+_ChatbotView:_ Provides an interactive interface for the chatbot.\
 Navigation is handled by _ViewManager_, which manages transitions between views, providing a seamless user experience.
 
 ## Attributions
