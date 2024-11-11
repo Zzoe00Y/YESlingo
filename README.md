@@ -10,7 +10,7 @@ Yuchen Zhao(emily-zhao-zz)
 
 ## Project Description
 
-YESlingo is a Translator Application platform that provides users with translation capabilities across various mediums. It supports:
+YESlingo is a translator application platform that provides users with translation capabilities across various mediums. It supports:
 * **Text Translation**: Allows users to translate text into a specified language.
 * **Image Translation**: Enables users to upload images, extract text, and translate them (such as reading signs, menus, and documents).
 * **Speech Translation**: Uses voice input to recognize and translate spoken language.
@@ -33,17 +33,17 @@ The project has been organized into distinct use cases that cover all core funct
 
 ### User Management Use Cases
 
-_Signup:_ Registers new users.\
-_Login:_ Handles user authentication.\
-_CheckProfile:_ Allows users to check their profiles.\
-_ChangePassword:_ Allows users to update their passwords.\
-_SetPreferredLanguage:_ Set default output language.
-_Logout:_ 
+_Signup:_ Registers new users and creates new Users.\
+_Login:_ Authenticates users.\
+_CheckProfile:_ Allows users to view their profile information, including username, password, and preferred language.\
+_ChangePassword:_ Enables users to update their passwords.\
+_SetPreferredLanguage:_ Lets users set the default output language for translations.\
+_Logout:_ Logs users out of their account.
 
 ### Translation Use Cases
 
-_ProcessTextTranslation:_ Handles the text translation feature.\
-_ProcessImageTranslation:_ Manages text extraction from images and subsequent translation.\
+_ProcessTextTranslation:_ Handles the text translation.\
+_ProcessImageTranslation:_ Manages text extraction from images and translation.\
 _ProcessSpeechTranslation:_ Manages voice recognition and translation.
 
 ### History Use Cases
@@ -62,15 +62,15 @@ SwitchToHomepage: Manages navigation back to the homepage.\
 
 The application has a well-defined set of views that guide the user through various features:
 
-_SignUpView:_ \
-_LogInView:_ \
-_HomepageView:_ Main dashboard for logged-in users.\
-_ProfileView:_ \
-_ChangePasswordView:_ \
-_SetPreferredLanguageView:_ \
-_HistoryView:_ Shows saved translations in the user's history.\
-_ChatbotView:_ Provides an interactive interface for the chatbot.\
-Navigation is handled by _ViewManager_, which manages transitions between views, providing a seamless user experience.
+_SignUpView:_ Interface for new users to create an account.\
+_LogInView:_ Interface for existing users to log into their accounts.\
+_HomepageView:_ Main dashboard for logged-in users, offering various application features.\
+_ProfileView:_ Displays user's profile information.\
+_ChangePasswordView:_ Interface allowing users to change their passwords.\
+_SetPreferredLanguageView:_ Interface allowing users to update their default translation output language.\
+_HistoryView:_ Shows translation history.\
+_ChatbotView:_ Provides an interactive interface for engaging with the chatbot.\
+Navigation is handled by _ViewManager_, which manages transitions between views.
 
 ## Attributions
 
