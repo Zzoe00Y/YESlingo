@@ -27,21 +27,19 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     private final JButton logOut;
 
-    private final JTextField passwordInputField = new JTextField(15);
+    private final JTextField textInputField = new JTextField(15);
     private final JButton changePassword;
 
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
         this.loggedInViewModel = loggedInViewModel;
         this.loggedInViewModel.addPropertyChangeListener(this);
 
-        final JLabel title = new JLabel("Logged In Screen");
+        final JLabel title = new JLabel("Hi, ");
+        username = new JLabel();
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         final LabelTextPanel passwordInfo = new LabelTextPanel(
-                new JLabel("Password"), passwordInputField);
-
-        final JLabel usernameInfo = new JLabel("Currently logged in: ");
-        username = new JLabel();
+                new JLabel("text: "), textInputField);
 
         final JPanel buttons = new JPanel();
         logOut = new JButton("Log Out");
@@ -52,11 +50,12 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        passwordInputField.getDocument().addDocumentListener(new DocumentListener() {
+        textInputField.getDocument().addDocumentListener(new DocumentListener() {
 
+            //TODO text input
             private void documentListenerHelper() {
                 final LoggedInState currentState = loggedInViewModel.getState();
-                currentState.setPassword(passwordInputField.getText());
+                currentState.setPassword(textInputField.getText());
                 loggedInViewModel.setState(currentState);
             }
 
@@ -104,7 +103,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         );
 
         this.add(title);
-        this.add(usernameInfo);
         this.add(username);
 
         this.add(passwordInfo);
