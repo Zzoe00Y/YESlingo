@@ -1,11 +1,11 @@
 # YESlingo
-CSC207 final project
+Group 177's CSC207 Final Project
 
 ## Team members(github username):
-Yucan Miao(heibaihaiermao),\
-Zhuxin Sun(juliexsun),\
-Ying Zhang(Zzoe00Y),\
-Jiner Zhang(jinerfreya),\
+Yucan Miao(heibaihaiermao)\
+Zhuxin Sun(juliexsun)\
+Ying Zhang(Zzoe00Y)\
+Jiner Zhang(jinerfreya)\
 Yuchen Zhao(emily-zhao-zz)
 
 ## Project Description
