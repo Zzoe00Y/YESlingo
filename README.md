@@ -53,10 +53,9 @@ _DeleteSingleHistory_: Deletes individual entries from the translation history.
 
 ### Chatbot Use Case
 
-ChatbotInteraction: Manages user interactions and the chatbot, providing language practice and study support.\
-Additional Use Cases\
-CopyOutput: Enables users to copy the translated text to the clipboard.\
-SwitchToHomepage: Manages navigation back to the homepage.\
+_CreateNewChat:_ Create a new chat channel allowing user to specifies the input/output language and channel name. \
+_EnterExistedChat:_ Pull chat setting and chat history from database and switch to that chat channel
+_GenerateResponse:_ Generate and display response to the user input after user click enter
 
 ## Views
 
