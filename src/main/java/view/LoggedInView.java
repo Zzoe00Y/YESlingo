@@ -23,8 +23,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private final String viewName = "logged in";
     private final LoggedInViewModel loggedInViewModel;
 
-    private final JLabel username;
-
     private final JTextField textInputField = new JTextField(15);
 
     private final JComboBox<String> inputLanguageComboBox;
@@ -42,17 +40,28 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         this.loggedInViewModel = loggedInViewModel;
         this.loggedInViewModel.addPropertyChangeListener(this);
 
-        final JLabel title = new JLabel("Hi, ");
-        username = new JLabel();
-        this.add(title);
-        title.setAlignmentX(Component.LEFT_ALIGNMENT);
+        this.setLayout(new BorderLayout());
 
-        final JPanel topButtons = new JPanel();
+        String username = loggedInViewModel.getState().getUsername();
+        JPanel welcomePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        final JLabel welcomeLabel = new JLabel("Hi, " + username + "!");
+        welcomePanel.add(welcomeLabel);
+
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(welcomePanel);
+
+
+
+        // Create top button panel with right alignment
+        JPanel topButtons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         profileButton = new JButton("Profile");
-        topButtons.add(profileButton);
         historyButton = new JButton("History");
+
+        topButtons.add(profileButton);
         topButtons.add(historyButton);
-        this.add(topButtons);
+
+        // Add the topButtons panel to the top of the BorderLayout
+        this.add(topButtons, BorderLayout.NORTH);
 
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -91,14 +100,11 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     }
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("state")) {
-            final LoggedInState state = (LoggedInState) evt.getNewValue();
-            username.setText(state.getUsername());
-        }
         if ("state".equals(evt.getPropertyName())) {
-            LoggedInState state = (LoggedInState) evt.getNewValue();
-            username.setText("Hi, " + state.getUsername());
+            final LoggedInState state = (LoggedInState) evt.getNewValue();
+            ((JLabel)((JPanel)this.getComponent(0)).getComponent(0)).setText("Hi, " + state.getUsername() + "!");
         }
+
         if ("translation".equals(evt.getPropertyName())) {
             translationLabel.setText((String) evt.getNewValue());
         }}
@@ -119,4 +125,4 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 //        this.add(logOutButton);
 
 
-    }
+}
