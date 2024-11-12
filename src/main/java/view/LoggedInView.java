@@ -9,8 +9,6 @@ import interface_adapter.translation.ImageTranslationController;
 import interface_adapter.translation.VoiceTranslationController;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -23,9 +21,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private final String viewName = "logged in";
     private final LoggedInViewModel loggedInViewModel;
 
-    private final JLabel username;
-
-    private final JTextField textInputField = new JTextField(15);
+    private final JLabel usernameLabel;
 
     private final JComboBox<String> inputLanguageComboBox;
     private final JComboBox<String> outputLanguageComboBox;
@@ -42,81 +38,83 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         this.loggedInViewModel = loggedInViewModel;
         this.loggedInViewModel.addPropertyChangeListener(this);
 
-        final JLabel title = new JLabel("Hi, ");
-        username = new JLabel();
-        this.add(title);
-        title.setAlignmentX(Component.LEFT_ALIGNMENT);
+        this.setLayout(new BorderLayout());
 
-        final JPanel topButtons = new JPanel();
+        JPanel topPanel = new JPanel(new BorderLayout());
+
+        JPanel welcomePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        usernameLabel = new JLabel("Hi, ");  // Initial text; username will be set via propertyChange
+        welcomePanel.add(usernameLabel);
+
+        JPanel topButtonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         profileButton = new JButton("Profile");
-        topButtons.add(profileButton);
         historyButton = new JButton("History");
-        topButtons.add(historyButton);
-        this.add(topButtons);
+        topButtonsPanel.add(profileButton);
+        topButtonsPanel.add(historyButton);
 
+        topPanel.add(welcomePanel, BorderLayout.WEST);
+        topPanel.add(topButtonsPanel, BorderLayout.EAST);
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(topPanel, BorderLayout.NORTH);
+
+        JPanel mainContentPanel = new JPanel();
+        mainContentPanel.setLayout(new BoxLayout(mainContentPanel, BoxLayout.Y_AXIS));
 
         inputLanguageComboBox = new JComboBox<>(new String[]{"English", "Spanish", "French"});
         outputLanguageComboBox = new JComboBox<>(new String[]{"English", "Spanish", "French"});
 
-        JPanel languagePanel = new JPanel(new FlowLayout());
+        JPanel languagePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         languagePanel.add(new JLabel("Input Language:"));
         languagePanel.add(inputLanguageComboBox);
         languagePanel.add(new JLabel("Output Language:"));
         languagePanel.add(outputLanguageComboBox);
-        this.add(languagePanel);
 
+        mainContentPanel.add(languagePanel);
+
+        JPanel textPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         textArea = new JTextArea(3, 20);
-        add(new JLabel("Text:"));
-        add(new JScrollPane(textArea));
+        textPanel.add(new JLabel("Text:"));
+        textPanel.add(new JScrollPane(textArea));
 
-        JPanel inputOptionsPanel = new JPanel();
-        imageUploadButton = new JButton("Image Upload");
-        voiceInputButton = new JButton("Voice Input");
+        mainContentPanel.add(textPanel);
+
+        JPanel translatePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         translateButton = new JButton("Translate");
+        translatePanel.add(translateButton);
+
+        mainContentPanel.add(translatePanel);
+
+        JPanel inputOptionsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        imageUploadButton = new JButton("Upload Image");
+        voiceInputButton = new JButton("Input Voice");
+        chatBoxButton = new JButton("ChatBox");
         inputOptionsPanel.add(imageUploadButton);
         inputOptionsPanel.add(voiceInputButton);
-        inputOptionsPanel.add(translateButton);
-
-        translationLabel = new JLabel("Translation will appear here:");
-        JPanel resultPanel = new JPanel();
-        resultPanel.add(translationLabel);
-        this.add(resultPanel);
-
-        chatBoxButton = new JButton("ChatBox");
         inputOptionsPanel.add(chatBoxButton);
-        this.add(chatBoxButton);
+
+        mainContentPanel.add(inputOptionsPanel);
+
+        this.add(mainContentPanel, BorderLayout.CENTER);
+
+        translationLabel = new JLabel("Translation Result:");
+        JPanel resultPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        resultPanel.add(translationLabel);
+        this.add(resultPanel, BorderLayout.SOUTH);
 
     }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("state")) {
-            final LoggedInState state = (LoggedInState) evt.getNewValue();
-            username.setText(state.getUsername());
-        }
         if ("state".equals(evt.getPropertyName())) {
-            LoggedInState state = (LoggedInState) evt.getNewValue();
-            username.setText("Hi, " + state.getUsername());
+            final LoggedInState state = (LoggedInState) evt.getNewValue();
+            usernameLabel.setText("Hi, " + state.getUsername() + "!");
         }
         if ("translation".equals(evt.getPropertyName())) {
             translationLabel.setText((String) evt.getNewValue());
-        }}
+        }
+    }
 
-    public String getViewName(){
+    public String getViewName() {
         return viewName;
     }
-
-//        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-//        this.add(usernameLabel);
-//        this.add(topButtonPanel);
-//        this.add(languagePanel);
-//        this.add(textPanel);
-//        this.add(inputOptionsPanel);
-//        this.add(resultPanel);
-//        this.add(chatBoxButton);
-//        this.add(logOutButton);
-
-
-    }
+}
