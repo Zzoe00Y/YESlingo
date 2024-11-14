@@ -1,12 +1,8 @@
 package view;
 
-import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
-import interface_adapter.logout.LogoutController;
-import interface_adapter.translation.TextTranslationController;
-import interface_adapter.translation.ImageTranslationController;
-import interface_adapter.translation.VoiceTranslationController;
+import interface_adapter.translation.TranslationViewInterface;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,9 +10,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 /**
- * The View for when the user is logged into the program.
+ * The View for when the user is logged into the program, displaying translation options and results.
  */
-public class LoggedInView extends JPanel implements PropertyChangeListener {
+public class LoggedInView extends JPanel implements PropertyChangeListener, TranslationViewInterface {
 
     private final String viewName = "logged in";
     private final LoggedInViewModel loggedInViewModel;
@@ -40,8 +36,8 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
         this.setLayout(new BorderLayout());
 
+        // Top Panel: Welcome and Navigation
         JPanel topPanel = new JPanel(new BorderLayout());
-
         JPanel welcomePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         usernameLabel = new JLabel("Hi, ");  // Initial text; username will be set via propertyChange
         welcomePanel.add(usernameLabel);
@@ -57,9 +53,11 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
         this.add(topPanel, BorderLayout.NORTH);
 
+        // Main Content Panel: Language selection, Text Entry, and Translate Button
         JPanel mainContentPanel = new JPanel();
         mainContentPanel.setLayout(new BoxLayout(mainContentPanel, BoxLayout.Y_AXIS));
 
+        // Language Selection Panel
         inputLanguageComboBox = new JComboBox<>(new String[]{"English", "Spanish", "French"});
         outputLanguageComboBox = new JComboBox<>(new String[]{"English", "Spanish", "French"});
 
@@ -71,6 +69,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
         mainContentPanel.add(languagePanel);
 
+        // Text Entry Panel
         JPanel textPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         textArea = new JTextArea(3, 20);
         textPanel.add(new JLabel("Text:"));
@@ -78,12 +77,14 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
         mainContentPanel.add(textPanel);
 
+        // Translate Button Panel
         JPanel translatePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         translateButton = new JButton("Translate");
         translatePanel.add(translateButton);
 
         mainContentPanel.add(translatePanel);
 
+        // Input Options Panel: Image and Voice Upload, ChatBox
         JPanel inputOptionsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         imageUploadButton = new JButton("Upload Image");
         voiceInputButton = new JButton("Input Voice");
@@ -96,11 +97,34 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
         this.add(mainContentPanel, BorderLayout.CENTER);
 
+        // Result Panel for Translation Output
         translationLabel = new JLabel("Translation Result:");
         JPanel resultPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         resultPanel.add(translationLabel);
         this.add(resultPanel, BorderLayout.SOUTH);
 
+        // Set up listeners for buttons
+        setupListeners();
+    }
+
+    private void setupListeners() {
+        translateButton.addActionListener(e -> {
+            // Placeholder for translation action
+            // This will interact with the TextTranslationController
+            System.out.println("Translate button clicked");
+        });
+
+        imageUploadButton.addActionListener(e -> {
+            // Placeholder for image translation action
+            // This will interact with the ImageTranslationController
+            System.out.println("Image Upload button clicked");
+        });
+
+        voiceInputButton.addActionListener(e -> {
+            // Placeholder for voice translation action
+            // This will interact with the VoiceTranslationController
+            System.out.println("Voice Input button clicked");
+        });
     }
 
     @Override
@@ -112,6 +136,18 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         if ("translation".equals(evt.getPropertyName())) {
             translationLabel.setText((String) evt.getNewValue());
         }
+    }
+
+    @Override
+    public void displayTranslation(String translatedText) {
+        // Sets the translated text on the translation label
+        translationLabel.setText("Translation: " + translatedText);
+    }
+
+    @Override
+    public void displayError(String error) {
+        // Sets an error message on the translation label
+        translationLabel.setText("Error: " + error);
     }
 
     public String getViewName() {
