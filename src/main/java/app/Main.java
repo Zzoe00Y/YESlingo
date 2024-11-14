@@ -38,7 +38,7 @@ public class Main {
         NanonetsImageToTextService imageToTextService = new NanonetsImageToTextService();
         TextTranslationUseCase textTranslationUseCase = new TextTranslationUseCase(new TextToTextTranslationService());
 
-        LoggedInView loggedInView = appBuilder.getLoggedInView(); // Ensure this method exists in AppBuilder
+        LoggedInView loggedInView = appBuilder.getLoggedInView();
 
         ImageTranslationOutputBoundary outputBoundary = new ImageTranslationPresenter(loggedInView);
 

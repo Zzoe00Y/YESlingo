@@ -146,19 +146,16 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
         });
 
         imageUploadButton.addActionListener(e -> {
-            selectImage(); // Load the selected image
+            selectImage();
             BufferedImage image = getSelectedImage();
             String targetLanguage = getSelectedTargetLanguage();
             if (image != null && targetLanguage != null && imageTranslationController != null) {
                 imageTranslationController.execute(image, targetLanguage);
             } else {
-                JOptionPane.showMessageDialog(this, "Please select an image and a target language.");
+                JOptionPane.showMessageDialog(this, "You can upload an image to translate.");
             }
         });
 
-        voiceInputButton.addActionListener(e -> {
-            System.out.println("Voice Input button clicked");
-        });
     }
 
     @Override
