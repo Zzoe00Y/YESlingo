@@ -30,13 +30,10 @@ public class ImageTranslationInteractor implements ImageTranslationInputBoundary
     @Override
     public void execute(ImageTranslationInputData inputData) {
         try {
-            // Extract text from the image using OCR
             String extractedText = imageToTextService.extractText(inputData.getImage());
 
-            // Translate the extracted text
             String translatedText = textTranslationUseCase.translate(extractedText, inputData.getTargetLanguage());
 
-            // Prepare success output data
             ImageTranslationOutputData outputData = new ImageTranslationOutputData(translatedText);
             outputBoundary.prepareSuccessView(outputData);
 

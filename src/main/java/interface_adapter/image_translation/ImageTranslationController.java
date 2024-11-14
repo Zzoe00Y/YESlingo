@@ -1,6 +1,5 @@
 package interface_adapter.image_translation;
 
-import use_case.change_password.ChangePasswordInputBoundary;
 import use_case.image_translation.ImageTranslationInputBoundary;
 import use_case.image_translation.ImageTranslationInputData;
 
@@ -24,7 +23,6 @@ public class ImageTranslationController {
      */
     public void execute(BufferedImage image, String targetLanguage) {
         final ImageTranslationInputData imageTranslationInputData = new ImageTranslationInputData(image, targetLanguage);
-
         imageTranslationUseCaseInteractor.execute(imageTranslationInputData);
     }
 }

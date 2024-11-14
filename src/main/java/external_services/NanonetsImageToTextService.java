@@ -19,14 +19,11 @@ public class NanonetsImageToTextService implements ImageToTextService {
 
     @Override
     public String extractText(BufferedImage image) throws Exception {
-        // Convert BufferedImage to Base64 encoded string
         String base64Image = bufferedImageToBase64(image);
 
-        // Create JSON payload with the encoded image
         JSONObject jsonPayload = new JSONObject();
         jsonPayload.put("file", "data:image/png;base64," + base64Image);
 
-        // Set up HTTP connection
         URL url = new URL(API_URL.replace("<MODEL_ID>", "your_model_id")); // Replace with actual model ID
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
@@ -34,13 +31,11 @@ public class NanonetsImageToTextService implements ImageToTextService {
         conn.setRequestProperty("Content-Type", "application/json");
         conn.setDoOutput(true);
 
-        // Send JSON payload
         try (OutputStream os = conn.getOutputStream()) {
             os.write(jsonPayload.toString().getBytes());
             os.flush();
         }
 
-        // Read the response
         StringBuilder response = new StringBuilder();
         try (InputStream is = conn.getInputStream()) {
             int ch;
@@ -49,7 +44,6 @@ public class NanonetsImageToTextService implements ImageToTextService {
             }
         }
 
-        // Parse JSON response to get the extracted text
         JSONObject jsonResponse = new JSONObject(response.toString());
         JSONArray results = jsonResponse.getJSONArray("result");
         StringBuilder extractedText = new StringBuilder();
