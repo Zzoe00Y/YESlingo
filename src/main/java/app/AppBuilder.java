@@ -169,17 +169,13 @@ public class AppBuilder {
 
     /**
      * Creates the JFrame for the application and initially sets the SignupView to be displayed.
+     *
      * @return the application
      */
     public JFrame build() {
-        final JFrame application = new JFrame();
-        application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-        application.add(cardPanel);
-
-        viewManagerModel.setState(signupView.getViewName());
-        viewManagerModel.firePropertyChanged();
-
-        return application;
+        return null;
     }
+
+    public LoggedInView getLoggedInView() {
+    return loggedInView;}
 }
