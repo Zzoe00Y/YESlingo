@@ -28,6 +28,8 @@ public class Main {
                                             .addLoggedInView()
                                             .addSignupUseCase()
                                             .addLoginUseCase()
+                                            .addChatBotView()
+                                            .addChatBotUseCase()
 //                                            .addChangePasswordUseCase()
                                             .addLogoutUseCase()
                                             .build();
