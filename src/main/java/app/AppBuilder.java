@@ -10,10 +10,10 @@ import data_access.InMemoryUserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.change_password.ChangePasswordController;
-import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.LoggedInViewModel;
-import interface_adapter.chatbot.ChatBotDefaultViewModel;
+import interface_adapter.chatbot.ChatBotController;
+import interface_adapter.chatbot.ChatBotPresenter;
+import interface_adapter.chatbot.ChatBotViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
@@ -22,9 +22,9 @@ import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
-import use_case.change_password.ChangePasswordInputBoundary;
-import use_case.change_password.ChangePasswordInteractor;
-import use_case.change_password.ChangePasswordOutputBoundary;
+import use_case.chatbot.ChatBotInputBoundary;
+import use_case.chatbot.ChatBotInteractor;
+import use_case.chatbot.ChatBotOutputBoundary;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
@@ -34,6 +34,7 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
+import view.ChatBotDefaultView;
 import view.LoggedInView;
 import view.LoginView;
 import view.SignupView;
@@ -67,7 +68,7 @@ public class AppBuilder {
     private LoggedInViewModel loggedInViewModel;
     private LoggedInView loggedInView;
     private LoginView loginView;
-    private ChatBotDefaultViewModel chatBotViewModel;
+    private ChatBotViewModel chatBotViewModel;
     private ChatBotDefaultView chatBotView;
 
     public AppBuilder() {
@@ -97,24 +98,39 @@ public class AppBuilder {
     }
 
     /**
-     * Adds the LoggedIn View to the application.
+     * Adds the ChatBot View to the application.
      * @return this builder
      */
     public AppBuilder addChatBotView() {
-        chatBotViewModel = new ChatBotDefaultViewModel();
+        chatBotViewModel = new ChatBotViewModel();
         chatBotView = new ChatBotDefaultView(chatBotViewModel);
         cardPanel.add(chatBotView, chatBotView.getViewName());
         return this;
     }
 
     /**
-     * Adds the ChatBot View to the application.
+     * Adds the LoggedIn View to the application.
      * @return this builder
      */
     public AppBuilder addLoggedInView() {
         loggedInViewModel = new LoggedInViewModel();
         loggedInView = new LoggedInView(loggedInViewModel);
         cardPanel.add(loggedInView, loggedInView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the ChatBot Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addChatBotUseCase() {
+        final ChatBotOutputBoundary chatBotOutputBoundary = new ChatBotPresenter(viewManagerModel,
+                chatBotViewModel, loggedInViewModel);
+        final ChatBotInputBoundary userChatBotInteractor = new ChatBotInteractor(
+                userDataAccessObject, chatBotOutputBoundary, userFactory);
+
+        final ChatBotController controller = new ChatBotController(userChatBotInteractor);
+        chatBotView.setChatBotController(controller);
         return this;
     }
 
@@ -191,7 +207,7 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(signupView.getViewName());
+        viewManagerModel.setState(chatBotView.getViewName());
         viewManagerModel.firePropertyChanged();
 
         return application;
