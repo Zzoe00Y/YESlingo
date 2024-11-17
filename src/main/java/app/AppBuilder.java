@@ -13,6 +13,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.chatbot.ChatBotDefaultViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
@@ -33,10 +34,7 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import view.LoggedInView;
-import view.LoginView;
-import view.SignupView;
-import view.ViewManager;
+import view.*;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -66,6 +64,8 @@ public class AppBuilder {
     private LoggedInViewModel loggedInViewModel;
     private LoggedInView loggedInView;
     private LoginView loginView;
+    private ChatBotDefaultViewModel chatBotViewModel;
+    private ChatBotDefaultView chatBotView;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -95,6 +95,17 @@ public class AppBuilder {
 
     /**
      * Adds the LoggedIn View to the application.
+     * @return this builder
+     */
+    public AppBuilder addChatBotView() {
+        chatBotViewModel = new ChatBotDefaultViewModel();
+        chatBotView = new ChatBotDefaultView(chatBotViewModel);
+        cardPanel.add(chatBotView, chatBotView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the ChatBot View to the application.
      * @return this builder
      */
     public AppBuilder addLoggedInView() {
@@ -177,7 +188,7 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(signupView.getViewName());
+        viewManagerModel.setState(chatBotView.getViewName());
         viewManagerModel.firePropertyChanged();
 
         return application;
