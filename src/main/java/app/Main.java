@@ -2,6 +2,15 @@ package app;
 
 import javax.swing.JFrame;
 
+import external_services.NanonetsImageToTextService;
+import external_services.TextToTextTranslationService;
+import interface_adapter.image_translation.ImageTranslationController;
+import interface_adapter.image_translation.ImageTranslationPresenter;
+import use_case.image_translation.ImageTranslationInteractor;
+import use_case.image_translation.ImageTranslationOutputBoundary;
+import use_case.text_translation.TextTranslationUseCase;
+import view.LoggedInView;
+
 /**
  * The Main class of our application.
  */
@@ -26,5 +35,21 @@ public class Main {
 
         application.pack();
         application.setVisible(true);
+
+        NanonetsImageToTextService imageToTextService = new NanonetsImageToTextService();
+        TextTranslationUseCase textTranslationUseCase = new TextTranslationUseCase(new TextToTextTranslationService());
+
+        LoggedInView loggedInView = appBuilder.getLoggedInView();
+
+        ImageTranslationOutputBoundary outputBoundary = new ImageTranslationPresenter(loggedInView);
+
+        ImageTranslationInteractor imageTranslationInteractor = new ImageTranslationInteractor(
+                imageToTextService,
+                textTranslationUseCase,
+                outputBoundary
+        );
+
+        ImageTranslationController imageTranslationController = new ImageTranslationController(imageTranslationInteractor);
+        loggedInView.setImageTranslationController(imageTranslationController);
     }
 }

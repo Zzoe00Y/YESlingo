@@ -1,32 +1,36 @@
 package view;
 
-import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
-import interface_adapter.logout.LogoutController;
-import interface_adapter.translation.TextTranslationController;
-import interface_adapter.translation.ImageTranslationController;
-import interface_adapter.translation.VoiceTranslationController;
+import interface_adapter.image_translation.ImageTranslationController;
+import interface_adapter.translation.TranslationViewInterface;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 
 /**
- * The View for when the user is logged into the program.
+ * The View for when the user is logged into the program, displaying translation options and results.
  */
-public class LoggedInView extends JPanel implements PropertyChangeListener {
+public class LoggedInView extends JPanel implements PropertyChangeListener, TranslationViewInterface {
 
     private final String viewName = "logged in";
     private final LoggedInViewModel loggedInViewModel;
+    private BufferedImage selectedImage;
+    private ImageTranslationController imageTranslationController;
+
 
     private final JLabel usernameLabel;
 
+
+    private final JButton imageUploadButton;
     private final JComboBox<String> inputLanguageComboBox;
     private final JComboBox<String> outputLanguageComboBox;
     private final JTextArea textArea;
-    private final JButton imageUploadButton;
     private final JButton voiceInputButton;
     private final JButton translateButton;
     private final JLabel translationLabel;
@@ -41,7 +45,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         this.setLayout(new BorderLayout());
 
         JPanel topPanel = new JPanel(new BorderLayout());
-
         JPanel welcomePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         usernameLabel = new JLabel("Hi, ");  // Initial text; username will be set via propertyChange
         welcomePanel.add(usernameLabel);
@@ -101,6 +104,58 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         resultPanel.add(translationLabel);
         this.add(resultPanel, BorderLayout.SOUTH);
 
+        setupListeners();
+    }
+
+    /**
+     * Sets the ImageTranslationController to handle image translation.
+     * @param imageTranslationController the ImageTranslationController to set
+     */
+    public void setImageTranslationController(ImageTranslationController imageTranslationController) {
+        this.imageTranslationController = imageTranslationController;
+    }
+
+    private void selectImage() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Image Files", "jpg", "png", "jpeg"));
+
+        int returnValue = fileChooser.showOpenDialog(this);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            try {
+                selectedImage = ImageIO.read(file);
+                JOptionPane.showMessageDialog(this, "Image loaded successfully.");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Failed to load image.");
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public BufferedImage getSelectedImage() {
+        return selectedImage;
+    }
+
+    public String getSelectedTargetLanguage() {
+        return (String) outputLanguageComboBox.getSelectedItem();
+    }
+
+    private void setupListeners() {
+        translateButton.addActionListener(e -> {
+            System.out.println("Translate button clicked");
+        });
+
+        imageUploadButton.addActionListener(e -> {
+            selectImage();
+            BufferedImage image = getSelectedImage();
+            String targetLanguage = getSelectedTargetLanguage();
+            if (image != null && targetLanguage != null && imageTranslationController != null) {
+                imageTranslationController.execute(image, targetLanguage);
+            } else {
+                JOptionPane.showMessageDialog(this, "You can upload an image to translate.");
+            }
+        });
+
     }
 
     @Override
@@ -112,6 +167,16 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         if ("translation".equals(evt.getPropertyName())) {
             translationLabel.setText((String) evt.getNewValue());
         }
+    }
+
+    @Override
+    public void displayTranslation(String translatedText) {
+        translationLabel.setText("Translation: " + translatedText);
+    }
+
+    @Override
+    public void displayError(String error) {
+        translationLabel.setText("Error: " + error);
     }
 
     public String getViewName() {

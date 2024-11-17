@@ -34,7 +34,10 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import view.*;
+import view.LoggedInView;
+import view.LoginView;
+import view.SignupView;
+import view.ViewManager;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -188,9 +191,12 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(chatBotView.getViewName());
+        viewManagerModel.setState(signupView.getViewName());
         viewManagerModel.firePropertyChanged();
 
         return application;
     }
+
+    public LoggedInView getLoggedInView() {
+    return loggedInView;}
 }
