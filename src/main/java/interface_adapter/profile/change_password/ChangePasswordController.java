@@ -7,10 +7,10 @@ import use_case.profile.change_password.ChangePasswordInputData;
  * Controller for the Change Password Use Case.
  */
 public class ChangePasswordController {
-    private final ChangePasswordInputBoundary userChangePasswordUseCaseInteractor;
+    private final ChangePasswordInputBoundary changePasswordUseCaseInteractor;
 
-    public ChangePasswordController(ChangePasswordInputBoundary userChangePasswordUseCaseInteractor) {
-        this.userChangePasswordUseCaseInteractor = userChangePasswordUseCaseInteractor;
+    public ChangePasswordController(ChangePasswordInputBoundary changePasswordUseCaseInteractor) {
+        this.changePasswordUseCaseInteractor = changePasswordUseCaseInteractor;
     }
 
     /**
@@ -20,7 +20,13 @@ public class ChangePasswordController {
      */
     public void execute(String password, String username) {
         final ChangePasswordInputData changePasswordInputData = new ChangePasswordInputData(username, password);
+        changePasswordUseCaseInteractor.execute(changePasswordInputData);
+    }
 
-        userChangePasswordUseCaseInteractor.execute(changePasswordInputData);
+    /**
+     * Executes the "switch to ProfileView" Use Case.
+     */
+    public void switchToProfileView() {
+        changePasswordUseCaseInteractor.switchToProfileView();
     }
 }

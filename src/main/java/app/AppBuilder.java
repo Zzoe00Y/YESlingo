@@ -24,6 +24,7 @@ import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.profile.ProfileController;
 import interface_adapter.profile.ProfilePresenter;
 import interface_adapter.profile.ProfileViewModel;
+import interface_adapter.profile.change_password.ChangePasswordViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
@@ -81,6 +82,8 @@ public class AppBuilder {
     private ChatBotDefaultView chatBotView;
     private ProfileViewModel profileViewModel;
     private ProfileView profileView;
+    private ChangePasswordViewModel changePasswordViewModel;
+    private ChangePasswordView changePasswordView;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -127,6 +130,17 @@ public class AppBuilder {
         profileViewModel = new ProfileViewModel();
         profileView = new ProfileView(profileViewModel);
         cardPanel.add(profileView, profileView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the Profile View to the application.
+     * @return this builder
+     */
+    public AppBuilder addChangePasswordView() {
+        changePasswordViewModel = new ChangePasswordViewModel();
+        changePasswordView = new ChangePasswordView(changePasswordViewModel);
+        cardPanel.add(changePasswordView, changePasswordView.getViewName());
         return this;
     }
 
@@ -207,9 +221,8 @@ public class AppBuilder {
      */
     public AppBuilder addProfileUseCase() {
         final ProfileOutputBoundary profileOutputBoundary = new ProfilePresenter(viewManagerModel,
-                loggedInViewModel, profileViewModel);
-        final ProfileInputBoundary profileInteractor = new ProfileInteractor(
-                (ProfileUserDataAccessInterface) userDataAccessObject, profileOutputBoundary, userFactory);
+                loggedInViewModel, profileViewModel, changePasswordViewModel, loginViewModel);
+        final ProfileInputBoundary profileInteractor = new ProfileInteractor(profileOutputBoundary, userFactory);
 
         final ProfileController controller = new ProfileController(profileInteractor);
         profileView.setProfileController(controller);
@@ -282,5 +295,21 @@ public class AppBuilder {
 
     public UserFactory getUserFactory() {
         return userFactory;
+    }
+
+    public ProfileView getProfileView() {
+        return profileView;
+    }
+
+    public ChangePasswordViewModel getChangePasswordViewModel() {
+        return changePasswordViewModel;
+    }
+
+    public ChangePasswordView getChangePasswordView() {
+        return changePasswordView;
+    }
+
+    public LoginViewModel getLoginViewModel() {
+        return loginViewModel;
     }
 }

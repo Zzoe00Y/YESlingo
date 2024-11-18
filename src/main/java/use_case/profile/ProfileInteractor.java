@@ -6,14 +6,25 @@ import entity.UserFactory;
  * The Profile Interactor.
  */
 public class ProfileInteractor implements ProfileInputBoundary {
-    private final ProfileUserDataAccessInterface profileUserDataAccessInterface;
-    private final ProfileOutputBoundary profileOutputBoundary;
+    private final ProfileOutputBoundary profilePresenter;
     private final UserFactory userFactory;
-    public ProfileInteractor(ProfileUserDataAccessInterface profileUserDataAccessInterface,
-                             ProfileOutputBoundary profileOutputBoundary,
+    public ProfileInteractor(ProfileOutputBoundary profilePresenter,
                              UserFactory userFactory) {
-        this.profileUserDataAccessInterface = profileUserDataAccessInterface;
-        this.profileOutputBoundary = profileOutputBoundary;
+        this.profilePresenter = profilePresenter;
         this.userFactory = userFactory;
+    }
+
+    @Override
+    public void switchToLoggedInView() {
+        profilePresenter.switchToLoggedInView();
+    }
+
+    @Override
+    public void switchToChangePasswordView() {
+        profilePresenter.switchToChangePasswordView();
+    }
+
+    public void switchToLogInView() {
+        profilePresenter.switchToLogInView();
     }
 }

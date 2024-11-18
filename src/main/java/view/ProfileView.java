@@ -63,18 +63,38 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
         gbc.gridy = 6;
         this.add(logout, gbc);
 
-        exit.addActionListener(this);
+        setProfileController(profileController);
 
-        changePassword.addActionListener(this);
+        exit.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        profileController.switchToLoggedInView();
+                    }
+                }
+        );
+
+        changePassword.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        profileController.switchToChangePasswordView();
+                    }
+                }
+        );
 
         changeLanguage.addActionListener(this);
 
-        logout.addActionListener(this);
+        logout.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        profileController.switchToLogInView();
+                    }
+                }
+        );
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JOptionPane.showMessageDialog(this, "Cancel not implemented yet.");
+        JOptionPane.showMessageDialog(this, "Not implemented yet.");
     }
 
     @Override
@@ -88,7 +108,9 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
         return viewName;
     }
 
-    public void setProfileController(ProfileController controller) {
-        this.profileController = controller;
+    public void setProfileController(ProfileController profileController) {
+        this.profileController = profileController;
     }
+
+
 }
