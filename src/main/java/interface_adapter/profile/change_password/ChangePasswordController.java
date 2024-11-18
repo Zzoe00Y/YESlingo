@@ -1,7 +1,7 @@
-package interface_adapter.change_password;
+package interface_adapter.profile.change_password;
 
-import use_case.change_password.ChangePasswordInputBoundary;
-import use_case.change_password.ChangePasswordInputData;
+import use_case.profile.change_password.ChangePasswordInputBoundary;
+import use_case.profile.change_password.ChangePasswordInputData;
 
 /**
  * Controller for the Change Password Use Case.

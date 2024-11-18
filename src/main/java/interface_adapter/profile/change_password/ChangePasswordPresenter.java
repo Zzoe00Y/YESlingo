@@ -1,7 +1,8 @@
-package interface_adapter.change_password;
+package interface_adapter.profile.change_password;
 
-import use_case.change_password.ChangePasswordOutputBoundary;
-import use_case.change_password.ChangePasswordOutputData;
+import interface_adapter.loggedin_homepage.LoggedInViewModel;
+import use_case.profile.change_password.ChangePasswordOutputBoundary;
+import use_case.profile.change_password.ChangePasswordOutputData;
 
 /**
  * The Presenter for the Change Password Use Case.

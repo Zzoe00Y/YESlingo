@@ -1,7 +1,7 @@
 package interface_adapter.chatbot;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.loggedin_homepage.LoggedInViewModel;
 import use_case.chatbot.ChatBotOutputBoundary;
 import use_case.chatbot.ChatBotOutputData;
 

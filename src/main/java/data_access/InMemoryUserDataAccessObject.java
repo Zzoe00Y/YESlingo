@@ -1,7 +1,7 @@
 package data_access;
 
 import entity.User;
-import use_case.change_password.ChangePasswordUserDataAccessInterface;
+import use_case.profile.change_password.ChangePasswordUserDataAccessInterface;
 import use_case.chatbot.ChatBotUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.logout.LogoutUserDataAccessInterface;

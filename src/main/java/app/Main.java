@@ -26,12 +26,15 @@ public class Main {
                                             .addLoginView()
                                             .addSignupView()
                                             .addLoggedInView()
+                                            .addProfileView()
+                                            .addChatBotView()
                                             .addSignupUseCase()
                                             .addLoginUseCase()
-                                            .addChatBotView()
+                                            .addLoggedinUseCase()
+                                            .addProfileUseCase()
                                             .addChatBotUseCase()
 //                                            .addChangePasswordUseCase()
-                                            .addLogoutUseCase()
+//                                            .addLogoutUseCase()
                                             .build();
 
         application.pack();

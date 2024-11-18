@@ -10,7 +10,9 @@ import data_access.InMemoryUserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.loggedin_homepage.LoggedInController;
+import interface_adapter.loggedin_homepage.LoggedInPresenter;
+import interface_adapter.loggedin_homepage.LoggedInViewModel;
 import interface_adapter.chatbot.ChatBotController;
 import interface_adapter.chatbot.ChatBotPresenter;
 import interface_adapter.chatbot.ChatBotViewModel;
@@ -19,26 +21,33 @@ import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.profile.ProfileController;
+import interface_adapter.profile.ProfilePresenter;
+import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
 import use_case.chatbot.ChatBotInputBoundary;
 import use_case.chatbot.ChatBotInteractor;
 import use_case.chatbot.ChatBotOutputBoundary;
+import use_case.loggedin.LoggedInInputBoundary;
+import use_case.loggedin.LoggedInInteractor;
+import use_case.loggedin.LoggedInOutputBoundary;
+import use_case.loggedin.LoggedInUserDataAccessInterface;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
 import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInteractor;
 import use_case.logout.LogoutOutputBoundary;
+import use_case.profile.ProfileInputBoundary;
+import use_case.profile.ProfileInteractor;
+import use_case.profile.ProfileOutputBoundary;
+import use_case.profile.ProfileUserDataAccessInterface;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import view.ChatBotDefaultView;
-import view.LoggedInView;
-import view.LoginView;
-import view.SignupView;
-import view.ViewManager;
+import view.*;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -70,6 +79,8 @@ public class AppBuilder {
     private LoginView loginView;
     private ChatBotViewModel chatBotViewModel;
     private ChatBotDefaultView chatBotView;
+    private ProfileViewModel profileViewModel;
+    private ProfileView profileView;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -98,17 +109,6 @@ public class AppBuilder {
     }
 
     /**
-     * Adds the ChatBot View to the application.
-     * @return this builder
-     */
-    public AppBuilder addChatBotView() {
-        chatBotViewModel = new ChatBotViewModel();
-        chatBotView = new ChatBotDefaultView(chatBotViewModel);
-        cardPanel.add(chatBotView, chatBotView.getViewName());
-        return this;
-    }
-
-    /**
      * Adds the LoggedIn View to the application.
      * @return this builder
      */
@@ -120,17 +120,24 @@ public class AppBuilder {
     }
 
     /**
-     * Adds the ChatBot Use Case to the application.
+     * Adds the Profile View to the application.
      * @return this builder
      */
-    public AppBuilder addChatBotUseCase() {
-        final ChatBotOutputBoundary chatBotOutputBoundary = new ChatBotPresenter(viewManagerModel,
-                chatBotViewModel, loggedInViewModel);
-        final ChatBotInputBoundary userChatBotInteractor = new ChatBotInteractor(
-                userDataAccessObject, chatBotOutputBoundary, userFactory);
+    public AppBuilder addProfileView() {
+        profileViewModel = new ProfileViewModel();
+        profileView = new ProfileView(profileViewModel);
+        cardPanel.add(profileView, profileView.getViewName());
+        return this;
+    }
 
-        final ChatBotController controller = new ChatBotController(userChatBotInteractor);
-        chatBotView.setChatBotController(controller);
+    /**
+     * Adds the ChatBot View to the application.
+     * @return this builder
+     */
+    public AppBuilder addChatBotView() {
+        chatBotViewModel = new ChatBotViewModel();
+        chatBotView = new ChatBotDefaultView(chatBotViewModel);
+        cardPanel.add(chatBotView, chatBotView.getViewName());
         return this;
     }
 
@@ -164,6 +171,67 @@ public class AppBuilder {
         return this;
     }
 
+//    /**
+//     * Adds the Logout Use Case to the application.
+//     * @return this builder
+//     */
+//    public AppBuilder addLogoutUseCase() {
+//        final LogoutOutputBoundary logoutOutputBoundary = new LogoutPresenter(viewManagerModel,
+//                loggedInViewModel, loginViewModel);
+//
+//        final LogoutInputBoundary logoutInteractor =
+//                new LogoutInteractor(userDataAccessObject, logoutOutputBoundary);
+//
+//        final LogoutController logoutController = new LogoutController(logoutInteractor);
+//        loggedInView.setLogoutController(logoutController);
+//        return this;
+//    }
+
+    /**
+     * Adds the Login Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addLoggedinUseCase() {
+        final LoggedInOutputBoundary loggedInOutputBoundary = new LoggedInPresenter(viewManagerModel,
+                loggedInViewModel, loginViewModel, profileViewModel);
+        final LoggedInInputBoundary loggedInInteractor = new LoggedInInteractor(
+                (LoggedInUserDataAccessInterface) userDataAccessObject, loggedInOutputBoundary, userFactory);
+
+        final LoggedInController loggedInController = new LoggedInController(loggedInInteractor);
+        loggedInView.setLoggedInController(loggedInController);
+        return this;
+    }
+
+    /**
+     * Adds the Profile Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addProfileUseCase() {
+        final ProfileOutputBoundary profileOutputBoundary = new ProfilePresenter(viewManagerModel,
+                loggedInViewModel, profileViewModel);
+        final ProfileInputBoundary profileInteractor = new ProfileInteractor(
+                (ProfileUserDataAccessInterface) userDataAccessObject, profileOutputBoundary, userFactory);
+
+        final ProfileController controller = new ProfileController(profileInteractor);
+        profileView.setProfileController(controller);
+        return this;
+    }
+
+    /**
+     * Adds the ChatBot Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addChatBotUseCase() {
+        final ChatBotOutputBoundary chatBotOutputBoundary = new ChatBotPresenter(viewManagerModel,
+                chatBotViewModel, loggedInViewModel);
+        final ChatBotInputBoundary userChatBotInteractor = new ChatBotInteractor(
+                userDataAccessObject, chatBotOutputBoundary, userFactory);
+
+        final ChatBotController controller = new ChatBotController(userChatBotInteractor);
+        chatBotView.setChatBotController(controller);
+        return this;
+    }
+
     /**
      * Adds the Change Password Use Case to the application.
      * @return this builder
@@ -180,22 +248,6 @@ public class AppBuilder {
 //        loggedInView.setChangePasswordController(changePasswordController);
 //        return this;
 //    }
-
-    /**
-     * Adds the Logout Use Case to the application.
-     * @return this builder
-     */
-    public AppBuilder addLogoutUseCase() {
-        final LogoutOutputBoundary logoutOutputBoundary = new LogoutPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel);
-
-        final LogoutInputBoundary logoutInteractor =
-                new LogoutInteractor(userDataAccessObject, logoutOutputBoundary);
-
-        final LogoutController logoutController = new LogoutController(logoutInteractor);
-//        loggedInView.setLogoutController(logoutController);
-        return this;
-    }
 
     /**
      * Creates the JFrame for the application and initially sets the SignupView to be displayed.

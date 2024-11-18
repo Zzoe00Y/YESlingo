@@ -1,13 +1,16 @@
 package view;
 
-import interface_adapter.change_password.LoggedInState;
-import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.loggedin_homepage.LoggedInController;
+import interface_adapter.loggedin_homepage.LoggedInState;
+import interface_adapter.loggedin_homepage.LoggedInViewModel;
 import interface_adapter.image_translation.ImageTranslationController;
 import interface_adapter.translation.TranslationViewInterface;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -20,6 +23,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
 
     private final String viewName = "logged in";
     private final LoggedInViewModel loggedInViewModel;
+    private LoggedInController loggedInController;
     private BufferedImage selectedImage;
     private ImageTranslationController imageTranslationController;
 
@@ -105,6 +109,14 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
         this.add(resultPanel, BorderLayout.SOUTH);
 
         setupListeners();
+
+        profileButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        loggedInController.switchToProfileView();
+                    }
+                }
+        );
     }
 
     /**
@@ -181,5 +193,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
 
     public String getViewName() {
         return viewName;
+    }
+
+    public void setLoggedInController(LoggedInController loggedInController) {
+        this.loggedInController = loggedInController;
     }
 }
