@@ -1,6 +1,6 @@
 package app;
 
-import java.awt.CardLayout;
+import java.awt.*;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -168,14 +168,31 @@ public class AppBuilder {
     }
 
     /**
-     * Creates the JFrame for the application and initially sets the SignupView to be displayed.
+     * Creates the JFrame for the application and initially sets the LoginView to be displayed.
      *
-     * @return the application
+     * @return the application JFrame
      */
     public JFrame build() {
-        return null;
+        JFrame application = new JFrame("YESlingo");
+        application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        // Add the card panel to the frame
+        application.add(cardPanel);
+
+        // Set initial view to login
+        viewManagerModel.firePropertyChanged();
+
+        // Set minimum size for the application
+        application.setMinimumSize(new Dimension(800, 600));
+        application.setPreferredSize(new Dimension(1024, 768));
+
+        // Center on screen
+        application.setLocationRelativeTo(null);
+
+        return application;
     }
 
     public LoggedInView getLoggedInView() {
-    return loggedInView;}
+        return loggedInView;
+    }
 }
