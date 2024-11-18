@@ -1,6 +1,7 @@
 package view;
 
 import interface_adapter.profile.ProfileController;
+import interface_adapter.profile.ProfileState;
 import interface_adapter.profile.ProfileViewModel;
 
 import javax.swing.*;
@@ -73,12 +74,12 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        JOptionPane.showMessageDialog(this, "Cancel not implemented yet.");
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        final ProfileState state = (ProfileState) evt.getNewValue();
     }
 
     public String getViewName() {
