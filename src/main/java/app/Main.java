@@ -25,7 +25,7 @@ public class Main {
         final JFrame application = appBuilder
                                             .addLoginView()
                                             .addSignupView()
-//                                            .addLoggedInView()
+                                            .addLoggedInView()
 //                                            .addProfileView()
                                             .addChatBotView()
                                             .addSignupUseCase()
