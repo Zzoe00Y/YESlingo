@@ -1,54 +1,82 @@
 package app;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
+import external_services.MyMemoryGateway;
 import external_services.NanonetsImageToTextService;
-import external_services.TextToTextTranslationService;
 import interface_adapter.image_translation.ImageTranslationController;
 import interface_adapter.image_translation.ImageTranslationPresenter;
+import interface_adapter.text_translation.TextTranslationController;
+import interface_adapter.text_translation.TextTranslationPresenter;
 import use_case.image_translation.ImageTranslationInteractor;
 import use_case.image_translation.ImageTranslationOutputBoundary;
-import use_case.text_translation.TextTranslationUseCase;
+import use_case.text_translation.TextTranslationInteractor;
+import use_case.text_translation.TextTranslationOutputBoundary;
+import use_case.text_translation.TranslationGateway;
 import view.LoggedInView;
 
-/**
- * The Main class of our application.
- */
 public class Main {
-    /**
-     * Builds and runs the CA architecture of the application.
-     * @param args unused arguments
-     */
     public static void main(String[] args) {
-        final AppBuilder appBuilder = new AppBuilder();
-        // add the Logout Use Case to the app using the appBuilder
-        final JFrame application = appBuilder
-                                            .addLoginView()
-                                            .addSignupView()
-                                            .addLoggedInView()
-                                            .addSignupUseCase()
-                                            .addLoginUseCase()
-//                                            .addChangePasswordUseCase()
-                                            .addLogoutUseCase()
-                                            .build();
+        SwingUtilities.invokeLater(() -> {
+            try {
+                // Initialize app builder
+                final AppBuilder appBuilder = new AppBuilder();
 
-        application.pack();
-        application.setVisible(true);
+                // Build basic application frame
+                final JFrame application = appBuilder
+                        .addLoginView()
+                        .addSignupView()
+                        .addLoggedInView()
+                        .addSignupUseCase()
+                        .addLoginUseCase()
+                        .addLogoutUseCase()
+                        .build();
 
-        NanonetsImageToTextService imageToTextService = new NanonetsImageToTextService();
-        TextTranslationUseCase textTranslationUseCase = new TextTranslationUseCase(new TextToTextTranslationService());
+                // Get reference to LoggedInView
+                LoggedInView loggedInView = appBuilder.getLoggedInView();
 
-        LoggedInView loggedInView = appBuilder.getLoggedInView();
+                // Initialize gateway and service for translation
+                TranslationGateway translationGateway = new MyMemoryGateway();
 
-        ImageTranslationOutputBoundary outputBoundary = new ImageTranslationPresenter(loggedInView);
+                // Set up text translation components
+                TextTranslationOutputBoundary textTranslationOutputBoundary =
+                        new TextTranslationPresenter(loggedInView);
 
-        ImageTranslationInteractor imageTranslationInteractor = new ImageTranslationInteractor(
-                imageToTextService,
-                textTranslationUseCase,
-                outputBoundary
-        );
+                TextTranslationInteractor textTranslationInteractor =
+                        new TextTranslationInteractor(translationGateway, textTranslationOutputBoundary);
 
-        ImageTranslationController imageTranslationController = new ImageTranslationController(imageTranslationInteractor);
-        loggedInView.setImageTranslationController(imageTranslationController);
+                TextTranslationController textTranslationController =
+                        new TextTranslationController(textTranslationInteractor);
+
+                // Important: Set the text translation controller in the view
+                loggedInView.setTextTranslationController(textTranslationController);
+
+                // Set up image translation components
+                NanonetsImageToTextService imageToTextService = new NanonetsImageToTextService();
+
+                ImageTranslationOutputBoundary imageTranslationOutputBoundary =
+                        new ImageTranslationPresenter(loggedInView);
+
+                ImageTranslationInteractor imageTranslationInteractor =
+                        new ImageTranslationInteractor(
+                                imageToTextService,
+                                textTranslationInteractor,
+                                imageTranslationOutputBoundary
+                        );
+
+                ImageTranslationController imageTranslationController =
+                        new ImageTranslationController(imageTranslationInteractor);
+
+                loggedInView.setImageTranslationController(imageTranslationController);
+
+                // Make the frame visible
+                application.pack();
+                application.setVisible(true);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.exit(1);
+            }
+        });
     }
 }

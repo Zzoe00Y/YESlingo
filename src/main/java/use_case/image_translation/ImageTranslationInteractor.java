@@ -1,6 +1,7 @@
 package use_case.image_translation;
 
 import external_services.ImageToTextService;
+import use_case.text_translation.TextTranslationInteractor;
 import use_case.text_translation.TextTranslationUseCase;
 
 /**
@@ -26,7 +27,6 @@ public class ImageTranslationInteractor implements ImageTranslationInputBoundary
         this.textTranslationUseCase = textTranslationUseCase;
         this.outputBoundary = outputBoundary;
     }
-
     @Override
     public void execute(ImageTranslationInputData inputData) {
         try {
