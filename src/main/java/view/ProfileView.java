@@ -81,7 +81,13 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
                 }
         );
 
-        changeLanguage.addActionListener(this);
+        changeLanguage.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        profileController.switchToChangeLanguageView();
+                    }
+                }
+        );
 
         logout.addActionListener(
                 new ActionListener() {

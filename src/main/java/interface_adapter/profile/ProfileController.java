@@ -29,4 +29,11 @@ public class ProfileController {
     public void switchToLogInView() {
         profileInteractor.switchToLogInView();
     }
+
+    /**
+     * Executes the "switch to ChangeLanguageView" Use Case.
+     */
+    public void switchToChangeLanguageView() {
+        profileInteractor.switchToChangeLanguageView();
+    }
 }

@@ -16,4 +16,9 @@ public interface ProfileOutputBoundary {
      * Switches to the LogIn View.
      */
     void switchToLogInView();
+
+    /**
+     * Switches to the ChangeLanguage View.
+     */
+    void switchToChangeLanguageView();
 }

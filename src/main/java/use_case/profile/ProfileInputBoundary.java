@@ -16,4 +16,9 @@ public interface ProfileInputBoundary {
      * Executes the switch to log in view use case.
      */
     void switchToLogInView();
+
+    /**
+     * Executes the switch to change language view use case.
+     */
+    void switchToChangeLanguageView();
 }

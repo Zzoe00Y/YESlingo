@@ -24,6 +24,7 @@ import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.profile.ProfileController;
 import interface_adapter.profile.ProfilePresenter;
 import interface_adapter.profile.ProfileViewModel;
+import interface_adapter.profile.change_language.ChangeLanguageViewModel;
 import interface_adapter.profile.change_password.ChangePasswordViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
@@ -84,6 +85,8 @@ public class AppBuilder {
     private ProfileView profileView;
     private ChangePasswordViewModel changePasswordViewModel;
     private ChangePasswordView changePasswordView;
+    private ChangeLanguageViewModel changeLanguageViewModel;
+    private ChangeLanguageView changeLanguageView;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -141,6 +144,17 @@ public class AppBuilder {
         changePasswordViewModel = new ChangePasswordViewModel();
         changePasswordView = new ChangePasswordView(changePasswordViewModel);
         cardPanel.add(changePasswordView, changePasswordView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the Profile View to the application.
+     * @return this builder
+     */
+    public AppBuilder addChangeLanguageView() {
+        changeLanguageViewModel = new ChangeLanguageViewModel();
+        changeLanguageView = new ChangeLanguageView(changeLanguageViewModel);
+        cardPanel.add(changeLanguageView, changeLanguageView.getViewName());
         return this;
     }
 
@@ -221,7 +235,7 @@ public class AppBuilder {
      */
     public AppBuilder addProfileUseCase() {
         final ProfileOutputBoundary profileOutputBoundary = new ProfilePresenter(viewManagerModel,
-                loggedInViewModel, profileViewModel, changePasswordViewModel, loginViewModel);
+                loggedInViewModel, profileViewModel, changePasswordViewModel, loginViewModel, changeLanguageViewModel);
         final ProfileInputBoundary profileInteractor = new ProfileInteractor(profileOutputBoundary, userFactory);
 
         final ProfileController controller = new ProfileController(profileInteractor);
@@ -312,4 +326,8 @@ public class AppBuilder {
     public LoginViewModel getLoginViewModel() {
         return loginViewModel;
     }
+
+    public ChangeLanguageViewModel getChangeLanguageViewModel() {return changeLanguageViewModel;}
+
+    public ChangeLanguageView getChangeLanguageView() {return changeLanguageView;}
 }

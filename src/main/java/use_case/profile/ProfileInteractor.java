@@ -27,4 +27,8 @@ public class ProfileInteractor implements ProfileInputBoundary {
     public void switchToLogInView() {
         profilePresenter.switchToLogInView();
     }
+
+    public void switchToChangeLanguageView() {
+        profilePresenter.switchToChangeLanguageView();
+    }
 }

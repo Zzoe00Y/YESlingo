@@ -16,6 +16,9 @@ import interface_adapter.login.LoginViewModel;
 import interface_adapter.profile.ProfileController;
 import interface_adapter.profile.ProfilePresenter;
 import interface_adapter.profile.ProfileViewModel;
+import interface_adapter.profile.change_language.ChangeLanguageController;
+import interface_adapter.profile.change_language.ChangeLanguagePresenter;
+import interface_adapter.profile.change_language.ChangeLanguageViewModel;
 import interface_adapter.profile.change_password.ChangePasswordController;
 import interface_adapter.profile.change_password.ChangePasswordPresenter;
 import interface_adapter.profile.change_password.ChangePasswordViewModel;
@@ -28,13 +31,12 @@ import use_case.loggedin.LoggedInUserDataAccessInterface;
 import use_case.profile.ProfileInteractor;
 import use_case.profile.ProfileOutputBoundary;
 import use_case.profile.ProfileUserDataAccessInterface;
+import use_case.profile.change_language.ChangeLanguageInputBoundary;
+import use_case.profile.change_language.ChangeLanguageInteractor;
 import use_case.profile.change_password.ChangePasswordInteractor;
 import use_case.profile.change_password.ChangePasswordUserDataAccessInterface;
 import use_case.text_translation.TextTranslationUseCase;
-import view.ChangePasswordView;
-import view.LoggedInView;
-import view.ProfileView;
-import view.ViewManager;
+import view.*;
 
 /**
  * The Main class of our application.
@@ -53,6 +55,7 @@ public class Main {
                                             .addLoggedInView()
                                             .addProfileView()
                                             .addChangePasswordView()
+                                            .addChangeLanguageView()
                                             .addChatBotView()
                                             .addSignupUseCase()
                                             .addLoginUseCase()
@@ -97,18 +100,25 @@ public class Main {
         ProfileView profileView = appBuilder.getProfileView();
         ChangePasswordViewModel changePasswordViewModel = appBuilder.getChangePasswordViewModel();
         LoginViewModel loginViewModel = appBuilder.getLoginViewModel();
-
-        ProfilePresenter profilePresenter = new ProfilePresenter(viewManagerModel, loggedInViewModel, profileViewModel, changePasswordViewModel, loginViewModel);
+        ChangeLanguageViewModel changeLanguageViewModel = appBuilder.getChangeLanguageViewModel();
+        ProfilePresenter profilePresenter = new ProfilePresenter(viewManagerModel, loggedInViewModel, profileViewModel,
+                changePasswordViewModel, loginViewModel, changeLanguageViewModel);
         ProfileInteractor profileInteractor = new ProfileInteractor(profilePresenter, userFactory);
         ProfileController profileController = new ProfileController(profileInteractor);
         profileView.setProfileController(profileController);
 
 
         ChangePasswordView changePasswordView = appBuilder.getChangePasswordView();
-
         ChangePasswordPresenter changePasswordPresenter = new ChangePasswordPresenter(viewManagerModel, changePasswordViewModel, profileViewModel);
         ChangePasswordInteractor changePasswordUseCaseInteractor = new ChangePasswordInteractor(changePasswordPresenter, userFactory);
         ChangePasswordController changePasswordController = new ChangePasswordController(changePasswordUseCaseInteractor);
         changePasswordView.setChangePasswordController(changePasswordController);
+
+
+        ChangeLanguageView changeLanguageView = appBuilder.getChangeLanguageView();
+        ChangeLanguagePresenter changeLanguagePresenter = new ChangeLanguagePresenter(viewManagerModel, changeLanguageViewModel, profileViewModel);
+        ChangeLanguageInteractor changeLanguageUseCaseInteractor = new ChangeLanguageInteractor(changeLanguagePresenter, userFactory);
+        ChangeLanguageController changeLanguageController = new ChangeLanguageController(changeLanguageUseCaseInteractor);
+        changeLanguageView.setChangeLanguageController(changeLanguageController);
     }
 }
