@@ -193,9 +193,8 @@ public class AppBuilder {
      */
     public AppBuilder addLoggedinUseCase() {
         final LoggedInOutputBoundary loggedInOutputBoundary = new LoggedInPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel, profileViewModel);
-        final LoggedInInputBoundary loggedInInteractor = new LoggedInInteractor(
-                (LoggedInUserDataAccessInterface) userDataAccessObject, loggedInOutputBoundary, userFactory);
+                loggedInViewModel, profileViewModel);
+        final LoggedInInputBoundary loggedInInteractor = new LoggedInInteractor(loggedInOutputBoundary, userFactory);
 
         final LoggedInController loggedInController = new LoggedInController(loggedInInteractor);
         loggedInView.setLoggedInController(loggedInController);
@@ -266,5 +265,22 @@ public class AppBuilder {
     }
 
     public LoggedInView getLoggedInView() {
-    return loggedInView;}
+        return loggedInView;
+    }
+
+    public LoggedInViewModel getLoggedInViewModel() {
+        return loggedInViewModel;
+    }
+
+    public ProfileViewModel getProfileViewModel() {
+        return profileViewModel;
+    }
+
+    public ViewManagerModel getViewManagerModel() {
+        return viewManagerModel;
+    }
+
+    public UserFactory getUserFactory() {
+        return userFactory;
+    }
 }

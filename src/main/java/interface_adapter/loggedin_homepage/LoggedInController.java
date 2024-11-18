@@ -1,6 +1,7 @@
 package interface_adapter.loggedin_homepage;
 
 import use_case.loggedin.LoggedInInputBoundary;
+import use_case.loggedin.LoggedInInputData;
 
 /**
  * Controller for the Loggedin Use Case.

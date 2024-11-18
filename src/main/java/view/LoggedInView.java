@@ -4,6 +4,8 @@ import interface_adapter.loggedin_homepage.LoggedInController;
 import interface_adapter.loggedin_homepage.LoggedInState;
 import interface_adapter.loggedin_homepage.LoggedInViewModel;
 import interface_adapter.image_translation.ImageTranslationController;
+import interface_adapter.login.LoginState;
+import interface_adapter.signup.SignupState;
 import interface_adapter.translation.TranslationViewInterface;
 
 import javax.imageio.ImageIO;
@@ -24,6 +26,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
     private final String viewName = "logged in";
     private final LoggedInViewModel loggedInViewModel;
     private LoggedInController loggedInController;
+
     private BufferedImage selectedImage;
     private ImageTranslationController imageTranslationController;
 
@@ -113,6 +116,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
         profileButton.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
+                        setLoggedInController(loggedInController);
                         loggedInController.switchToProfileView();
                     }
                 }

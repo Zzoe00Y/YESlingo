@@ -23,7 +23,7 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
     public ProfileView(ProfileViewModel profileViewModel) {
 
         this.profileViewModel = profileViewModel;
-        this.profileViewModel.addPropertyChangeListener(this);
+        profileViewModel.addPropertyChangeListener(this);
 
         final JLabel title = new JLabel("Profile");
         final JButton exit = new JButton("Exit");
@@ -34,34 +34,34 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
         final JButton changeLanguage = new JButton("Change Language");
         final JButton logout = new JButton("Log Out");
 
-        final JFrame frame = new JFrame("");
-
+        this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
         gbc.gridy = 0;
+        gbc.weightx = 1;
         gbc.anchor = GridBagConstraints.WEST;
-        frame.add(title, gbc);
+        this.add(title, gbc);
         gbc.gridx = 1;
         gbc.anchor = GridBagConstraints.EAST;
-        frame.add(exit, gbc);
+        this.add(exit, gbc);
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridwidth = 2;
+        gbc.weightx = 0;
         gbc.anchor = GridBagConstraints.CENTER;
-        frame.add(username, gbc);
+        this.add(username, gbc);
         gbc.gridy = 2;
-        frame.add(password, gbc);
+        this.add(password, gbc);
         gbc.gridy = 3;
-        frame.add(changePassword, gbc);
+        this.add(changePassword, gbc);
         gbc.gridy = 4;
-        frame.add(preferredLanguage, gbc);
+        this.add(preferredLanguage, gbc);
         gbc.gridy = 5;
-        frame.add(changeLanguage, gbc);
+        this.add(changeLanguage, gbc);
         gbc.gridy = 6;
-        frame.add(logout, gbc);
-        frame.setVisible(true);
-
+        this.add(logout, gbc);
 
         exit.addActionListener(this);
 
@@ -80,6 +80,8 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         final ProfileState state = (ProfileState) evt.getNewValue();
+//        if (state.getUsername() != null) {
+//            JOptionPane.showMessageDialog(this, state.getUsername());
     }
 
     public String getViewName() {

@@ -2,14 +2,27 @@ package app;
 
 import javax.swing.JFrame;
 
+import entity.UserFactory;
 import external_services.NanonetsImageToTextService;
 import external_services.TextToTextTranslationService;
+import interface_adapter.ViewManagerModel;
 import interface_adapter.image_translation.ImageTranslationController;
 import interface_adapter.image_translation.ImageTranslationPresenter;
+import interface_adapter.loggedin_homepage.LoggedInController;
+import interface_adapter.loggedin_homepage.LoggedInPresenter;
+import interface_adapter.loggedin_homepage.LoggedInViewModel;
+import interface_adapter.login.LoginViewModel;
+import interface_adapter.profile.ProfileViewModel;
 import use_case.image_translation.ImageTranslationInteractor;
 import use_case.image_translation.ImageTranslationOutputBoundary;
+import use_case.loggedin.LoggedInInputBoundary;
+import use_case.loggedin.LoggedInInteractor;
+import use_case.loggedin.LoggedInOutputBoundary;
+import use_case.loggedin.LoggedInUserDataAccessInterface;
 import use_case.text_translation.TextTranslationUseCase;
 import view.LoggedInView;
+import view.ProfileView;
+import view.ViewManager;
 
 /**
  * The Main class of our application.
@@ -26,12 +39,12 @@ public class Main {
                                             .addLoginView()
                                             .addSignupView()
                                             .addLoggedInView()
-//                                            .addProfileView()
+                                            .addProfileView()
                                             .addChatBotView()
                                             .addSignupUseCase()
                                             .addLoginUseCase()
 //                                            .addLoggedinUseCase()
-//                                            .addProfileUseCase()
+                                            //.addProfileUseCase()
                                             .addChatBotUseCase()
 //                                            .addChangePasswordUseCase()
 //                                            .addLogoutUseCase()
@@ -55,5 +68,17 @@ public class Main {
 
         ImageTranslationController imageTranslationController = new ImageTranslationController(imageTranslationInteractor);
         loggedInView.setImageTranslationController(imageTranslationController);
+
+
+        ViewManagerModel viewManagerModel = appBuilder.getViewManagerModel();
+        LoggedInViewModel loggedInViewModel = appBuilder.getLoggedInViewModel();
+        ProfileViewModel profileViewModel = appBuilder.getProfileViewModel();
+        LoggedInOutputBoundary loggedInOutputBoundary = new LoggedInPresenter(viewManagerModel, loggedInViewModel, profileViewModel);
+
+        UserFactory userFactory = appBuilder.getUserFactory();
+        LoggedInInteractor loggedInInteractor = new LoggedInInteractor(loggedInOutputBoundary, userFactory);
+
+        LoggedInController loggedInController = new LoggedInController(loggedInInteractor);
+        loggedInView.setLoggedInController(loggedInController);
     }
 }

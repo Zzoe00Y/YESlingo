@@ -15,8 +15,6 @@ public class ProfilePresenter implements ProfileOutputBoundary {
                             ProfileViewModel profileViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInViewModel;
-        this.profileViewModel = new ProfileViewModel();
+        this.profileViewModel = profileViewModel;
     }
-
-
 }
