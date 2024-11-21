@@ -1,15 +1,29 @@
 package use_case.image_translation;
-import entity.User;
 
-import java.awt.image.BufferedImage;
 import java.util.List;
 
-public abstract class ImageTranslationDataAccessInterface {
-    void imageTranslation(User user, BufferedImage image) {}
+public interface ImageTranslationDataAccessInterface {
 
-    public abstract void saveTranslation(String imageId, String originalText, String translatedText);
+    /**
+     * Save the translation of an image with its corresponding original and translated text.
+     *
+     * @param imageId        the unique ID of the image
+     * @param originalText   the original extracted text
+     * @param translatedText the translated text
+     */
+    void saveTranslation(String imageId, String originalText, String translatedText);
 
-    public abstract List<String> getTranslationHistory();
+    /**
+     * Retrieve the history of all translations.
+     *
+     * @return a list of strings representing the translation history
+     */
+    List<String> getTranslationHistory();
 
-    public abstract void deleteTranslation(String imageId);
+    /**
+     * Delete a translation record based on the image ID.
+     *
+     * @param imageId the unique ID of the image whose translation should be deleted
+     */
+    void deleteTranslation(String imageId);
 }

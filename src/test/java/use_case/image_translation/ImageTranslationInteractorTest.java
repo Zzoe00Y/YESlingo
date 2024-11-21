@@ -47,7 +47,7 @@ public class ImageTranslationInteractorTest {
         BufferedImage mockImage = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
         ImageTranslationInputData inputData = new ImageTranslationInputData(mockImage, "es");
 
-        interactor.execute(inputData);
+        interactor.translate(inputData);
     }
 
     @Test
@@ -86,7 +86,7 @@ public class ImageTranslationInteractorTest {
         BufferedImage mockImage = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
         ImageTranslationInputData inputData = new ImageTranslationInputData(mockImage, "es");
 
-        interactor.execute(inputData);
+        interactor.translate(inputData);
     }
 
     @Test
@@ -125,6 +125,6 @@ public class ImageTranslationInteractorTest {
         BufferedImage mockImage = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
         ImageTranslationInputData inputData = new ImageTranslationInputData(mockImage, "es");
 
-        interactor.execute(inputData);
+        interactor.translate(inputData);
     }
 }

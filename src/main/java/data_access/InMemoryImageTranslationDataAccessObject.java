@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class InMemoryImageTranslationDataAccessObject extends ImageTranslationDataAccessInterface {
+public class InMemoryImageTranslationDataAccessObject implements ImageTranslationDataAccessInterface {
 
     private final Map<String, String[]> translations = new HashMap<>();
 
@@ -32,10 +32,9 @@ public class InMemoryImageTranslationDataAccessObject extends ImageTranslationDa
     public List<String> getTranslationHistory() {
         List<String> history = new ArrayList<>();
         for (Map.Entry<String, String[]> entry : translations.entrySet()) {
-            String imageId = entry.getKey();
             String originalText = entry.getValue()[0];
             String translatedText = entry.getValue()[1];
-            history.add("Image ID: " + imageId + ", Original Text: " + originalText + ", Translated Text: " + translatedText);
+            history.add(", Original Text: " + originalText + ", Translated Text: " + translatedText);
         }
         return history;
     }

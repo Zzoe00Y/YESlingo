@@ -1,18 +1,23 @@
 package app;
 
 import java.awt.*;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import data_access.InMemoryUserDataAccessObject;
+import data_access.InMemoryImageTranslationDataAccessObject;
 import entity.CommonUserFactory;
 import entity.UserFactory;
+import external_services.ImageToTextAPIService;
+import external_services.MyMemoryGateway;
+import external_services.TextToTextTranslationService;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.image_translation.ImageTranslationController;
+import interface_adapter.image_translation.ImageTranslationPresenter;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
@@ -21,6 +26,9 @@ import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
+import interface_adapter.text_translation.TextTranslationController;
+import use_case.image_translation.ImageTranslationInteractor;
+import use_case.image_translation.ImageTranslationOutputBoundary;
 import use_case.change_password.ChangePasswordInputBoundary;
 import use_case.change_password.ChangePasswordInteractor;
 import use_case.change_password.ChangePasswordOutputBoundary;
@@ -33,6 +41,7 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
+import use_case.text_translation.TextTranslationUseCase;
 import view.LoggedInView;
 import view.LoginView;
 import view.SignupView;
@@ -59,6 +68,8 @@ public class AppBuilder {
 
     // thought question: is the hard dependency below a problem?
     private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
+    private final InMemoryImageTranslationDataAccessObject imageTranslationDataAccessObject =
+            new InMemoryImageTranslationDataAccessObject();
 
     private SignupView signupView;
     private SignupViewModel signupViewModel;
@@ -100,6 +111,11 @@ public class AppBuilder {
     public AppBuilder addLoggedInView() {
         loggedInViewModel = new LoggedInViewModel();
         loggedInView = new LoggedInView(loggedInViewModel);
+        // Add controllers for all translation use cases
+        ImageTranslationInteractor imageTranslationInteractor = createImageTranslationInteractor();
+        ImageTranslationController imageTranslationController = new ImageTranslationController(imageTranslationInteractor);
+        loggedInView.setImageTranslationController(imageTranslationController);
+
         cardPanel.add(loggedInView, loggedInView.getViewName());
         return this;
     }
@@ -166,6 +182,24 @@ public class AppBuilder {
 //        loggedInView.setLogoutController(logoutController);
         return this;
     }
+
+    private ImageTranslationInteractor createImageTranslationInteractor() {
+        // Ensure dependencies are correctly initialized
+        if (loggedInView == null) {
+            throw new IllegalStateException("LoggedInView is not initialized");
+        }
+
+        ImageToTextAPIService imageToTextService = new ImageToTextAPIService();
+
+        MyMemoryGateway myMemoryGateway = new MyMemoryGateway();
+        TextToTextTranslationService textTranslationService = new TextToTextTranslationService(myMemoryGateway);
+        TextTranslationUseCase textTranslationUseCase = new TextTranslationUseCase(textTranslationService);
+
+        ImageTranslationPresenter presenter = new ImageTranslationPresenter(loggedInView);
+
+        return new ImageTranslationInteractor(imageToTextService, textTranslationUseCase, presenter);
+    }
+
 
     /**
      * Creates the JFrame for the application and initially sets the LoginView to be displayed.

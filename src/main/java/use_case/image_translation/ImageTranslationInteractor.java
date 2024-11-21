@@ -1,7 +1,6 @@
 package use_case.image_translation;
 
 import external_services.ImageToTextService;
-import use_case.text_translation.TextTranslationInteractor;
 import use_case.text_translation.TextTranslationUseCase;
 
 /**
@@ -28,10 +27,9 @@ public class ImageTranslationInteractor implements ImageTranslationInputBoundary
         this.outputBoundary = outputBoundary;
     }
     @Override
-    public void execute(ImageTranslationInputData inputData) {
+    public void translate(ImageTranslationInputData inputData) {
         try {
             String extractedText = imageToTextService.extractText(inputData.getImage());
-
             String translatedText = textTranslationUseCase.translate(extractedText, inputData.getTargetLanguage());
 
             ImageTranslationOutputData outputData = new ImageTranslationOutputData(translatedText);
@@ -39,7 +37,7 @@ public class ImageTranslationInteractor implements ImageTranslationInputBoundary
 
         } catch (Exception e) {
             e.printStackTrace();
-            outputBoundary.prepareFailView("Error occurred during image translation: " + e.getMessage());
+            outputBoundary.prepareFailView("Translation failed: " + e.getMessage());
         }
     }
 }

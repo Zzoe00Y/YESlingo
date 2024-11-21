@@ -201,7 +201,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
             String targetLanguage = targetItem != null ? targetItem.code : "en";
 
             if (image != null && imageTranslationController != null) {
-                imageTranslationController.execute(image, targetLanguage);
+                imageTranslationController.translateImage(image, targetLanguage);
             } else {
                 String error = imageTranslationController == null ?
                         "Image translation controller not initialized" :
