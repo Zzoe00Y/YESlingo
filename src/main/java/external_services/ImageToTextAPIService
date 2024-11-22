@@ -12,7 +12,7 @@ import java.net.URL;
 import java.util.Base64;
 import java.io.InputStream;
 
-public class NanonetsImageToTextService implements ImageToTextService {
+public class ImageToTextAPIService implements ImageToTextService {
 
     private static final String API_KEY = "33a63559-9ed3-11ef-9412-8ac686cb80af";
     private static final String API_URL = "https://app.nanonets.com/v2/OCR/Model/<MODEL_ID>/LabelFile/";
