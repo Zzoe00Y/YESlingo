@@ -1,6 +1,7 @@
 package use_case.image_translation;
 
 import java.awt.image.BufferedImage;
+import java.util.Objects;
 
 /**
  * Input data for the Image Translation use case.
@@ -17,8 +18,8 @@ public class ImageTranslationInputData {
      * @param targetLanguage the language to translate the extracted text into
      */
     public ImageTranslationInputData(BufferedImage image, String targetLanguage) {
-        this.image = image;
-        this.targetLanguage = targetLanguage;
+        this.image = Objects.requireNonNull(image, "Image cannot be null");
+        this.targetLanguage = targetLanguage != null ? targetLanguage : "en"; // Default to English if null
     }
 
     /**
@@ -37,5 +38,13 @@ public class ImageTranslationInputData {
      */
     public String getTargetLanguage() {
         return targetLanguage;
+    }
+
+    @Override
+    public String toString() {
+        return "ImageTranslationInputData{" +
+                "image=" + image +
+                ", targetLanguage='" + targetLanguage + '\'' +
+                '}';
     }
 }

@@ -1,9 +1,12 @@
 package external_services;
 
+import entity.Translation;
+import use_case.text_translation.TranslationGateway;
+
 /**
- * Service that adapts LibreTranslateGateway to the TranslationService interface.
+ * Service that adapts MyMemoryGateway to the TranslationGateway interface.
  */
-public class TextToTextTranslationService implements TranslationService {
+public class TextToTextTranslationService implements TranslationGateway {
     private final MyMemoryGateway gateway;
 
     public TextToTextTranslationService(MyMemoryGateway gateway) {
@@ -11,13 +14,11 @@ public class TextToTextTranslationService implements TranslationService {
     }
 
     @Override
-    public String translate(String text, String targetLanguage) throws Exception {
+    public Translation translateText(String sourceText, String sourceLang, String targetLang) {
         try {
-            // Use "auto" as source language for automatic language detection
-            return gateway.translateText(text, "auto", targetLanguage)
-                    .getTranslatedText();
+            return gateway.translateText(sourceText, sourceLang, targetLang);
         } catch (RuntimeException e) {
-            throw new Exception("Translation failed: " + e.getMessage());
+            throw new RuntimeException("Translation failed: " + e.getMessage(), e);
         }
     }
 }

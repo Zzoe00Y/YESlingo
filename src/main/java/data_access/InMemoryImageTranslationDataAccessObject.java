@@ -3,13 +3,14 @@ package data_access;
 import use_case.image_translation.ImageTranslationDataAccessInterface;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class InMemoryImageTranslationDataAccessObject implements ImageTranslationDataAccessInterface {
 
-    private final Map<String, String[]> translations = new HashMap<>();
+    private final Map<String, String[]> translations = new ConcurrentHashMap<>();
 
     /**
      * Saves a translated image result to the in-memory storage.
@@ -32,11 +33,12 @@ public class InMemoryImageTranslationDataAccessObject implements ImageTranslatio
     public List<String> getTranslationHistory() {
         List<String> history = new ArrayList<>();
         for (Map.Entry<String, String[]> entry : translations.entrySet()) {
+            String imageId = entry.getKey();
             String originalText = entry.getValue()[0];
             String translatedText = entry.getValue()[1];
-            history.add(", Original Text: " + originalText + ", Translated Text: " + translatedText);
+            history.add("Image ID: " + imageId + ", Original Text: " + originalText + ", Translated Text: " + translatedText);
         }
-        return history;
+        return Collections.unmodifiableList(history); // Return an unmodifiable list for safety
     }
 
     /**
@@ -46,6 +48,8 @@ public class InMemoryImageTranslationDataAccessObject implements ImageTranslatio
      */
     @Override
     public void deleteTranslation(String imageId) {
-        translations.remove(imageId);
+        if (translations.remove(imageId) == null) {
+            System.out.println("Warning: No translation found for Image ID: " + imageId);
+        }
     }
 }
