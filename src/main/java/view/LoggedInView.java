@@ -2,6 +2,7 @@ package view;
 
 import interface_adapter.loggedin_homepage.LoggedInState;
 import interface_adapter.loggedin_homepage.LoggedInViewModel;
+import interface_adapter.loggedin_homepage.LoggedInController;
 import interface_adapter.image_translation.ImageTranslationController;
 import interface_adapter.text_translation.TextTranslationController;
 import interface_adapter.translation.TranslationViewInterface;
@@ -17,6 +18,7 @@ import java.io.File;
 public class LoggedInView extends JPanel implements PropertyChangeListener, TranslationViewInterface {
     private final String viewName = "logged in";
     private final LoggedInViewModel loggedInViewModel;
+    private LoggedInController loggedInController;
     private BufferedImage selectedImage;
     private ImageTranslationController imageTranslationController;
     private TextTranslationController textTranslationController;
@@ -169,6 +171,10 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
         setupListeners();
     }
 
+    public void setLoggedInController(LoggedInController controller) {
+        this.loggedInController = controller;
+    }
+
     private void setupListeners() {
         translateButton.addActionListener(e -> {
             System.out.println("Translate button clicked");
@@ -257,6 +263,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
     private String extractTextFromImage(BufferedImage image) {
         return "This is the extracted text.";
     }
+
 
     public void setTextTranslationController(TextTranslationController controller) {
         this.textTranslationController = controller;
