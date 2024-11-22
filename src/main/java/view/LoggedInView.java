@@ -1,48 +1,54 @@
 package view;
 
-import interface_adapter.loggedin_homepage.LoggedInController;
-import interface_adapter.loggedin_homepage.LoggedInState;
-import interface_adapter.loggedin_homepage.LoggedInViewModel;
+import interface_adapter.change_password.LoggedInState;
+import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.image_translation.ImageTranslationController;
-import interface_adapter.login.LoginState;
+import interface_adapter.text_translation.TextTranslationController;
 import interface_adapter.translation.TranslationViewInterface;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 
-/**
- * The View for when the user is logged into the program, displaying translation options and results.
- */
 public class LoggedInView extends JPanel implements PropertyChangeListener, TranslationViewInterface {
-
     private final String viewName = "logged in";
     private final LoggedInViewModel loggedInViewModel;
-    private LoggedInController loggedInController;
-
     private BufferedImage selectedImage;
     private ImageTranslationController imageTranslationController;
-
+    private TextTranslationController textTranslationController;
 
     private final JLabel usernameLabel;
-
-
-    private final JButton imageUploadButton;
-    private final JComboBox<String> inputLanguageComboBox;
-    private final JComboBox<String> outputLanguageComboBox;
+    private final JComboBox<LanguageItem> inputLanguageComboBox;
+    private final JComboBox<LanguageItem> outputLanguageComboBox;
     private final JTextArea textArea;
+    private final JButton imageUploadButton;
     private final JButton voiceInputButton;
     private final JButton translateButton;
+    private JPanel extractedTextPanel;
     private final JLabel translationLabel;
     private final JButton profileButton;
     private final JButton historyButton;
-    private final JButton chatBotButton;
+    private final JButton chatBoxButton;
+
+    // Inner class to hold language information
+    private static class LanguageItem {
+        final String displayName;
+        final String code;
+
+        LanguageItem(String displayName, String code) {
+            this.displayName = displayName;
+            this.code = code;
+        }
+
+        @Override
+        public String toString() {
+            return displayName;
+        }
+    }
 
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
         this.loggedInViewModel = loggedInViewModel;
@@ -50,9 +56,10 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
 
         this.setLayout(new BorderLayout());
 
+        // Top Panel with Welcome and Buttons
         JPanel topPanel = new JPanel(new BorderLayout());
         JPanel welcomePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        usernameLabel = new JLabel("Hi, ");  // Initial text; username will be set via propertyChange
+        usernameLabel = new JLabel("Hi, ");
         welcomePanel.add(usernameLabel);
 
         JPanel topButtonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -66,11 +73,43 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
 
         this.add(topPanel, BorderLayout.NORTH);
 
+        // Main Content Panel
         JPanel mainContentPanel = new JPanel();
         mainContentPanel.setLayout(new BoxLayout(mainContentPanel, BoxLayout.Y_AXIS));
 
-        inputLanguageComboBox = new JComboBox<>(new String[]{"English", "Spanish", "French"});
-        outputLanguageComboBox = new JComboBox<>(new String[]{"English", "Spanish", "French"});
+        // Language Selection Panel with complete list of supported languages
+        String[][] languages = {
+                {"English", "en"},
+                {"Spanish", "es"},
+                {"French", "fr"},
+                {"German", "de"},
+                {"Italian", "it"},
+                {"Portuguese", "pt"},
+                {"Chinese", "zh-CN"},
+                {"Japanese", "ja"},
+                {"Korean", "ko"},
+                {"Russian", "ru"},
+                {"Arabic", "ar"},
+                {"Dutch", "nl"},
+                {"Greek", "el"},
+                {"Hebrew", "he"},
+                {"Hindi", "hi"},
+                {"Polish", "pl"},
+                {"Turkish", "tr"},
+                {"Vietnamese", "vi"}
+        };
+
+        DefaultComboBoxModel<LanguageItem> inputModel = new DefaultComboBoxModel<>();
+        DefaultComboBoxModel<LanguageItem> outputModel = new DefaultComboBoxModel<>();
+
+        for (String[] lang : languages) {
+            LanguageItem item = new LanguageItem(lang[0], lang[1]);
+            inputModel.addElement(item);
+            outputModel.addElement(item);
+        }
+
+        inputLanguageComboBox = new JComboBox<>(inputModel);
+        outputLanguageComboBox = new JComboBox<>(outputModel);
 
         JPanel languagePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         languagePanel.add(new JLabel("Input Language:"));
@@ -80,59 +119,127 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
 
         mainContentPanel.add(languagePanel);
 
+        // Text Input Panel
         JPanel textPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        textArea = new JTextArea(3, 20);
+        textArea = new JTextArea(5, 30); // Increased size for better usability
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
+        JScrollPane scrollPane = new JScrollPane(textArea);
         textPanel.add(new JLabel("Text:"));
-        textPanel.add(new JScrollPane(textArea));
+        textPanel.add(scrollPane);
 
         mainContentPanel.add(textPanel);
 
+        // Translate Button Panel
         JPanel translatePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         translateButton = new JButton("Translate");
         translatePanel.add(translateButton);
 
         mainContentPanel.add(translatePanel);
 
+        // Input Options Panel
         JPanel inputOptionsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         imageUploadButton = new JButton("Upload Image");
         voiceInputButton = new JButton("Input Voice");
-        chatBotButton = new JButton("ChatBot");
+        chatBoxButton = new JButton("ChatBox");
         inputOptionsPanel.add(imageUploadButton);
         inputOptionsPanel.add(voiceInputButton);
-        inputOptionsPanel.add(chatBotButton);
+        inputOptionsPanel.add(chatBoxButton);
 
         mainContentPanel.add(inputOptionsPanel);
 
         this.add(mainContentPanel, BorderLayout.CENTER);
 
+        // Extracted Text Section
+        extractedTextPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JLabel extractedTextLabel = new JLabel("Extracted Text: (not available yet)");
+        extractedTextPanel.add(extractedTextLabel);
+        extractedTextPanel.setVisible(false); // Initially hidden
+
+        mainContentPanel.add(extractedTextPanel);
+
+
+        // Translation Result Panel
         translationLabel = new JLabel("Translation Result:");
-        JPanel resultPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        resultPanel.add(translationLabel);
+        JPanel resultPanel = new JPanel(new BorderLayout());
+        resultPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        resultPanel.add(translationLabel, BorderLayout.CENTER);
         this.add(resultPanel, BorderLayout.SOUTH);
 
         setupListeners();
+    }
 
-        profileButton.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        setLoggedInController(loggedInController);
-                        loggedInController.switchToProfileView();
-                    }
+    private void setupListeners() {
+        translateButton.addActionListener(e -> {
+            System.out.println("Translate button clicked");
+            String textToTranslate = textArea.getText().trim();
+            if (!textToTranslate.isEmpty() && textTranslationController != null) {
+                LanguageItem sourceItem = (LanguageItem) inputLanguageComboBox.getSelectedItem();
+                LanguageItem targetItem = (LanguageItem) outputLanguageComboBox.getSelectedItem();
+
+                if (sourceItem == null || targetItem == null) {
+                    JOptionPane.showMessageDialog(this, "Please select both source and target languages");
+                    return;
                 }
-        );
+
+                String sourceLang = sourceItem.code;
+                String targetLang = targetItem.code;
+
+                // Don't translate if source and target languages are the same
+                if (sourceLang.equals(targetLang)) {
+                    JOptionPane.showMessageDialog(this,
+                            "Source and target languages must be different");
+                    return;
+                }
+
+                System.out.println("Translating: " + textToTranslate);
+                System.out.println("From: " + sourceLang + " To: " + targetLang);
+
+                textTranslationController.translate(textToTranslate, sourceLang, targetLang);
+            } else {
+                String error = textTranslationController == null ?
+                        "Translation controller not initialized" :
+                        "Please enter text to translate and ensure all languages are selected.";
+                JOptionPane.showMessageDialog(this, error);
+            }
+        });
+
+        imageUploadButton.addActionListener(e -> {
+            selectImage();
+            if (selectedImage != null) {
+                extractedTextPanel.setVisible(true); // Show the extracted text panel
+                JLabel label = (JLabel) extractedTextPanel.getComponent(0);
+                label.setText("Extracted Text: (Processing...)");
+
+                // Perform text extraction from the selected image
+                String extractedText = extractTextFromImage(selectedImage);
+                label.setText("Extracted Text: " + extractedText); // Display extracted text
+
+                // Get the selected target language from the combo box
+                LanguageItem targetItem = (LanguageItem) outputLanguageComboBox.getSelectedItem();
+                String targetLanguage = targetItem != null ? targetItem.code : "en"; // Default to English if no selection
+
+                // Proceed with image translation if the controller and required inputs are valid
+                if (imageTranslationController != null) {
+                    try {
+                        imageTranslationController.translateImage(selectedImage, targetLanguage);
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(this, "Failed to translate image: " + ex.getMessage());
+                        ex.printStackTrace();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Image translation controller not initialized.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Please upload a valid image.");
+            }
+        });
     }
 
-    /**
-     * Sets the ImageTranslationController to handle image translation.
-     * @param imageTranslationController the ImageTranslationController to set
-     */
-    public void setImageTranslationController(ImageTranslationController imageTranslationController) {
-        this.imageTranslationController = imageTranslationController;
-    }
-
-    private void selectImage() {
+        private void selectImage() {
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Image Files", "jpg", "png", "jpeg"));
+        fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter(
+                "Image Files", "jpg", "png", "jpeg"));
 
         int returnValue = fileChooser.showOpenDialog(this);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
@@ -141,74 +248,62 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
                 selectedImage = ImageIO.read(file);
                 JOptionPane.showMessageDialog(this, "Image loaded successfully.");
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Failed to load image.");
+                JOptionPane.showMessageDialog(this, "Failed to load image: " + ex.getMessage());
                 ex.printStackTrace();
             }
         }
+    }
+
+    private String extractTextFromImage(BufferedImage image) {
+        return "This is the extracted text.";
+    }
+
+    public void setTextTranslationController(TextTranslationController controller) {
+        this.textTranslationController = controller;
+    }
+
+    public void setImageTranslationController(ImageTranslationController controller) {
+        this.imageTranslationController = controller;
     }
 
     public BufferedImage getSelectedImage() {
         return selectedImage;
     }
 
-    public String getSelectedTargetLanguage() {
-        return (String) outputLanguageComboBox.getSelectedItem();
-    }
-
-    private void setupListeners() {
-        translateButton.addActionListener(e -> {
-            System.out.println("Translate button clicked");
-        });
-
-        imageUploadButton.addActionListener(e -> {
-            selectImage();
-            BufferedImage image = getSelectedImage();
-            String targetLanguage = getSelectedTargetLanguage();
-            if (image != null && targetLanguage != null && imageTranslationController != null) {
-                imageTranslationController.execute(image, targetLanguage);
-            } else {
-                JOptionPane.showMessageDialog(this, "You can upload an image to translate.");
-            }
-        });
-
-        chatBotButton.addActionListener(
-                evt -> {
-                    if (evt.getSource().equals(chatBotButton)) {
-                        final LoggedInState currentState = loggedInViewModel.getState();
-
-                        loggedInController.switchToChatBotView(currentState.getUsername());
-                    }
-                }
-        );
-
-    }
-
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        System.out.println("Property change event: " + evt.getPropertyName());
         if ("state".equals(evt.getPropertyName())) {
-            final LoggedInState state = (LoggedInState) evt.getNewValue();
+            LoggedInState state = (LoggedInState) evt.getNewValue();
             usernameLabel.setText("Hi, " + state.getUsername() + "!");
         }
         if ("translation".equals(evt.getPropertyName())) {
-            translationLabel.setText((String) evt.getNewValue());
+            SwingUtilities.invokeLater(() -> {
+                String translatedText = (String) evt.getNewValue();
+                System.out.println("Received translation: " + translatedText);
+                translationLabel.setText("Translation: " + translatedText);
+            });
         }
     }
 
     @Override
     public void displayTranslation(String translatedText) {
-        translationLabel.setText("Translation: " + translatedText);
+        System.out.println("Displaying translation: " + translatedText);
+        SwingUtilities.invokeLater(() -> {
+            translationLabel.setText("Translation: " + translatedText);
+        });
     }
 
     @Override
     public void displayError(String error) {
-        translationLabel.setText("Error: " + error);
+        System.out.println("Displaying error: " + error);
+        SwingUtilities.invokeLater(() -> {
+            translationLabel.setText("Error: " + error);
+            JOptionPane.showMessageDialog(this, error);
+        });
     }
 
     public String getViewName() {
         return viewName;
-    }
-
-    public void setLoggedInController(LoggedInController loggedInController) {
-        this.loggedInController = loggedInController;
     }
 }
