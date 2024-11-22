@@ -75,6 +75,8 @@ public class Main {
 
         LoggedInView loggedInView = appBuilder.getLoggedInView();
 
+        ImageToTextAPIService imageToTextService = new ImageToTextAPIService();
+
         ImageTranslationOutputBoundary outputBoundary = new ImageTranslationPresenter(loggedInView);
 
         ImageTranslationInteractor imageTranslationInteractor = new ImageTranslationInteractor(
