@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 
 import entity.User;
 import entity.UserFactory;
-import external_services.NanonetsImageToTextService;
+import external_services.ImageToTextAPIService;
 import external_services.TextToTextTranslationService;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.chatbot.ChatBotViewModel;
