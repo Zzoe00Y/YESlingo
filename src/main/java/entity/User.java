@@ -29,9 +29,9 @@ public interface User {
 
     ArrayList<ChatMessage> getChatHistoryMessagesDisplay();
 
-    void setChatHistoryMessagesDisplay(ArrayList<ChatMessage> chatHistoryMessagesDisplay);
+    void addChatHistoryMessagesDisplay(ChatMessage newMessagesDisplay);
 
     ArrayList<ChatMessage> getChatHistoryMessagesEng();
 
-    void setChatHistoryMessagesEng(ArrayList<ChatMessage> chatHistoryMessagesEng);
+    void addChatHistoryMessagesEng(ChatMessage newMessagesEng);
 }

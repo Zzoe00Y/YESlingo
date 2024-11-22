@@ -20,6 +20,13 @@ public class ChatBotState {
         chatHistoryMessages.add(new ChatMessage("SYSTEM", "Select an existing Chat Channel, or create a new Chat"));
     }
 
+    public ChatBotState(String username, String inputLan, String outputLan, ArrayList<ChatMessage> chatHistoryMessages) {
+        this.username = username;
+        this.inputLan = inputLan;
+        this.outputLan = outputLan;
+        this.chatHistoryMessages = chatHistoryMessages;
+    }
+
     public ArrayList<ChatMessage> getChatHistoryMessages() {
         return chatHistoryMessages;
     }
@@ -70,7 +77,6 @@ public class ChatBotState {
 
     public void setOutputLan(String outputLan) {
         this.outputLan = outputLan;
-
     }
 
     public String getCurrentChatID() {

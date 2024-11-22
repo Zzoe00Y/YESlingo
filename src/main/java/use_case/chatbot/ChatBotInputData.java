@@ -9,14 +9,12 @@ public class ChatBotInputData {
     private final String inputLan;
     private final String outputLan;
     private final String username;
-    private final String channelID;
 
-    public ChatBotInputData(String message1, String inputLan1, String outputLan1, String channelID, String username) {
+    public ChatBotInputData(String message1, String inputLan1, String outputLan1, String username) {
         this.username = username;
         this.message = message1;
         this.inputLan = inputLan1;
         this.outputLan = outputLan1;
-        this.channelID = channelID;
     }
 
 
@@ -36,7 +34,4 @@ public class ChatBotInputData {
         return username;
     }
 
-    public String getChannelID() {
-        return channelID;
-    }
 }

@@ -14,7 +14,6 @@ public class ChatBotController {
         this.chatBotUseCaseInteractor = chatBotUseCaseInteractor;
     }
 
-
     /**
      * Executes the sendChat Use Case.
      * @param message the message that was sent to generate response
@@ -24,10 +23,21 @@ public class ChatBotController {
      * @param username the username of this user
      */
     public void sendChat(String message, String inputLan, String outputLan, String chatChannelID, String username) {
-        chatBotUseCaseInteractor.sendChat(new ChatBotInputData(message, inputLan, outputLan, chatChannelID, username));
+        chatBotUseCaseInteractor.sendChat(new ChatBotInputData(message, inputLan, outputLan, username));
     }
 
+    /**
+     * Executes the exit use case
+     */
     public void switchToLoggedInView() {
         chatBotUseCaseInteractor.switchToLoggedInView();
     }
+
+    /**
+     * Executes the pull user info use case
+     */
+    public void pullUser(String username) {
+        chatBotUseCaseInteractor.pullUser(username);
+    }
+
 }

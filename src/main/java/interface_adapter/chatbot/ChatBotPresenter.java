@@ -22,8 +22,8 @@ public class ChatBotPresenter implements ChatBotOutputBoundary {
         this.loggedinViewModel = loggedinViewModel;
     }
 
-    @Override
-    public void prepareSuccessView(ChatBotOutputData response) {
+//    @Override
+//    public void prepareSuccessView(ChatBotOutputData response) {
         // On success, switch to the login view.
 //        final LoginState loginState = loginViewModel.getState();
 //        loginState.setUsername(response.getUsername());
@@ -32,7 +32,7 @@ public class ChatBotPresenter implements ChatBotOutputBoundary {
 //
 //        viewManagerModel.setState(loginViewModel.getViewName());
 //        viewManagerModel.firePropertyChanged();
-    }
+//    }
 
     @Override
     public void displayResponse(ChatBotOutputData outputData) {
@@ -42,15 +42,23 @@ public class ChatBotPresenter implements ChatBotOutputBoundary {
         chatbotViewModel.firePropertyChanged("sentChat");
     }
 
-    @Override
-    public void prepareFailView(String error) {
+//    @Override
+//    public void prepareFailView(String error) {
 //        final ChatBotState chatbotState = chatbotViewModel.getState();
 //        chatbotState.setUsernameError(error);
 //        chatbotViewModel.firePropertyChanged();
-    }
+//    }
 
     @Override
     public void switchToLoggedInView() {
+        viewManagerModel.setState(loggedinViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public void pullUser(ChatBotState newState) {
+        chatbotViewModel.setState(newState);
+
         viewManagerModel.setState(loggedinViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }

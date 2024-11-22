@@ -7,6 +7,7 @@ import entity.UserFactory;
 import external_services.NanonetsImageToTextService;
 import external_services.TextToTextTranslationService;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.chatbot.ChatBotViewModel;
 import interface_adapter.image_translation.ImageTranslationController;
 import interface_adapter.image_translation.ImageTranslationPresenter;
 import interface_adapter.loggedin_homepage.LoggedInController;
@@ -91,7 +92,7 @@ public class Main {
         ProfileViewModel profileViewModel = appBuilder.getProfileViewModel();
         UserFactory userFactory = appBuilder.getUserFactory();
 
-        LoggedInOutputBoundary loggedInOutputBoundary = new LoggedInPresenter(viewManagerModel, loggedInViewModel, profileViewModel);
+        LoggedInOutputBoundary loggedInOutputBoundary = new LoggedInPresenter(viewManagerModel, loggedInViewModel, profileViewModel, new ChatBotViewModel());
         LoggedInInteractor loggedInInteractor = new LoggedInInteractor(loggedInOutputBoundary, userFactory);
         LoggedInController loggedInController = new LoggedInController(loggedInInteractor);
         loggedInView.setLoggedInController(loggedInController);

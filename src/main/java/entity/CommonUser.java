@@ -55,8 +55,8 @@ public class CommonUser implements User {
     }
 
     @Override
-    public void setChatHistoryMessagesDisplay(ArrayList<ChatMessage> chatHistoryMessagesDisplay) {
-        this.chatHistoryMessagesDisplay = chatHistoryMessagesDisplay;
+    public void addChatHistoryMessagesDisplay(ChatMessage newMessagesDisplay) {
+        this.chatHistoryMessagesDisplay.add(newMessagesDisplay);
     }
 
     @Override
@@ -65,7 +65,7 @@ public class CommonUser implements User {
     }
 
     @Override
-    public void setChatHistoryMessagesEng(ArrayList<ChatMessage> chatHistoryMessagesEng) {
-        this.chatHistoryMessagesEng = chatHistoryMessagesEng;
+    public void addChatHistoryMessagesEng(ChatMessage newMessagesEng) {
+        this.chatHistoryMessagesEng.add(newMessagesEng);
     }
 }
