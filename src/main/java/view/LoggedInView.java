@@ -5,7 +5,6 @@ import interface_adapter.loggedin_homepage.LoggedInState;
 import interface_adapter.loggedin_homepage.LoggedInViewModel;
 import interface_adapter.image_translation.ImageTranslationController;
 import interface_adapter.login.LoginState;
-import interface_adapter.signup.SignupState;
 import interface_adapter.translation.TranslationViewInterface;
 
 import javax.imageio.ImageIO;
@@ -43,7 +42,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
     private final JLabel translationLabel;
     private final JButton profileButton;
     private final JButton historyButton;
-    private final JButton chatBoxButton;
+    private final JButton chatBotButton;
 
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
         this.loggedInViewModel = loggedInViewModel;
@@ -97,10 +96,10 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
         JPanel inputOptionsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         imageUploadButton = new JButton("Upload Image");
         voiceInputButton = new JButton("Input Voice");
-        chatBoxButton = new JButton("ChatBox");
+        chatBotButton = new JButton("ChatBot");
         inputOptionsPanel.add(imageUploadButton);
         inputOptionsPanel.add(voiceInputButton);
-        inputOptionsPanel.add(chatBoxButton);
+        inputOptionsPanel.add(chatBotButton);
 
         mainContentPanel.add(inputOptionsPanel);
 
@@ -171,6 +170,16 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
                 JOptionPane.showMessageDialog(this, "You can upload an image to translate.");
             }
         });
+
+        chatBotButton.addActionListener(
+                evt -> {
+                    if (evt.getSource().equals(chatBotButton)) {
+                        final LoggedInState currentState = loggedInViewModel.getState();
+
+                        loggedInController.switchToChatBotView(currentState.getUsername());
+                    }
+                }
+        );
 
     }
 

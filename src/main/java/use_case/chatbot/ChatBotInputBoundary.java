@@ -15,4 +15,9 @@ public interface ChatBotInputBoundary {
      * Executes the switch to loggedIn view use case.
      */
     void switchToLoggedInView();
+
+    /**
+     * Executes the pull user use case.
+     */
+    void pullUser(String userName);
 }

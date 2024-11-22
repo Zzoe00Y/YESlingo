@@ -9,4 +9,7 @@ public interface LoggedInOutputBoundary {
      * Switches to the Profile View.
      */
     void switchToProfileView();
+
+    void switchToChatBotView(String username);
+
 }

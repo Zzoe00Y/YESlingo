@@ -8,15 +8,15 @@ import entity.User;
 public interface ChatBotUserDataAccessInterface {
 
     /**
-     * Checks if the given username exists.
-     * @param username the username to look for
-     * @return true if a user with the given username exists; false otherwise
-     */
-//    boolean existsByName(String username);
-
-    /**
      * Saves the user.
      * @param user the user to save
      */
-//    void getChatHistory(User user);
+    void save(User user);
+
+    /**
+     * return the user
+     * @param username the username of the user
+     * @return the User object
+     */
+    User get(String username);
 }

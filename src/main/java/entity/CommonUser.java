@@ -1,12 +1,18 @@
 package entity;
 
+import java.util.ArrayList;
+
 /**
  * A simple implementation of the User interface.
  */
 public class CommonUser implements User {
 
     private final String name;
-    private final String password;
+    private String password;
+    private String inputLan = "English";
+    private String outputLan = "English";
+    private ArrayList<ChatMessage> chatHistoryMessagesDisplay = new ArrayList<>();
+    private ArrayList<ChatMessage> chatHistoryMessagesEng = new ArrayList<>();
 
     public CommonUser(String name, String password) {
         this.name = name;
@@ -23,4 +29,43 @@ public class CommonUser implements User {
         return password;
     }
 
+    @Override
+    public String getOutputLan() {
+        return outputLan;
+    }
+
+    @Override
+    public void setOutputLan(String outputLan) {
+        this.outputLan = outputLan;
+    }
+
+    @Override
+    public String getInputLan() {
+        return inputLan;
+    }
+
+    @Override
+    public void setInputLan(String inputLan) {
+        this.inputLan = inputLan;
+    }
+
+    @Override
+    public ArrayList<ChatMessage> getChatHistoryMessagesDisplay() {
+        return chatHistoryMessagesDisplay;
+    }
+
+    @Override
+    public void addChatHistoryMessagesDisplay(ChatMessage newMessagesDisplay) {
+        this.chatHistoryMessagesDisplay.add(newMessagesDisplay);
+    }
+
+    @Override
+    public ArrayList<ChatMessage> getChatHistoryMessagesEng() {
+        return chatHistoryMessagesEng;
+    }
+
+    @Override
+    public void addChatHistoryMessagesEng(ChatMessage newMessagesEng) {
+        this.chatHistoryMessagesEng.add(newMessagesEng);
+    }
 }

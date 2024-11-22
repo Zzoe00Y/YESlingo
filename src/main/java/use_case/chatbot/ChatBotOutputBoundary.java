@@ -1,5 +1,7 @@
 package use_case.chatbot;
 
+import interface_adapter.chatbot.ChatBotState;
+
 /**
  * The output boundary for the ChatBot Use Case.
  */
@@ -9,7 +11,7 @@ public interface ChatBotOutputBoundary {
      * Prepares the success view for the ChatBot Use Case.
      * @param outputData the output data
      */
-    void prepareSuccessView(ChatBotOutputData outputData);
+//    void prepareSuccessView(ChatBotOutputData outputData);
 
     /**
      * Display the response message for the ChatBot sendChat Use Case.
@@ -21,10 +23,15 @@ public interface ChatBotOutputBoundary {
      * Prepares the failure view for the ChatBot Use Case.
      * @param errorMessage the explanation of the failure
      */
-    void prepareFailView(String errorMessage);
+//    void prepareFailView(String errorMessage);
 
     /**
      * Switches to the LoggedIn View.
      */
     void switchToLoggedInView();
+
+    /**
+     * Update the chatBot state through pull user use case.
+     */
+    void pullUser(ChatBotState newState);
 }

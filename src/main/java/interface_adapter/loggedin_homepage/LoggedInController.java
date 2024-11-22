@@ -1,7 +1,6 @@
 package interface_adapter.loggedin_homepage;
 
 import use_case.loggedin.LoggedInInputBoundary;
-import use_case.loggedin.LoggedInInputData;
 
 /**
  * Controller for the Loggedin Use Case.
@@ -19,5 +18,12 @@ public class LoggedInController {
      */
     public void switchToProfileView() {
         loggedInUseCaseInteractor.switchToProfileView();
+    }
+
+    /**
+     * Executes the "switch to ChatBotView" Use Case.
+     */
+    public void switchToChatBotView(String username) {
+        loggedInUseCaseInteractor.switchToChatBotView(username);
     }
 }

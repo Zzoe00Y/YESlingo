@@ -19,4 +19,10 @@ public class LoggedInInteractor implements LoggedInInputBoundary{
     public void switchToProfileView() {
         loggedInPresenter.switchToProfileView();
     }
+
+    @Override
+    public void switchToChatBotView(String username) {
+        loggedInPresenter.switchToChatBotView(username);
+    }
+
 }
