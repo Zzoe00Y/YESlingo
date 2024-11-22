@@ -8,11 +8,11 @@ import java.util.ArrayList;
 public class CommonUser implements User {
 
     private final String name;
-    private final String password;
-    private final String inputLan = "English";
-    private final String outputLan = "English";
-    private final ArrayList<ChatMessage> chatHistoryMessagesDisplay = new ArrayList<>();
-    private final ArrayList<ChatMessage> chatHistoryMessagesEng = new ArrayList<>();
+    private String password;
+    private String inputLan = "English";
+    private String outputLan = "English";
+    private ArrayList<ChatMessage> chatHistoryMessagesDisplay = new ArrayList<>();
+    private ArrayList<ChatMessage> chatHistoryMessagesEng = new ArrayList<>();
 
     public CommonUser(String name, String password) {
         this.name = name;
@@ -29,19 +29,43 @@ public class CommonUser implements User {
         return password;
     }
 
-    public ArrayList<ChatMessage> getChatHistoryMessagesDisplay() {
-        return chatHistoryMessagesDisplay;
-    }
-
-    public ArrayList<ChatMessage> getChatHistoryMessagesEng() {
-        return chatHistoryMessagesEng;
-    }
-
+    @Override
     public String getOutputLan() {
         return outputLan;
     }
 
+    @Override
+    public void setOutputLan(String outputLan) {
+        this.outputLan = outputLan;
+    }
+
+    @Override
     public String getInputLan() {
         return inputLan;
+    }
+
+    @Override
+    public void setInputLan(String inputLan) {
+        this.inputLan = inputLan;
+    }
+
+    @Override
+    public ArrayList<ChatMessage> getChatHistoryMessagesDisplay() {
+        return chatHistoryMessagesDisplay;
+    }
+
+    @Override
+    public void setChatHistoryMessagesDisplay(ArrayList<ChatMessage> chatHistoryMessagesDisplay) {
+        this.chatHistoryMessagesDisplay = chatHistoryMessagesDisplay;
+    }
+
+    @Override
+    public ArrayList<ChatMessage> getChatHistoryMessagesEng() {
+        return chatHistoryMessagesEng;
+    }
+
+    @Override
+    public void setChatHistoryMessagesEng(ArrayList<ChatMessage> chatHistoryMessagesEng) {
+        this.chatHistoryMessagesEng = chatHistoryMessagesEng;
     }
 }
