@@ -1,4 +1,4 @@
-package use_case.change_password;
+package use_case.profile.change_password;
 
 /**
  * The output boundary for the Change Password Use Case.
@@ -15,4 +15,9 @@ public interface ChangePasswordOutputBoundary {
      * @param errorMessage the explanation of the failure
      */
     void prepareFailView(String errorMessage);
+
+    /**
+     * Switches to the Profile View.
+     */
+    void switchToProfileView();
 }

@@ -1,4 +1,4 @@
-package use_case.change_password;
+package use_case.profile.change_password;
 
 /**
  * The Change Password Use Case.
@@ -11,4 +11,8 @@ public interface ChangePasswordInputBoundary {
      */
     void execute(ChangePasswordInputData changePasswordInputData);
 
+    /**
+     * Executes the switch to profile view use case.
+     */
+    void switchToProfileView();
 }
