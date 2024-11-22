@@ -1,7 +1,7 @@
 package view;
 
-import interface_adapter.change_password.LoggedInState;
-import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.loggedin_homepage.LoggedInState;
+import interface_adapter.loggedin_homepage.LoggedInViewModel;
 import interface_adapter.image_translation.ImageTranslationController;
 import interface_adapter.text_translation.TextTranslationController;
 import interface_adapter.translation.TranslationViewInterface;
@@ -28,6 +28,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
     private final JButton imageUploadButton;
     private final JButton voiceInputButton;
     private final JButton translateButton;
+    private JPanel extractedTextPanel;
     private final JLabel translationLabel;
     private final JButton profileButton;
     private final JButton historyButton;
@@ -149,6 +150,15 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
 
         this.add(mainContentPanel, BorderLayout.CENTER);
 
+        // Extracted Text Section
+        extractedTextPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JLabel extractedTextLabel = new JLabel("Extracted Text: (not available yet)");
+        extractedTextPanel.add(extractedTextLabel);
+        extractedTextPanel.setVisible(false); // Initially hidden
+
+        mainContentPanel.add(extractedTextPanel);
+
+
         // Translation Result Panel
         translationLabel = new JLabel("Translation Result:");
         JPanel resultPanel = new JPanel(new BorderLayout());
@@ -196,17 +206,32 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
 
         imageUploadButton.addActionListener(e -> {
             selectImage();
-            BufferedImage image = getSelectedImage();
-            LanguageItem targetItem = (LanguageItem) outputLanguageComboBox.getSelectedItem();
-            String targetLanguage = targetItem != null ? targetItem.code : "en";
+            if (selectedImage != null) {
+                extractedTextPanel.setVisible(true); // Show the extracted text panel
+                JLabel label = (JLabel) extractedTextPanel.getComponent(0);
+                label.setText("Extracted Text: (Processing...)");
 
-            if (image != null && imageTranslationController != null) {
-                imageTranslationController.execute(image, targetLanguage);
+                // Perform text extraction from the selected image
+                String extractedText = extractTextFromImage(selectedImage);
+                label.setText("Extracted Text: " + extractedText); // Display extracted text
+
+                // Get the selected target language from the combo box
+                LanguageItem targetItem = (LanguageItem) outputLanguageComboBox.getSelectedItem();
+                String targetLanguage = targetItem != null ? targetItem.code : "en"; // Default to English if no selection
+
+                // Proceed with image translation if the controller and required inputs are valid
+                if (imageTranslationController != null) {
+                    try {
+                        imageTranslationController.translateImage(selectedImage, targetLanguage);
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(this, "Failed to translate image: " + ex.getMessage());
+                        ex.printStackTrace();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Image translation controller not initialized.");
+                }
             } else {
-                String error = imageTranslationController == null ?
-                        "Image translation controller not initialized" :
-                        "Please select an image and ensure target language is selected.";
-                JOptionPane.showMessageDialog(this, error);
+                JOptionPane.showMessageDialog(this, "Please upload a valid image.");
             }
         });
     }
@@ -227,6 +252,10 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
                 ex.printStackTrace();
             }
         }
+    }
+
+    private String extractTextFromImage(BufferedImage image) {
+        return "This is the extracted text.";
     }
 
     public void setTextTranslationController(TextTranslationController controller) {
