@@ -3,7 +3,7 @@ package app;
 import javax.swing.*;
 
 import external_services.MyMemoryGateway;
-import external_services.NanonetsImageToTextService;
+import external_services.ImageToTextAPIService;
 import interface_adapter.image_translation.ImageTranslationController;
 import interface_adapter.image_translation.ImageTranslationPresenter;
 import interface_adapter.text_translation.TextTranslationController;
@@ -44,15 +44,13 @@ public class Main {
 
                 TextTranslationInteractor textTranslationInteractor =
                         new TextTranslationInteractor(textTranslationDataAccessInterface, textTranslationOutputBoundary);
-
+                
                 TextTranslationController textTranslationController =
                         new TextTranslationController(textTranslationInteractor);
 
-                // Important: Set the text translation controller in the view
                 loggedInView.setTextTranslationController(textTranslationController);
 
-                // Set up image translation components
-                NanonetsImageToTextService imageToTextService = new NanonetsImageToTextService();
+                ImageToTextAPIService imageToTextService = new ImageToTextAPIService();
 
                 ImageTranslationOutputBoundary imageTranslationOutputBoundary =
                         new ImageTranslationPresenter(loggedInView);
