@@ -12,7 +12,7 @@ import use_case.image_translation.ImageTranslationInteractor;
 import use_case.image_translation.ImageTranslationOutputBoundary;
 import use_case.text_translation.TextTranslationInteractor;
 import use_case.text_translation.TextTranslationOutputBoundary;
-import use_case.text_translation.TranslationGateway;
+import use_case.text_translation.TextTranslationDataAccessInterface;
 import view.LoggedInView;
 
 public class Main {
@@ -36,14 +36,14 @@ public class Main {
                 LoggedInView loggedInView = appBuilder.getLoggedInView();
 
                 // Initialize gateway and service for translation
-                TranslationGateway translationGateway = new MyMemoryGateway();
+                TextTranslationDataAccessInterface textTranslationDataAccessInterface = new MyMemoryGateway();
 
                 // Set up text translation components
                 TextTranslationOutputBoundary textTranslationOutputBoundary =
                         new TextTranslationPresenter(loggedInView);
 
                 TextTranslationInteractor textTranslationInteractor =
-                        new TextTranslationInteractor(translationGateway, textTranslationOutputBoundary);
+                        new TextTranslationInteractor(textTranslationDataAccessInterface, textTranslationOutputBoundary);
 
                 TextTranslationController textTranslationController =
                         new TextTranslationController(textTranslationInteractor);

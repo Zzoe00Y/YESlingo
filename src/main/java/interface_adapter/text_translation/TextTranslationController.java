@@ -1,7 +1,7 @@
 package interface_adapter.text_translation;
 
 import use_case.text_translation.TextTranslationInputBoundary;
-import use_case.text_translation.TextTranslationRequestModel;
+import use_case.text_translation.TextTranslationInputData;
 
 /**
  * Controller for handling text translation requests.
@@ -29,7 +29,7 @@ public class TextTranslationController {
      */
     public void translate(String text, String sourceLang, String targetLang) {
         System.out.println("Controller received translation request"); // Debug print
-        TextTranslationRequestModel requestModel = new TextTranslationRequestModel(
+        TextTranslationInputData requestModel = new TextTranslationInputData(
                 text,
                 sourceLang,
                 targetLang

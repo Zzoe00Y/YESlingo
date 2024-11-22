@@ -2,7 +2,7 @@ package interface_adapter.text_translation;
 
 import view.LoggedInView;
 import use_case.text_translation.TextTranslationOutputBoundary;
-import use_case.text_translation.TextTranslationResponseModel;
+import use_case.text_translation.TextTranslationOutputData;
 
 /**
  * Presenter for the Text Translation feature.
@@ -28,7 +28,7 @@ public class TextTranslationPresenter implements TextTranslationOutputBoundary {
      * @return TextTranslationResponseModel either the original response or an error response
      */
     @Override
-    public TextTranslationResponseModel prepareSuccessView(TextTranslationResponseModel response) {
+    public TextTranslationOutputData prepareSuccessView(TextTranslationOutputData response) {
         if (response == null || response.getTranslatedText() == null) {
             return prepareFailView("Invalid translation response");
         }
@@ -57,7 +57,7 @@ public class TextTranslationPresenter implements TextTranslationOutputBoundary {
      * @return TextTranslationResponseModel containing error information
      */
     @Override
-    public TextTranslationResponseModel prepareFailView(String error) {
+    public TextTranslationOutputData prepareFailView(String error) {
         try {
             String errorMessage = "Translation failed: " + (error != null ? error : "Unknown error");
             System.err.println("Preparing fail view: " + errorMessage);
@@ -66,7 +66,7 @@ public class TextTranslationPresenter implements TextTranslationOutputBoundary {
             view.displayError(errorMessage);
 
             // Create error response model
-            return new TextTranslationResponseModel(
+            return new TextTranslationOutputData(
                     "", // source text
                     "Translation Error: " + error, // translated text
                     "", // source language
@@ -84,7 +84,7 @@ public class TextTranslationPresenter implements TextTranslationOutputBoundary {
                 System.err.println("Failed to display error to user");
             }
 
-            return new TextTranslationResponseModel(
+            return new TextTranslationOutputData(
                     "",
                     "System Error",
                     "",

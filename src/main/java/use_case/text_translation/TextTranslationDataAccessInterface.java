@@ -6,7 +6,7 @@ import entity.Translation;
  * Gateway interface for text translation operations.
  * Defines the contract for interacting with translation services or repositories.
  */
-public interface TranslationGateway {
+public interface TextTranslationDataAccessInterface {
     /**
      * Translates text from one language to another.
      *

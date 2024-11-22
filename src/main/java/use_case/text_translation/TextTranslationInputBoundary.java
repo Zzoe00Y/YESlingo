@@ -11,5 +11,5 @@ public interface TextTranslationInputBoundary {
      * @param request the request model containing text and translation parameters
      * @return TextTranslationResponseModel containing the translated text results
      */
-    TextTranslationResponseModel translate(TextTranslationRequestModel request);
+    TextTranslationOutputData translate(TextTranslationInputData request);
 }

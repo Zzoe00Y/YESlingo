@@ -3,9 +3,9 @@ package external_services;
 import entity.Translation;
 import okhttp3.*;
 import org.json.JSONObject;
-import use_case.text_translation.TranslationGateway;
+import use_case.text_translation.TextTranslationDataAccessInterface;
 
-public class MyMemoryGateway implements TranslationGateway {
+public class MyMemoryGateway implements TextTranslationDataAccessInterface {
     private final String API_URL = "https://api.mymemory.translated.net/get";
     private final OkHttpClient client;
 

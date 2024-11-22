@@ -1,13 +1,13 @@
 package use_case.text_translation;
 
-public class TextTranslationResponseModel {
+public class TextTranslationOutputData {
     private final String sourceText;
     private final String translatedText;
     private final String sourceLang;
     private final String targetLang;
 
-    public TextTranslationResponseModel(String sourceText, String translatedText,
-                                        String sourceLang, String targetLang) {
+    public TextTranslationOutputData(String sourceText, String translatedText,
+                                     String sourceLang, String targetLang) {
         this.sourceText = sourceText;
         this.translatedText = translatedText;
         this.sourceLang = sourceLang;

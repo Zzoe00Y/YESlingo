@@ -11,7 +11,7 @@ public interface TextTranslationOutputBoundary {
      * @param translation the response model containing the successful translation results
      * @return TextTranslationResponseModel formatted for presentation
      */
-    TextTranslationResponseModel prepareSuccessView(TextTranslationResponseModel translation);
+    TextTranslationOutputData prepareSuccessView(TextTranslationOutputData translation);
 
     /**
      * Prepares the failure response when a translation operation fails.
@@ -19,5 +19,5 @@ public interface TextTranslationOutputBoundary {
      * @param error the error message describing what went wrong
      * @return TextTranslationResponseModel containing the error information
      */
-    TextTranslationResponseModel prepareFailView(String error);
+    TextTranslationOutputData prepareFailView(String error);
 }

@@ -1,21 +1,21 @@
 package external_services;
 
-import use_case.text_translation.TranslationGateway;
+import use_case.text_translation.TextTranslationDataAccessInterface;
 
 /**
  * Adapter to convert TranslationGateway to TranslationService
  */
 public class TranslationServiceAdapter implements TranslationService {
-    private final TranslationGateway translationGateway;
+    private final TextTranslationDataAccessInterface textTranslationDataAccessInterface;
 
-    public TranslationServiceAdapter(TranslationGateway translationGateway) {
-        this.translationGateway = translationGateway;
+    public TranslationServiceAdapter(TextTranslationDataAccessInterface textTranslationDataAccessInterface) {
+        this.textTranslationDataAccessInterface = textTranslationDataAccessInterface;
     }
 
     @Override
     public String translate(String text, String targetLanguage) throws Exception {
         try {
-            return translationGateway.translateText(text, "auto", targetLanguage)
+            return textTranslationDataAccessInterface.translateText(text, "auto", targetLanguage)
                     .getTranslatedText();
         } catch (RuntimeException e) {
             throw new Exception("Translation failed: " + e.getMessage());

@@ -8,34 +8,34 @@ import external_services.TranslationServiceAdapter;
  */
 
 public class TextTranslationInteractor extends TextTranslationUseCase implements TextTranslationInputBoundary {
-    private final TranslationGateway translationGateway;
+    private final TextTranslationDataAccessInterface textTranslationDataAccessInterface;
     private final TextTranslationOutputBoundary outputBoundary;
 
     /**
      * Constructs a TextTranslationInteractor with the necessary gateway and presenter.
      *
-     * @param translationGateway gateway for accessing external translation services
+     * @param textTranslationDataAccessInterface gateway for accessing external translation services
      * @param outputBoundary used for presenting success or failure of the translation process
      */
-    public TextTranslationInteractor(TranslationGateway translationGateway,
+    public TextTranslationInteractor(TextTranslationDataAccessInterface textTranslationDataAccessInterface,
                                      TextTranslationOutputBoundary outputBoundary) {
-        super(new TranslationServiceAdapter(translationGateway));
-        this.translationGateway = translationGateway;
+        super(new TranslationServiceAdapter(textTranslationDataAccessInterface));
+        this.textTranslationDataAccessInterface = textTranslationDataAccessInterface;
         this.outputBoundary = outputBoundary;
     }
 
     @Override
-    public TextTranslationResponseModel translate(TextTranslationRequestModel request) {
+    public TextTranslationOutputData translate(TextTranslationInputData request) {
         try {
             // Use translationGateway directly instead of calling super.translate
-            Translation translation = translationGateway.translateText(
+            Translation translation = textTranslationDataAccessInterface.translateText(
                     request.getSourceText(),
                     request.getSourceLang(),  // Actually use the source language
                     request.getTargetLang()
             );
 
             // Create success response
-            return outputBoundary.prepareSuccessView(new TextTranslationResponseModel(
+            return outputBoundary.prepareSuccessView(new TextTranslationOutputData(
                     request.getSourceText(),
                     translation.getTranslatedText(),
                     request.getSourceLang(),
