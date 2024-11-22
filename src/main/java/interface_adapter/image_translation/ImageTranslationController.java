@@ -21,8 +21,8 @@ public class ImageTranslationController {
      * @param image the image containing the text to translate
      * @param targetLanguage the target language for the translation
      */
-    public void execute(BufferedImage image, String targetLanguage) {
+    public void translateImage(BufferedImage image, String targetLanguage) {
         final ImageTranslationInputData imageTranslationInputData = new ImageTranslationInputData(image, targetLanguage);
-        imageTranslationUseCaseInteractor.execute(imageTranslationInputData);
+        imageTranslationUseCaseInteractor.translate(imageTranslationInputData);
     }
 }
