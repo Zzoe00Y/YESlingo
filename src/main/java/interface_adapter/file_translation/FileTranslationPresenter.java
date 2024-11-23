@@ -25,7 +25,7 @@ public class FileTranslationPresenter implements FileTranslationOutputBoundary {
     public void prepareSuccessView(FileTranslationOutputData outputData) {
         // Display the translated file URL to the user
         String translatedFileUrl = outputData.getTranslatedFileUrl();
-        String successMessage = "File translated successfully! Download here: " + translatedFileUrl;
+        String successMessage = translatedFileUrl;
         System.out.println("Presenter: " + successMessage);
 
         view.displayTranslation(successMessage); // Call the view interface to update the UI

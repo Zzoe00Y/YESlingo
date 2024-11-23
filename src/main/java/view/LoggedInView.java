@@ -4,7 +4,6 @@ import interface_adapter.file_translation.FileTranslationController;
 import interface_adapter.loggedin_homepage.LoggedInState;
 import interface_adapter.loggedin_homepage.LoggedInViewModel;
 import interface_adapter.loggedin_homepage.LoggedInController;
-import interface_adapter.file_translation.FileTranslationController;
 import interface_adapter.text_translation.TextTranslationController;
 import interface_adapter.translation.TranslationViewInterface;
 
@@ -25,10 +24,10 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
     private final JComboBox<LanguageItem> inputLanguageComboBox;
     private final JComboBox<LanguageItem> outputLanguageComboBox;
     private final JTextArea textArea;
+    private final JTextArea translationTextArea; // Updated to replace `translationLabel`
     private final JButton fileUploadButton;
     private final JButton voiceInputButton;
     private final JButton translateButton;
-    private final JLabel translationLabel;
     private final JButton profileButton;
     private final JButton historyButton;
     private final JButton chatBoxButton;
@@ -76,41 +75,10 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
         JPanel mainContentPanel = new JPanel();
         mainContentPanel.setLayout(new BoxLayout(mainContentPanel, BoxLayout.Y_AXIS));
 
-        // Language Selection Panel with complete list of supported languages
-        String[][] languages = {
-                {"English", "en"},
-                {"Spanish", "es"},
-                {"French", "fr"},
-                {"German", "de"},
-                {"Italian", "it"},
-                {"Portuguese", "pt"},
-                {"Chinese", "zh-CN"},
-                {"Japanese", "ja"},
-                {"Korean", "ko"},
-                {"Russian", "ru"},
-                {"Arabic", "ar"},
-                {"Dutch", "nl"},
-                {"Greek", "el"},
-                {"Hebrew", "he"},
-                {"Hindi", "hi"},
-                {"Polish", "pl"},
-                {"Turkish", "tr"},
-                {"Vietnamese", "vi"}
-        };
-
-        DefaultComboBoxModel<LanguageItem> inputModel = new DefaultComboBoxModel<>();
-        DefaultComboBoxModel<LanguageItem> outputModel = new DefaultComboBoxModel<>();
-
-        for (String[] lang : languages) {
-            LanguageItem item = new LanguageItem(lang[0], lang[1]);
-            inputModel.addElement(item);
-            outputModel.addElement(item);
-        }
-
-        inputLanguageComboBox = new JComboBox<>(inputModel);
-        outputLanguageComboBox = new JComboBox<>(outputModel);
-
+        // Language Selection Panel
         JPanel languagePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        inputLanguageComboBox = createLanguageComboBox();
+        outputLanguageComboBox = createLanguageComboBox();
         languagePanel.add(new JLabel("Input Language:"));
         languagePanel.add(inputLanguageComboBox);
         languagePanel.add(new JLabel("Output Language:"));
@@ -120,12 +88,12 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
 
         // Text Input Panel
         JPanel textPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        textArea = new JTextArea(5, 30); // Increased size for better usability
+        textArea = new JTextArea(5, 30);
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
-        JScrollPane scrollPane = new JScrollPane(textArea);
+        JScrollPane textScrollPane = new JScrollPane(textArea);
         textPanel.add(new JLabel("Text:"));
-        textPanel.add(scrollPane);
+        textPanel.add(textScrollPane);
 
         mainContentPanel.add(textPanel);
 
@@ -147,130 +115,104 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
 
         mainContentPanel.add(inputOptionsPanel);
 
-        this.add(mainContentPanel, BorderLayout.CENTER);
-
         // Translation Result Panel
-        translationLabel = new JLabel("Translation Result:");
-        JPanel resultPanel = new JPanel(new BorderLayout());
-        resultPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        resultPanel.add(translationLabel, BorderLayout.CENTER);
-        this.add(resultPanel, BorderLayout.SOUTH);
+        JPanel translationPanel = new JPanel(new BorderLayout());
+        translationPanel.setBorder(BorderFactory.createTitledBorder("Translation Result"));
+        translationTextArea = new JTextArea(5, 30);
+        translationTextArea.setEditable(false);
+        translationTextArea.setLineWrap(true);
+        translationTextArea.setWrapStyleWord(true);
+        JScrollPane translationScrollPane = new JScrollPane(translationTextArea);
+        translationPanel.add(translationScrollPane, BorderLayout.CENTER);
+
+        mainContentPanel.add(translationPanel);
+
+        this.add(mainContentPanel, BorderLayout.CENTER);
 
         setupListeners();
     }
 
-    public void setFileTranslationController(FileTranslationController controller) {
-        this.fileTranslationController = controller;
+    private JComboBox<LanguageItem> createLanguageComboBox() {
+        DefaultComboBoxModel<LanguageItem> model = new DefaultComboBoxModel<>();
+        String[][] languages = {
+                {"English", "en"}, {"Spanish", "es"}, {"French", "fr"},
+                {"German", "de"}, {"Italian", "it"}, {"Portuguese", "pt"},
+                {"Chinese", "zh-CN"}, {"Japanese", "ja"}, {"Korean", "ko"},
+                {"Russian", "ru"}, {"Arabic", "ar"}, {"Dutch", "nl"},
+                {"Greek", "el"}, {"Hebrew", "he"}, {"Hindi", "hi"},
+                {"Polish", "pl"}, {"Turkish", "tr"}, {"Vietnamese", "vi"}
+        };
+        for (String[] lang : languages) {
+            model.addElement(new LanguageItem(lang[0], lang[1]));
+        }
+        return new JComboBox<>(model);
+    }
+
+    private void setupListeners() {
+        translateButton.addActionListener(e -> {
+            String textToTranslate = textArea.getText().trim();
+            if (!textToTranslate.isEmpty() && textTranslationController != null) {
+                LanguageItem sourceItem = (LanguageItem) inputLanguageComboBox.getSelectedItem();
+                LanguageItem targetItem = (LanguageItem) outputLanguageComboBox.getSelectedItem();
+                if (sourceItem != null && targetItem != null && !sourceItem.code.equals(targetItem.code)) {
+                    textTranslationController.translate(textToTranslate, sourceItem.code, targetItem.code);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Select valid and different source/target languages.");
+                }
+            }
+        });
+
+        fileUploadButton.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Text Files", "txt"));
+            if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                try {
+                    LanguageItem sourceItem = (LanguageItem) inputLanguageComboBox.getSelectedItem();
+                    LanguageItem targetItem = (LanguageItem) outputLanguageComboBox.getSelectedItem();
+                    if (sourceItem != null && targetItem != null) {
+                        fileTranslationController.translateFile(file.getAbsolutePath(), sourceItem.code, targetItem.code);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Select valid languages.");
+                    }
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "Error during file translation: " + ex.getMessage());
+                }
+            }
+        });
+    }
+
+    @Override
+    public void displayTranslation(String translatedText) {
+        SwingUtilities.invokeLater(() -> translationTextArea.setText(translatedText));
+    }
+
+    @Override
+    public void displayError(String error) {
+        SwingUtilities.invokeLater(() -> translationTextArea.setText("Error: " + error));
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if ("state".equals(evt.getPropertyName())) {
+            LoggedInState state = (LoggedInState) evt.getNewValue();
+            usernameLabel.setText("Hi, " + state.getUsername() + "!");
+        }
+    }
+
+    public String getViewName() {
+        return viewName;
     }
 
     public void setLoggedInController(LoggedInController controller) {
         this.loggedInController = controller;
     }
 
-    private void setupListeners() {
-        translateButton.addActionListener(e -> {
-            System.out.println("Translate button clicked");
-            String textToTranslate = textArea.getText().trim();
-            if (!textToTranslate.isEmpty() && textTranslationController != null) {
-                LanguageItem sourceItem = (LanguageItem) inputLanguageComboBox.getSelectedItem();
-                LanguageItem targetItem = (LanguageItem) outputLanguageComboBox.getSelectedItem();
-
-                if (sourceItem == null || targetItem == null) {
-                    JOptionPane.showMessageDialog(this, "Please select both source and target languages");
-                    return;
-                }
-
-                String sourceLang = sourceItem.code;
-                String targetLang = targetItem.code;
-
-                // Don't translate if source and target languages are the same
-                if (sourceLang.equals(targetLang)) {
-                    JOptionPane.showMessageDialog(this,
-                            "Source and target languages must be different");
-                    return;
-                }
-
-                System.out.println("Translating: " + textToTranslate);
-                System.out.println("From: " + sourceLang + " To: " + targetLang);
-
-                textTranslationController.translate(textToTranslate, sourceLang, targetLang);
-            } else {
-                String error = textTranslationController == null ?
-                        "Translation controller not initialized" :
-                        "Please enter text to translate and ensure all languages are selected.";
-                JOptionPane.showMessageDialog(this, error);
-            }
-        });
-
-        fileUploadButton.addActionListener(e -> {
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter(
-                    "Text Files", "txt"));
-
-            int returnValue = fileChooser.showOpenDialog(this);
-            if (returnValue == JFileChooser.APPROVE_OPTION) {
-                File file = fileChooser.getSelectedFile();
-                try {
-                    LanguageItem sourceItem = (LanguageItem) inputLanguageComboBox.getSelectedItem();
-                    LanguageItem targetItem = (LanguageItem) outputLanguageComboBox.getSelectedItem();
-
-                    if (sourceItem == null || targetItem == null) {
-                        JOptionPane.showMessageDialog(this, "Please select both source and target languages.");
-                        return;
-                    }
-
-                    String sourceLang = sourceItem.code;
-                    String targetLang = targetItem.code;
-
-                    fileTranslationController.translateFile(file.getAbsolutePath(), sourceLang, targetLang);
-
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Error during file translation: " + ex.getMessage());
-                }
-            }
-        });
-
-
-    }
-
     public void setTextTranslationController(TextTranslationController controller) {
         this.textTranslationController = controller;
     }
 
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        System.out.println("Property change event: " + evt.getPropertyName());
-        if ("state".equals(evt.getPropertyName())) {
-            LoggedInState state = (LoggedInState) evt.getNewValue();
-            usernameLabel.setText("Hi, " + state.getUsername() + "!");
-        }
-        if ("translation".equals(evt.getPropertyName())) {
-            SwingUtilities.invokeLater(() -> {
-                String translatedText = (String) evt.getNewValue();
-                System.out.println("Received translation: " + translatedText);
-                translationLabel.setText("Translation: " + translatedText);
-            });
-        }
-    }
-
-    @Override
-    public void displayTranslation(String translatedText) {
-        System.out.println("Displaying translation: " + translatedText);
-        SwingUtilities.invokeLater(() -> {
-            translationLabel.setText("Translation: " + translatedText);
-        });
-    }
-
-    @Override
-    public void displayError(String error) {
-        System.out.println("Displaying error: " + error);
-        SwingUtilities.invokeLater(() -> {
-            translationLabel.setText("Error: " + error);
-            JOptionPane.showMessageDialog(this, error);
-        });
-    }
-
-    public String getViewName() {
-        return viewName;
+    public void setFileTranslationController(FileTranslationController controller) {
+        this.fileTranslationController = controller;
     }
 }
