@@ -4,13 +4,13 @@ import javax.swing.JFrame;
 
 import entity.User;
 import entity.UserFactory;
-import external_services.ImageToTextAPIService;
+import external_services.FileTranslationService;
 import external_services.MyMemoryGateway;
 import external_services.TextToTextTranslationService;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.chatbot.ChatBotViewModel;
-import interface_adapter.image_translation.ImageTranslationController;
-import interface_adapter.image_translation.ImageTranslationPresenter;
+import interface_adapter.file_translation.FileTranslationController;
+import interface_adapter.file_translation.FileTranslationPresenter;
 import interface_adapter.loggedin_homepage.LoggedInController;
 import interface_adapter.loggedin_homepage.LoggedInPresenter;
 import interface_adapter.loggedin_homepage.LoggedInViewModel;
@@ -26,8 +26,8 @@ import interface_adapter.profile.change_password.ChangePasswordPresenter;
 import interface_adapter.profile.change_password.ChangePasswordViewModel;
 import interface_adapter.text_translation.TextTranslationController;
 import interface_adapter.text_translation.TextTranslationPresenter;
-import use_case.image_translation.ImageTranslationInteractor;
-import use_case.image_translation.ImageTranslationOutputBoundary;
+import use_case.file_translation.FileTranslationInteractor;
+import use_case.file_translation.FileTranslationOutputBoundary;
 import use_case.loggedin.LoggedInInputBoundary;
 import use_case.loggedin.LoggedInInteractor;
 import use_case.loggedin.LoggedInOutputBoundary;
@@ -94,19 +94,21 @@ public class Main {
 
         loggedInView.setTextTranslationController(textTranslationController);
 
-        ImageToTextAPIService imageToTextService = new ImageToTextAPIService();
-        ImageTranslationOutputBoundary imageTranslationOutputBoundary =
-                new ImageTranslationPresenter(loggedInView);
-        ImageTranslationInteractor imageTranslationInteractor =
-                new ImageTranslationInteractor(
-                        imageToTextService,
-                        textTranslationInteractor,
-                        imageTranslationOutputBoundary
-                );
-        ImageTranslationController imageTranslationController =
-                new ImageTranslationController(imageTranslationInteractor);
-        loggedInView.setImageTranslationController(imageTranslationController);
+        FileTranslationService fileTranslationService = new FileTranslationService();
 
+        FileTranslationOutputBoundary fileTranslationOutputBoundary =
+                new FileTranslationPresenter(loggedInView);
+
+        FileTranslationInteractor fileTranslationInteractor =
+                new FileTranslationInteractor(
+                        fileTranslationService,
+                        fileTranslationOutputBoundary
+                );
+
+        FileTranslationController fileTranslationController =
+                new FileTranslationController(fileTranslationInteractor);
+
+        loggedInView.setFileTranslationController(fileTranslationController);
 
         ViewManagerModel viewManagerModel = appBuilder.getViewManagerModel();
         LoggedInViewModel loggedInViewModel = appBuilder.getLoggedInViewModel();

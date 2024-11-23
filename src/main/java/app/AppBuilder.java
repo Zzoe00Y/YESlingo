@@ -9,11 +9,12 @@ import javax.swing.WindowConstants;
 import data_access.InMemoryUserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.UserFactory;
-import external_services.ImageToTextAPIService;
+import external_services.FileTranslationService;
 import external_services.MyMemoryGateway;
 import external_services.TextToTextTranslationService;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.image_translation.ImageTranslationPresenter;
+import interface_adapter.file_translation.FileTranslationController;
+import interface_adapter.file_translation.FileTranslationPresenter;
 import interface_adapter.loggedin_homepage.LoggedInController;
 import interface_adapter.loggedin_homepage.LoggedInPresenter;
 import interface_adapter.loggedin_homepage.LoggedInViewModel;
@@ -36,7 +37,7 @@ import interface_adapter.signup.SignupViewModel;
 import use_case.chatbot.ChatBotInputBoundary;
 import use_case.chatbot.ChatBotInteractor;
 import use_case.chatbot.ChatBotOutputBoundary;
-import use_case.image_translation.ImageTranslationInteractor;
+import use_case.file_translation.FileTranslationInteractor;
 import use_case.loggedin.LoggedInInputBoundary;
 import use_case.loggedin.LoggedInInteractor;
 import use_case.loggedin.LoggedInOutputBoundary;
@@ -249,6 +250,17 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addFileTranslationUseCase() {
+        FileTranslationInteractor fileTranslationInteractor = createFileTranslationInteractor();
+        FileTranslationController fileTranslationController = new FileTranslationController(fileTranslationInteractor);
+
+        // Inject the controller into the LoggedInView
+        loggedInView.setFileTranslationController(fileTranslationController);
+
+        return this;
+    }
+
+
     /**
      * Adds the ChatBot Use Case to the application.
      * @return this builder
@@ -281,21 +293,20 @@ public class AppBuilder {
 //        return this;
 //    }
 
-    private ImageTranslationInteractor createImageTranslationInteractor() {
+    private FileTranslationInteractor createFileTranslationInteractor() {
         // Ensure dependencies are correctly initialized
         if (loggedInView == null) {
             throw new IllegalStateException("LoggedInView is not initialized");
         }
 
-        ImageToTextAPIService imageToTextService = new ImageToTextAPIService();
+        // Initialize the FileTranslationService
+        FileTranslationService fileTranslationService = new FileTranslationService();
 
-        MyMemoryGateway myMemoryGateway = new MyMemoryGateway();
-        TextToTextTranslationService textTranslationService = new TextToTextTranslationService(myMemoryGateway);
-        TextTranslationUseCase textTranslationUseCase = new TextTranslationUseCase(textTranslationService);
+        // Initialize the presenter for the FileTranslationInteractor
+        FileTranslationPresenter fileTranslationPresenter = new FileTranslationPresenter(loggedInView);
 
-        ImageTranslationPresenter presenter = new ImageTranslationPresenter(loggedInView);
-
-        return new ImageTranslationInteractor(imageToTextService, textTranslationUseCase, presenter);
+        // Create and return the FileTranslationInteractor with required dependencies
+        return new FileTranslationInteractor(fileTranslationService, fileTranslationPresenter);
     }
 
 

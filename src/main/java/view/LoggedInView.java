@@ -1,16 +1,15 @@
 package view;
 
+import interface_adapter.file_translation.FileTranslationController;
 import interface_adapter.loggedin_homepage.LoggedInState;
 import interface_adapter.loggedin_homepage.LoggedInViewModel;
 import interface_adapter.loggedin_homepage.LoggedInController;
-import interface_adapter.image_translation.ImageTranslationController;
+import interface_adapter.file_translation.FileTranslationController;
 import interface_adapter.text_translation.TextTranslationController;
 import interface_adapter.translation.TranslationViewInterface;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -19,18 +18,16 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
     private final String viewName = "logged in";
     private final LoggedInViewModel loggedInViewModel;
     private LoggedInController loggedInController;
-    private BufferedImage selectedImage;
-    private ImageTranslationController imageTranslationController;
+    private FileTranslationController fileTranslationController;
     private TextTranslationController textTranslationController;
 
     private final JLabel usernameLabel;
     private final JComboBox<LanguageItem> inputLanguageComboBox;
     private final JComboBox<LanguageItem> outputLanguageComboBox;
     private final JTextArea textArea;
-    private final JButton imageUploadButton;
+    private final JButton fileUploadButton;
     private final JButton voiceInputButton;
     private final JButton translateButton;
-    private JPanel extractedTextPanel;
     private final JLabel translationLabel;
     private final JButton profileButton;
     private final JButton historyButton;
@@ -141,25 +138,16 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
 
         // Input Options Panel
         JPanel inputOptionsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        imageUploadButton = new JButton("Upload Image");
+        fileUploadButton = new JButton("Upload File");
         voiceInputButton = new JButton("Input Voice");
         chatBoxButton = new JButton("ChatBox");
-        inputOptionsPanel.add(imageUploadButton);
+        inputOptionsPanel.add(fileUploadButton);
         inputOptionsPanel.add(voiceInputButton);
         inputOptionsPanel.add(chatBoxButton);
 
         mainContentPanel.add(inputOptionsPanel);
 
         this.add(mainContentPanel, BorderLayout.CENTER);
-
-        // Extracted Text Section
-        extractedTextPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JLabel extractedTextLabel = new JLabel("Extracted Text: (not available yet)");
-        extractedTextPanel.add(extractedTextLabel);
-        extractedTextPanel.setVisible(false); // Initially hidden
-
-        mainContentPanel.add(extractedTextPanel);
-
 
         // Translation Result Panel
         translationLabel = new JLabel("Translation Result:");
@@ -169,6 +157,10 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
         this.add(resultPanel, BorderLayout.SOUTH);
 
         setupListeners();
+    }
+
+    public void setFileTranslationController(FileTranslationController controller) {
+        this.fileTranslationController = controller;
     }
 
     public void setLoggedInController(LoggedInController controller) {
@@ -210,71 +202,39 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
             }
         });
 
-        imageUploadButton.addActionListener(e -> {
-            selectImage();
-            if (selectedImage != null) {
-                extractedTextPanel.setVisible(true); // Show the extracted text panel
-                JLabel label = (JLabel) extractedTextPanel.getComponent(0);
-                label.setText("Extracted Text: (Processing...)");
+        fileUploadButton.addActionListener(e -> {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter(
+                    "Text Files", "txt"));
 
-                // Perform text extraction from the selected image
-                String extractedText = extractTextFromImage(selectedImage);
-                label.setText("Extracted Text: " + extractedText); // Display extracted text
+            int returnValue = fileChooser.showOpenDialog(this);
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                try {
+                    LanguageItem sourceItem = (LanguageItem) inputLanguageComboBox.getSelectedItem();
+                    LanguageItem targetItem = (LanguageItem) outputLanguageComboBox.getSelectedItem();
 
-                // Get the selected target language from the combo box
-                LanguageItem targetItem = (LanguageItem) outputLanguageComboBox.getSelectedItem();
-                String targetLanguage = targetItem != null ? targetItem.code : "en"; // Default to English if no selection
-
-                // Proceed with image translation if the controller and required inputs are valid
-                if (imageTranslationController != null) {
-                    try {
-                        imageTranslationController.translateImage(selectedImage, targetLanguage);
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(this, "Failed to translate image: " + ex.getMessage());
-                        ex.printStackTrace();
+                    if (sourceItem == null || targetItem == null) {
+                        JOptionPane.showMessageDialog(this, "Please select both source and target languages.");
+                        return;
                     }
-                } else {
-                    JOptionPane.showMessageDialog(this, "Image translation controller not initialized.");
+
+                    String sourceLang = sourceItem.code;
+                    String targetLang = targetItem.code;
+
+                    fileTranslationController.translateFile(file.getAbsolutePath(), sourceLang, targetLang);
+
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "Error during file translation: " + ex.getMessage());
                 }
-            } else {
-                JOptionPane.showMessageDialog(this, "Please upload a valid image.");
             }
         });
+
+
     }
-
-    private void selectImage() {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter(
-                "Image Files", "jpg", "png", "jpeg"));
-
-        int returnValue = fileChooser.showOpenDialog(this);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
-            try {
-                selectedImage = ImageIO.read(file);
-                JOptionPane.showMessageDialog(this, "Image loaded successfully.");
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Failed to load image: " + ex.getMessage());
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    private String extractTextFromImage(BufferedImage image) {
-        return "This is the extracted text.";
-    }
-
 
     public void setTextTranslationController(TextTranslationController controller) {
         this.textTranslationController = controller;
-    }
-
-    public void setImageTranslationController(ImageTranslationController controller) {
-        this.imageTranslationController = controller;
-    }
-
-    public BufferedImage getSelectedImage() {
-        return selectedImage;
     }
 
     @Override
