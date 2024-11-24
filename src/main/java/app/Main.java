@@ -121,7 +121,7 @@ public class Main {
         ProfileViewModel profileViewModel = appBuilder.getProfileViewModel();
         UserFactory userFactory = appBuilder.getUserFactory();
 
-        LoggedInOutputBoundary loggedInOutputBoundary = new LoggedInPresenter(viewManagerModel, loggedInViewModel, profileViewModel, new ChatBotViewModel());
+        LoggedInOutputBoundary loggedInOutputBoundary = new LoggedInPresenter(viewManagerModel, loggedInViewModel, profileViewModel, new HistoryViewModel(), new ChatBotViewModel());
         LoggedInInteractor loggedInInteractor = new LoggedInInteractor(loggedInOutputBoundary, userFactory);
         LoggedInController loggedInController = new LoggedInController(loggedInInteractor);
 //        loggedInView.setLoggedInController(loggedInController);

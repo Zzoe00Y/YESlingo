@@ -20,6 +20,14 @@ public class LoggedInController {
         loggedInUseCaseInteractor.switchToProfileView();
     }
 
+
+    /**
+     * Executes the "switch to ProfileView" Use Case.
+     */
+    public void switchToHistoryView() {
+        loggedInUseCaseInteractor.switchToHistoryView();
+    }
+
     /**
      * Executes the "switch to ChatBotView" Use Case.
      */

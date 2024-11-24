@@ -1,68 +1,65 @@
-package use_case.file_translation;
+package external_services;
 
-import org.junit.Test;
-import external_services.FileTranslationService;
+import okhttp3.*;
+import org.json.JSONObject;
 
-import static org.junit.Assert.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
-public class FileTranslationInteractorTest {
+public class FileTranslationService {
 
-    @Test
-    public void successFileTranslationTest() {
-        FileTranslationService mockFileTranslationService = new FileTranslationService() {
-            @Override
-            public String translate(String filePath, String sourceLang, String targetLang) {
-                assertEquals("en", sourceLang);
-                assertEquals("es", targetLang);
-                return "Translation completed successfully for file: test1.txt";
+    private static final String API_URL = "https://libretranslate.com/translate";
+    private static final String API_KEY = "dc756137-1bea-4261-aa01-15c9105034a2";
+
+    /**
+     * Translates text from a `.txt` file using the LibreTranslate API.
+     *
+     * @param filePath      Path to the `.txt` file to be translated.
+     * @param sourceLang    Source language code (e.g., "en").
+     * @param targetLang    Target language code (e.g., "fr").
+     * @return Translated text.
+     * @throws IOException If there are errors during file reading or API call.
+     */
+    public String translate(String filePath, String sourceLang, String targetLang) throws IOException {
+        // Ensure the file exists
+        File file = new File(filePath);
+        if (!file.exists()) {
+            throw new IOException("File not found: " + filePath);
+        }
+
+        // Read the content of the `.txt` file
+        String fileContent = Files.readString(file.toPath());
+
+        // Build the JSON payload for the LibreTranslate API
+        JSONObject jsonPayload = new JSONObject();
+        jsonPayload.put("q", fileContent);
+        jsonPayload.put("source", sourceLang);
+        jsonPayload.put("target", targetLang);
+        jsonPayload.put("api_key", API_KEY);
+
+        // Create the request
+        OkHttpClient client = new OkHttpClient();
+        RequestBody body = RequestBody.create(
+                jsonPayload.toString(),
+                MediaType.parse("application/json")
+        );
+
+        Request request = new Request.Builder()
+                .url(API_URL)
+                .post(body)
+                .build();
+
+        // Execute the request
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                throw new IOException("API Error: " + response.code() + " - " + response.body().string());
             }
-        };
 
-        FileTranslationOutputBoundary successPresenter = new FileTranslationOutputBoundary() {
-            @Override
-            public void prepareSuccessView(FileTranslationOutputData outputData) {
-                assertEquals("Translation completed successfully for file: test1.txt", outputData.getTranslatedFileUrl());
-            }
-
-            @Override
-            public void prepareFailView(String error) {
-                fail("Translation failed, error: " + error);
-            }
-        };
-
-        FileTranslationInputData inputData = new FileTranslationInputData(
-                "/Users/freyazhang/IdeaProjects/YESlingo/test1.txt", "en", "es");
-
-        FileTranslationInteractor interactor = new FileTranslationInteractor(mockFileTranslationService, successPresenter);
-        interactor.translate(inputData);
-    }
-
-    @Test
-    public void failureFileNotFoundTest() {
-        // Mock FileTranslationService for file not found error
-        FileTranslationService mockFileTranslationService = new FileTranslationService() {
-            @Override
-            public String translate(String filePath, String sourceLang, String targetLang) {
-                throw new RuntimeException("File not found: " + filePath);
-            }
-        };
-
-        FileTranslationOutputBoundary failurePresenter = new FileTranslationOutputBoundary() {
-            @Override
-            public void prepareSuccessView(FileTranslationOutputData outputData) {
-                fail("Translation should have failed, but it succeeded with file URL: " + outputData.getTranslatedFileUrl());
-            }
-
-            @Override
-            public void prepareFailView(String error) {
-                assertTrue(error.contains("File not found"));
-            }
-        };
-
-        FileTranslationInputData inputData = new FileTranslationInputData(
-                "/Users/freyazhang/IdeaProjects/YESlingo/nonexistent.txt", "en", "es");
-
-        FileTranslationInteractor interactor = new FileTranslationInteractor(mockFileTranslationService, failurePresenter);
-        interactor.translate(inputData);
+            // Parse the response to get the translated text
+            String responseBody = response.body().string();
+            JSONObject jsonResponse = new JSONObject(responseBody);
+            return jsonResponse.getString("translatedText");
+        }
     }
 }
