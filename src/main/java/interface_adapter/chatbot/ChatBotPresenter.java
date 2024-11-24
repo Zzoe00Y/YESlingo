@@ -37,7 +37,6 @@ public class ChatBotPresenter implements ChatBotOutputBoundary {
     @Override
     public void displayResponse(ChatBotOutputData outputData) {
         ChatBotState currentState = chatbotViewModel.getState();
-        currentState.addChatHistoryMessage(outputData.getResponse());
         currentState.setNewResponse(outputData.getResponse());
         chatbotViewModel.firePropertyChanged("sentChat");
     }
@@ -58,8 +57,5 @@ public class ChatBotPresenter implements ChatBotOutputBoundary {
     @Override
     public void pullUser(ChatBotState newState) {
         chatbotViewModel.setState(newState);
-
-        viewManagerModel.setState(loggedinViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
     }
 }

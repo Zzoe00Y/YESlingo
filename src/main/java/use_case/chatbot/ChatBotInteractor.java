@@ -8,6 +8,8 @@ import entity.ChatMessage;
 import entity.User;
 import entity.UserFactory;
 import interface_adapter.chatbot.ChatBotState;
+import space.dynomake.libretranslate.Language;
+import space.dynomake.libretranslate.Translator;
 
 import java.util.ArrayList;
 
@@ -34,25 +36,27 @@ public class ChatBotInteractor implements ChatBotInputBoundary {
         String inputMessage = chatbotInputData.getMessage();
         String inputLan = chatbotInputData.getInputLan();
         String outputLan = chatbotInputData.getOutputLan();
-        String inputMessageEng = translate(inputMessage, inputLan, "English");
+        String inputMessageEng = translate(inputMessage, inputLan, "ENGLISH");
 
         ChatMessage responseEng = generateResponse(inputMessageEng, user.getChatHistoryMessagesEng());
-
-        String outputMessage = translate(responseEng.getMessage(), "English", outputLan);
+        String outputMessage = translate(responseEng.getMessage(), "ENGLISH", outputLan);
         ChatMessage output = new ChatMessage("CHATBOT",outputMessage);
-        updateUserChatHistory(user, output, responseEng);
+
+        updateUserChatHistory(user, output, responseEng, new ChatMessage("USER", inputMessage), new ChatMessage("USER", inputMessageEng));
 
         final ChatBotOutputData chatbotOutputData = new ChatBotOutputData(output);
         userPresenter.displayResponse(chatbotOutputData);
     }
 
     private String translate(final String inputMessage, final String inputLan, final String outputLan) {
-        return inputMessage;
+        return Translator.translate(Language.valueOf(inputLan), Language.valueOf(outputLan), inputMessage);
     }
 
-    private void updateUserChatHistory(User user, ChatMessage chatMessageDisplay, ChatMessage chatMessageEng) {
-        user.addChatHistoryMessagesDisplay(chatMessageDisplay);
-        user.addChatHistoryMessagesEng(chatMessageEng);
+    private void updateUserChatHistory(User user, ChatMessage messageDisplayOut, ChatMessage messageEngOut, ChatMessage messageDisplayIn, ChatMessage messageEngIn) {
+        user.addChatHistoryMessagesDisplay(messageDisplayIn);
+        user.addChatHistoryMessagesDisplay(messageDisplayOut);
+        user.addChatHistoryMessagesEng(messageEngIn);
+        user.addChatHistoryMessagesEng(messageEngOut);
         userDataAccessObject.save(user);
     }
 

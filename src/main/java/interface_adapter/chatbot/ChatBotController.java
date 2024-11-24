@@ -16,13 +16,13 @@ public class ChatBotController {
 
     /**
      * Executes the sendChat Use Case.
-     * @param message the message that was sent to generate response
-     * @param inputLan language of the message
+     *
+     * @param message   the message that was sent to generate response
+     * @param inputLan  language of the message
      * @param outputLan desired language of the output
-     * @param chatChannelID the ID for this chat channel
-     * @param username the username of this user
+     * @param username  the username of this user
      */
-    public void sendChat(String message, String inputLan, String outputLan, String chatChannelID, String username) {
+    public void sendChat(String message, String inputLan, String outputLan, String username) {
         chatBotUseCaseInteractor.sendChat(new ChatBotInputData(message, inputLan, outputLan, username));
     }
 

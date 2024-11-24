@@ -9,8 +9,8 @@ public class CommonUser implements User {
 
     private final String name;
     private String password;
-    private String inputLan = "English";
-    private String outputLan = "English";
+    private String inputLan = "ENGLISH";
+    private String outputLan = "ENGLISH";
     private ArrayList<ChatMessage> chatHistoryMessagesDisplay = new ArrayList<>();
     private ArrayList<ChatMessage> chatHistoryMessagesEng = new ArrayList<>();
 
