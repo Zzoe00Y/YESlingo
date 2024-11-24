@@ -320,7 +320,7 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(chatBotView.getViewName());
+        viewManagerModel.setState(loggedInView.getViewName());
         viewManagerModel.firePropertyChanged();
 
         return application;

@@ -21,7 +21,7 @@ public class FileTranslationService {
      * @return Translated text.
      * @throws IOException If there are errors during file reading or API call.
      */
-    public String translateFile(String filePath, String sourceLang, String targetLang) throws IOException {
+    public String translate(String filePath, String sourceLang, String targetLang) throws IOException {
         // Ensure the file exists
         File file = new File(filePath);
         if (!file.exists()) {
