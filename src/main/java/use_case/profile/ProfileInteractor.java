@@ -8,6 +8,7 @@ import entity.UserFactory;
 public class ProfileInteractor implements ProfileInputBoundary {
     private final ProfileOutputBoundary profilePresenter;
     private final UserFactory userFactory;
+
     public ProfileInteractor(ProfileOutputBoundary profilePresenter,
                              UserFactory userFactory) {
         this.profilePresenter = profilePresenter;
