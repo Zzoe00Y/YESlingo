@@ -30,7 +30,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
     private final JButton translateButton;
     private final JButton profileButton;
     private final JButton historyButton;
-    private final JButton chatBoxButton;
+    private final JButton chatBotButton;
 
     // Inner class to hold language information
     private static class LanguageItem {
@@ -108,10 +108,10 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
         JPanel inputOptionsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         fileUploadButton = new JButton("Upload File");
         voiceInputButton = new JButton("Input Voice");
-        chatBoxButton = new JButton("ChatBox");
+        chatBotButton = new JButton("ChatBot");
         inputOptionsPanel.add(fileUploadButton);
         inputOptionsPanel.add(voiceInputButton);
-        inputOptionsPanel.add(chatBoxButton);
+        inputOptionsPanel.add(chatBotButton);
 
         mainContentPanel.add(inputOptionsPanel);
 
@@ -180,6 +180,16 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
                 }
             }
         });
+
+        chatBotButton.addActionListener(
+                evt -> {
+                    if (evt.getSource().equals(chatBotButton)) {
+                        final LoggedInState currentState = loggedInViewModel.getState();
+
+                        loggedInController.switchToChatBotView(currentState.getUsername());
+                    }
+                }
+        );
     }
 
     @Override
