@@ -11,8 +11,6 @@ public class ChatBotState {
     private String userInput = "";
     private String inputLan = "English";
     private String outputLan = "English";
-    private String currentChatID = "";
-    private ArrayList<String> chatHistoryIds;
     private ArrayList<ChatMessage> chatHistoryMessages = new ArrayList<>();
     private ChatMessage newResponse;
 
@@ -47,14 +45,6 @@ public class ChatBotState {
         this.username = username;
     }
 
-    public ArrayList<String> getChatHistoryIds() {
-        return chatHistoryIds;
-    }
-
-    public void setChatHistoryIds(ArrayList<String> chatHistoryIds) {
-        this.chatHistoryIds = chatHistoryIds;
-    }
-
     public String getUserInput() {
         return userInput;
     }
@@ -77,14 +67,6 @@ public class ChatBotState {
 
     public void setOutputLan(String outputLan) {
         this.outputLan = outputLan;
-    }
-
-    public String getCurrentChatID() {
-        return currentChatID;
-    }
-
-    public void setCurrentChatID(String currentChatID) {
-        this.currentChatID = currentChatID;
     }
 
     public ChatMessage getNewResponse() {

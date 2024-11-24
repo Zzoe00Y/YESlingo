@@ -53,9 +53,8 @@ _DeleteSingleHistory_: Deletes individual entries from the translation history.
 
 ### Chatbot Use Case
 
-_CreateNewChat:_ Create a new chat channel allowing the user to specify the input/output language and channel name. \
-_EnterExistedChat:_ Pull chat setting and chat history from the database and switch to that chat channel.\
-_GenerateResponse:_ Generate and display a response to the user input after the user clicks enter.
+_sentChat:_ Generates and displays a response to user's input when user click sent button \
+_pullUser:_ Pull user information from DAO and update the chatBotView's state\
 
 ## Views
 
@@ -76,5 +75,5 @@ Navigation is handled by _ViewManager_, which manages transitions between views.
 API:
 1. Text to Text Translation: [https://libretranslate.com/](https://mymemory.translated.net/)
 2. Image to Text API key: https://app.nanonets.com/#keys 33a63559-9ed3-11ef-9412-8ac686cb80af
-3. 
+3. ChatBot Cohere API: https://docs.cohere.com/v1/reference/chat O40OXvNOKzdUtm6vQlpLiE7erjfv81ZeFUeHbvmg
 

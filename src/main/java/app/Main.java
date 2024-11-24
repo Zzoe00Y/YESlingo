@@ -72,7 +72,7 @@ public class Main {
                 .addChatBotView()
                 .addSignupUseCase()
                 .addLoginUseCase()
-//                                            .addLoggedinUseCase()
+                                            .addLoggedinUseCase()
                 //.addProfileUseCase()
                 .addChatBotUseCase()
 //                                            .addChangePasswordUseCase()
@@ -124,7 +124,7 @@ public class Main {
         LoggedInOutputBoundary loggedInOutputBoundary = new LoggedInPresenter(viewManagerModel, loggedInViewModel, profileViewModel, new ChatBotViewModel());
         LoggedInInteractor loggedInInteractor = new LoggedInInteractor(loggedInOutputBoundary, userFactory);
         LoggedInController loggedInController = new LoggedInController(loggedInInteractor);
-        loggedInView.setLoggedInController(loggedInController);
+//        loggedInView.setLoggedInController(loggedInController);
 
         ProfileView profileView = appBuilder.getProfileView();
         ChangePasswordViewModel changePasswordViewModel = appBuilder.getChangePasswordViewModel();
