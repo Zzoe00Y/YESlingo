@@ -9,7 +9,13 @@ import javax.swing.WindowConstants;
 import data_access.InMemoryUserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.UserFactory;
+import external_services.FileTranslationService;
+import external_services.MyMemoryGateway;
+import external_services.TextToTextTranslationService;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.file_translation.FileTranslationController;
+import interface_adapter.file_translation.FileTranslationPresenter;
+import interface_adapter.history.HistoryViewModel;
 import interface_adapter.loggedin_homepage.LoggedInController;
 import interface_adapter.loggedin_homepage.LoggedInPresenter;
 import interface_adapter.loggedin_homepage.LoggedInViewModel;
@@ -24,12 +30,15 @@ import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.profile.ProfileController;
 import interface_adapter.profile.ProfilePresenter;
 import interface_adapter.profile.ProfileViewModel;
+import interface_adapter.profile.change_language.ChangeLanguageViewModel;
+import interface_adapter.profile.change_password.ChangePasswordViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
 import use_case.chatbot.ChatBotInputBoundary;
 import use_case.chatbot.ChatBotInteractor;
 import use_case.chatbot.ChatBotOutputBoundary;
+import use_case.file_translation.FileTranslationInteractor;
 import use_case.loggedin.LoggedInInputBoundary;
 import use_case.loggedin.LoggedInInteractor;
 import use_case.loggedin.LoggedInOutputBoundary;
@@ -47,6 +56,7 @@ import use_case.profile.ProfileUserDataAccessInterface;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
+import use_case.text_translation.TextTranslationUseCase;
 import view.*;
 
 /**
@@ -81,6 +91,12 @@ public class AppBuilder {
     private ChatBotDefaultView chatBotView;
     private ProfileViewModel profileViewModel;
     private ProfileView profileView;
+    private ChangePasswordViewModel changePasswordViewModel;
+    private ChangePasswordView changePasswordView;
+    private ChangeLanguageViewModel changeLanguageViewModel;
+    private ChangeLanguageView changeLanguageView;
+    private HistoryViewModel historyViewModel;
+    private HistoryView historyView;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -131,6 +147,39 @@ public class AppBuilder {
     }
 
     /**
+     * Adds the Profile View to the application.
+     * @return this builder
+     */
+    public AppBuilder addChangePasswordView() {
+        changePasswordViewModel = new ChangePasswordViewModel();
+        changePasswordView = new ChangePasswordView(changePasswordViewModel);
+        cardPanel.add(changePasswordView, changePasswordView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the Profile View to the application.
+     * @return this builder
+     */
+    public AppBuilder addChangeLanguageView() {
+        changeLanguageViewModel = new ChangeLanguageViewModel();
+        changeLanguageView = new ChangeLanguageView(changeLanguageViewModel);
+        cardPanel.add(changeLanguageView, changeLanguageView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the Profile View to the application.
+     * @return this builder
+     */
+    public AppBuilder addHistoryView() {
+        historyViewModel = new HistoryViewModel();
+        historyView = new HistoryView(historyViewModel);
+        cardPanel.add(historyView, historyView.getViewName());
+        return this;
+    }
+
+    /**
      * Adds the ChatBot View to the application.
      * @return this builder
      */
@@ -171,31 +220,14 @@ public class AppBuilder {
         return this;
     }
 
-//    /**
-//     * Adds the Logout Use Case to the application.
-//     * @return this builder
-//     */
-//    public AppBuilder addLogoutUseCase() {
-//        final LogoutOutputBoundary logoutOutputBoundary = new LogoutPresenter(viewManagerModel,
-//                loggedInViewModel, loginViewModel);
-//
-//        final LogoutInputBoundary logoutInteractor =
-//                new LogoutInteractor(userDataAccessObject, logoutOutputBoundary);
-//
-//        final LogoutController logoutController = new LogoutController(logoutInteractor);
-//        loggedInView.setLogoutController(logoutController);
-//        return this;
-//    }
-
     /**
      * Adds the Login Use Case to the application.
      * @return this builder
      */
     public AppBuilder addLoggedinUseCase() {
         final LoggedInOutputBoundary loggedInOutputBoundary = new LoggedInPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel, profileViewModel);
-        final LoggedInInputBoundary loggedInInteractor = new LoggedInInteractor(
-                (LoggedInUserDataAccessInterface) userDataAccessObject, loggedInOutputBoundary, userFactory);
+                loggedInViewModel, profileViewModel, historyViewModel, chatBotViewModel);
+        final LoggedInInputBoundary loggedInInteractor = new LoggedInInteractor(loggedInOutputBoundary, userFactory);
 
         final LoggedInController loggedInController = new LoggedInController(loggedInInteractor);
         loggedInView.setLoggedInController(loggedInController);
@@ -208,14 +240,24 @@ public class AppBuilder {
      */
     public AppBuilder addProfileUseCase() {
         final ProfileOutputBoundary profileOutputBoundary = new ProfilePresenter(viewManagerModel,
-                loggedInViewModel, profileViewModel);
-        final ProfileInputBoundary profileInteractor = new ProfileInteractor(
-                (ProfileUserDataAccessInterface) userDataAccessObject, profileOutputBoundary, userFactory);
+                loggedInViewModel, profileViewModel, changePasswordViewModel, loginViewModel, changeLanguageViewModel);
+        final ProfileInputBoundary profileInteractor = new ProfileInteractor(profileOutputBoundary, userFactory);
 
         final ProfileController controller = new ProfileController(profileInteractor);
         profileView.setProfileController(controller);
         return this;
     }
+
+    public AppBuilder addFileTranslationUseCase() {
+        FileTranslationInteractor fileTranslationInteractor = createFileTranslationInteractor();
+        FileTranslationController fileTranslationController = new FileTranslationController(fileTranslationInteractor);
+
+        // Inject the controller into the LoggedInView
+        loggedInView.setFileTranslationController(fileTranslationController);
+
+        return this;
+    }
+
 
     /**
      * Adds the ChatBot Use Case to the application.
@@ -249,6 +291,23 @@ public class AppBuilder {
 //        return this;
 //    }
 
+    private FileTranslationInteractor createFileTranslationInteractor() {
+        // Ensure dependencies are correctly initialized
+        if (loggedInView == null) {
+            throw new IllegalStateException("LoggedInView is not initialized");
+        }
+
+        // Initialize the FileTranslationService
+        FileTranslationService fileTranslationService = new FileTranslationService();
+
+        // Initialize the presenter for the FileTranslationInteractor
+        FileTranslationPresenter fileTranslationPresenter = new FileTranslationPresenter(loggedInView);
+
+        // Create and return the FileTranslationInteractor with required dependencies
+        return new FileTranslationInteractor(fileTranslationService, fileTranslationPresenter);
+    }
+
+
     /**
      * Creates the JFrame for the application and initially sets the SignupView to be displayed.
      * @return the application
@@ -259,12 +318,53 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(chatBotView.getViewName());
+        viewManagerModel.setState(signupView.getViewName());
         viewManagerModel.firePropertyChanged();
 
         return application;
     }
 
     public LoggedInView getLoggedInView() {
-    return loggedInView;}
+        return loggedInView;
+    }
+
+    public LoggedInViewModel getLoggedInViewModel() {
+        return loggedInViewModel;
+    }
+
+    public ProfileViewModel getProfileViewModel() {
+        return profileViewModel;
+    }
+
+    public ViewManagerModel getViewManagerModel() {
+        return viewManagerModel;
+    }
+
+    public UserFactory getUserFactory() {
+        return userFactory;
+    }
+
+    public ProfileView getProfileView() {
+        return profileView;
+    }
+
+    public ChangePasswordViewModel getChangePasswordViewModel() {
+        return changePasswordViewModel;
+    }
+
+    public ChangePasswordView getChangePasswordView() {
+        return changePasswordView;
+    }
+
+    public LoginViewModel getLoginViewModel() {
+        return loginViewModel;
+    }
+
+    public ChangeLanguageViewModel getChangeLanguageViewModel() {return changeLanguageViewModel;}
+
+    public ChangeLanguageView getChangeLanguageView() {return changeLanguageView;}
+
+    public HistoryView getHistoryView() {return historyView;}
+
+    public HistoryViewModel getHistoryViewModel() {return historyViewModel;}
 }

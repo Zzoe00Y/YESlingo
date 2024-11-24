@@ -7,8 +7,11 @@ import com.cohere.api.types.NonStreamedChatResponse;
 import entity.ChatMessage;
 import entity.User;
 import entity.UserFactory;
+import interface_adapter.chatbot.ChatBotState;
+import space.dynomake.libretranslate.Language;
+import space.dynomake.libretranslate.Translator;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * The ChatBot Interactor.
@@ -28,40 +31,68 @@ public class ChatBotInteractor implements ChatBotInputBoundary {
 
     @Override
     public void sendChat(ChatBotInputData chatbotInputData) {
-//        if (userDataAccessObject.existsByName(chatbotInputData.getUsername())) {
-            if (chatbotInputData.getInputLan().equals("English")){
-//                ChatMessage response = new ChatMessage("CHATBOT", "helllwwwwwwwwwwwwwwwwwwwww wwwwwwwwwwwwwwww\n" +
-//                        "wwwwwwwwwwwww wwwwwwwwwwwwwwww wwwwwwwwwwwmmm mmmmmmmmmmmmmm\nmmmmmmmmmmmmmmmmmmmmmmmmm mmmmmm" +
-//                        "" +
-//                        ":) 4444444444444" +
-//                        "\n\n\n\n hahahahaha");
-                ChatMessage response = generateResponse(chatbotInputData.getMessage(), chatbotInputData.getChannelID());
-//                userDataAccessObject.save(user);
+        final User user = userDataAccessObject.get(chatbotInputData.getUsername());
 
-                final ChatBotOutputData chatbotOutputData = new ChatBotOutputData(response);
-                userPresenter.displayResponse(chatbotOutputData);
-            }
-//        }
-//        else if (!chatbotInputData.getPassword().equals(chatbotInputData.getRepeatPassword())) {
-//            userPresenter.prepareFailView("Passwords don't match.");
-//        }
-//        else {
-//            final User user = userFactory.create(chatbotInputData.getUsername(), chatbotInputData.getPassword());
-//            userDataAccessObject.save(user);
-//
-//            final ChatBotOutputData chatbotOutputData = new ChatBotOutputData(user.getName(), false);
-//            userPresenter.prepareSuccessView(chatbotOutputData);
-//        }
+        String inputMessage = chatbotInputData.getMessage();
+        String inputLan = chatbotInputData.getInputLan();
+        String outputLan = chatbotInputData.getOutputLan();
+        String inputMessageEng = translate(inputMessage, inputLan, "ENGLISH");
+
+        ChatMessage responseEng = generateResponse(inputMessageEng, user.getChatHistoryMessagesEng());
+        String outputMessage = translate(responseEng.getMessage(), "ENGLISH", outputLan);
+        ChatMessage output = new ChatMessage("CHATBOT",outputMessage);
+
+        updateUserChatHistory(user, output, responseEng, new ChatMessage("USER", inputMessage), new ChatMessage("USER", inputMessageEng));
+
+        final ChatBotOutputData chatbotOutputData = new ChatBotOutputData(output);
+        userPresenter.displayResponse(chatbotOutputData);
     }
 
-    private ChatMessage generateResponse(String message, String channelID) {
-        Cohere cohere = Cohere.builder().token("O40OXvNOKzdUtm6vQlpLiE7erjfv81ZeFUeHbvmg").clientName("snippet").build();
+    private String translate(final String inputMessage, final String inputLan, final String outputLan) {
+        return Translator.translate(Language.valueOf(inputLan), Language.valueOf(outputLan), inputMessage);
+    }
+
+    private void updateUserChatHistory(User user, ChatMessage messageDisplayOut, ChatMessage messageEngOut, ChatMessage messageDisplayIn, ChatMessage messageEngIn) {
+        user.addChatHistoryMessagesDisplay(messageDisplayIn);
+        user.addChatHistoryMessagesDisplay(messageDisplayOut);
+        user.addChatHistoryMessagesEng(messageEngIn);
+        user.addChatHistoryMessagesEng(messageEngOut);
+        userDataAccessObject.save(user);
+    }
+
+    /**
+     * return a ChatMessage with role CHATBOT and response generated with API Cohere.
+     */
+    private ChatMessage generateResponse(String message, ArrayList<ChatMessage> chatHistoryMessages) {
+        Cohere cohere = Cohere.builder().token("O40OXvNOKzdUtm6vQlpLiE7erjfv81ZeFUeHbvmg").build();
+
+        ArrayList<Message> chatHistoryMessagesList = new ArrayList<>();
+        for (ChatMessage chatMessage : chatHistoryMessages) {
+            String role = chatMessage.getRole();
+            String value = chatMessage.getMessage();
+            com.cohere.api.types.ChatMessage m = com.cohere.api.types.ChatMessage.builder()
+                                                                                .message(value)
+                                                                                .build();
+            switch (role){
+                case "USER":
+                    chatHistoryMessagesList.add(Message.user(m));
+                    break;
+                case "CHATBOT":
+                    chatHistoryMessagesList.add(Message.chatbot(m));
+                    break;
+                case "SYSTEM":
+                    chatHistoryMessagesList.add(Message.system(m));
+                    break;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + role);
+            }
+        }
 
         NonStreamedChatResponse response =
                 cohere.chat(
                         ChatRequest.builder()
                                 .message(message)
-//                                .conversationId(channelID)
+                                .chatHistory(chatHistoryMessagesList)
                                 .build());
 
         return new ChatMessage("CHATBOT", response.getText());
@@ -70,5 +101,12 @@ public class ChatBotInteractor implements ChatBotInputBoundary {
     @Override
     public void switchToLoggedInView() {
         userPresenter.switchToLoggedInView();
+    }
+
+    @Override
+    public void pullUser(String userName) {
+        User user = userDataAccessObject.get(userName);
+        ChatBotState newState = new ChatBotState(userName, user.getInputLan(), user.getOutputLan(), user.getChatHistoryMessagesDisplay());
+        userPresenter.pullUser(newState);
     }
 }

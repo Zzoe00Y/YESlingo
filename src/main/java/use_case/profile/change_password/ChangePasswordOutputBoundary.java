@@ -15,4 +15,9 @@ public interface ChangePasswordOutputBoundary {
      * @param errorMessage the explanation of the failure
      */
     void prepareFailView(String errorMessage);
+
+    /**
+     * Switches to the Profile View.
+     */
+    void switchToProfileView();
 }

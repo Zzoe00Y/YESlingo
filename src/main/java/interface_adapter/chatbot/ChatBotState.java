@@ -9,15 +9,21 @@ import entity.ChatMessage;
 public class ChatBotState {
     private String username = "";
     private String userInput = "";
-    private String inputLan = "English";
-    private String outputLan = "English";
-    private String currentChatID = "";
-    private ArrayList<String> chatHistoryIds;
+    private String inputLan = "ENGLISH";
+    private String outputLan = "ENGLISH";
     private ArrayList<ChatMessage> chatHistoryMessages = new ArrayList<>();
     private ChatMessage newResponse;
 
     public ChatBotState() {
         chatHistoryMessages.add(new ChatMessage("SYSTEM", "Select an existing Chat Channel, or create a new Chat"));
+    }
+
+    public ChatBotState(String username, String inputLan, String outputLan, ArrayList<ChatMessage> chatHistoryMessages) {
+        this();
+        this.username = username;
+        this.inputLan = inputLan;
+        this.outputLan = outputLan;
+        this.chatHistoryMessages = chatHistoryMessages;
     }
 
     public ArrayList<ChatMessage> getChatHistoryMessages() {
@@ -38,14 +44,6 @@ public class ChatBotState {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public ArrayList<String> getChatHistoryIds() {
-        return chatHistoryIds;
-    }
-
-    public void setChatHistoryIds(ArrayList<String> chatHistoryIds) {
-        this.chatHistoryIds = chatHistoryIds;
     }
 
     public String getUserInput() {
@@ -70,15 +68,6 @@ public class ChatBotState {
 
     public void setOutputLan(String outputLan) {
         this.outputLan = outputLan;
-
-    }
-
-    public String getCurrentChatID() {
-        return currentChatID;
-    }
-
-    public void setCurrentChatID(String currentChatID) {
-        this.currentChatID = currentChatID;
     }
 
     public ChatMessage getNewResponse() {

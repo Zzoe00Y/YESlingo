@@ -11,4 +11,8 @@ public interface ChangePasswordInputBoundary {
      */
     void execute(ChangePasswordInputData changePasswordInputData);
 
+    /**
+     * Executes the switch to profile view use case.
+     */
+    void switchToProfileView();
 }

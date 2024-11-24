@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.ArrayList;
+
 /**
  * The representation of a user in our program.
  */
@@ -17,4 +19,19 @@ public interface User {
      */
     String getPassword();
 
+    String getOutputLan();
+
+    void setOutputLan(String outputLan);
+
+    String getInputLan();
+
+    void setInputLan(String inputLan);
+
+    ArrayList<ChatMessage> getChatHistoryMessagesDisplay();
+
+    void addChatHistoryMessagesDisplay(ChatMessage newMessagesDisplay);
+
+    ArrayList<ChatMessage> getChatHistoryMessagesEng();
+
+    void addChatHistoryMessagesEng(ChatMessage newMessagesEng);
 }

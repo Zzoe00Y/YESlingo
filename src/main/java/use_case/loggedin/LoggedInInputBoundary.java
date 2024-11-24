@@ -9,4 +9,11 @@ public interface LoggedInInputBoundary {
      * Executes the switch to profile view use case.
      */
     void switchToProfileView();
+
+    /**
+     * Executes the switch to chatBot view use case.
+     */
+    void switchToChatBotView(String username);
+
+    void switchToHistoryView();
 }

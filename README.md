@@ -23,8 +23,8 @@ The application also includes:
 ## Entities
 
 The primary entities within the application include:
-* User: Base class for all users with basic profile information and preferred language.\
-* TranslationHistory: Represents a record of past translations, containing details such as source text and translated text.\
+* User: Base class for all users with basic profile information and preferred language.
+* TranslationHistory: Represents a record of past translations, containing details such as source text and translated text.
 * ChatMessage: Represents messages exchanged in the chatbot feature.
 
 ## Use Cases
@@ -53,9 +53,8 @@ _DeleteSingleHistory_: Deletes individual entries from the translation history.
 
 ### Chatbot Use Case
 
-_CreateNewChat:_ Create a new chat channel allowing user to specifies the input/output language and channel name. \
-_EnterExistedChat:_ Pull chat setting and chat history from database and switch to that chat channel
-_GenerateResponse:_ Generate and display response to the user input after user click enter
+_sentChat:_ Generates and displays a response to user's input when user click sent button \
+_pullUser:_ Pull user information from DAO and update the chatBotView's state\
 
 ## Views
 
@@ -74,7 +73,7 @@ Navigation is handled by _ViewManager_, which manages transitions between views.
 ## Attributions
 
 API:
-1. Text to Text Translation: https://libretranslate.com/
+1. Text to Text Translation: [https://libretranslate.com/](https://mymemory.translated.net/)
 2. Image to Text API key: https://app.nanonets.com/#keys 33a63559-9ed3-11ef-9412-8ac686cb80af
-3. 
+3. ChatBot Cohere API: https://docs.cohere.com/v1/reference/chat O40OXvNOKzdUtm6vQlpLiE7erjfv81ZeFUeHbvmg
 
