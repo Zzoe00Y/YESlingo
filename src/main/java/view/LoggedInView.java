@@ -1,6 +1,7 @@
 package view;
 
 import interface_adapter.file_translation.FileTranslationController;
+import interface_adapter.history.HistoryController;
 import interface_adapter.loggedin_homepage.LoggedInState;
 import interface_adapter.loggedin_homepage.LoggedInViewModel;
 import interface_adapter.loggedin_homepage.LoggedInController;
@@ -187,6 +188,22 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
                         final LoggedInState currentState = loggedInViewModel.getState();
 
                         loggedInController.switchToChatBotView(currentState.getUsername());
+                    }
+                }
+        );
+
+        profileButton.addActionListener(
+                evt -> {
+                    if (evt.getSource().equals(profileButton)) {
+                        loggedInController.switchToProfileView();
+                    }
+                }
+        );
+
+        historyButton.addActionListener(
+                evt -> {
+                    if (evt.getSource().equals(historyButton)) {
+                        loggedInController.switchToHistoryView();
                     }
                 }
         );

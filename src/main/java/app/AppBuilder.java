@@ -226,7 +226,7 @@ public class AppBuilder {
      */
     public AppBuilder addLoggedinUseCase() {
         final LoggedInOutputBoundary loggedInOutputBoundary = new LoggedInPresenter(viewManagerModel,
-                loggedInViewModel, profileViewModel, chatBotViewModel);
+                loggedInViewModel, profileViewModel, historyViewModel, chatBotViewModel);
         final LoggedInInputBoundary loggedInInteractor = new LoggedInInteractor(loggedInOutputBoundary, userFactory);
 
         final LoggedInController loggedInController = new LoggedInController(loggedInInteractor);

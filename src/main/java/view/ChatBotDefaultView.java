@@ -210,15 +210,15 @@ public class ChatBotDefaultView extends JPanel implements ActionListener, Proper
         if (currentState.getChatHistoryMessages().isEmpty()) {
             String defaultMessage = "Select an existing Chat Channel, or create a new Chat";
             final JLabel noContentLabel = new JLabel(defaultMessage);
-            return new JScrollPane(noContentLabel);
+            messagePanel.add(noContentLabel, BorderLayout.CENTER);
         }
         // else, add the messages in the panel
         else {
             for(ChatMessage message: currentState.getChatHistoryMessages()){
                 addNewMessage(message);
             }
-            return new JScrollPane(messagePanel);
         }
+        return new JScrollPane(messagePanel);
     }
 
     /**
@@ -227,7 +227,6 @@ public class ChatBotDefaultView extends JPanel implements ActionListener, Proper
     private JPanel createContentPane() {
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout());
-
 
         messagePanel = new JPanel();
         messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.Y_AXIS));

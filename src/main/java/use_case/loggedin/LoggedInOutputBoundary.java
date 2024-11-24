@@ -12,4 +12,5 @@ public interface LoggedInOutputBoundary {
 
     void switchToChatBotView(String username);
 
+    void switchToHistoryView();
 }

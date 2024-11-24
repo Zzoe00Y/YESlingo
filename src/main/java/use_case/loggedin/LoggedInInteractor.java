@@ -25,4 +25,9 @@ public class LoggedInInteractor implements LoggedInInputBoundary{
         loggedInPresenter.switchToChatBotView(username);
     }
 
+    @Override
+    public void switchToHistoryView() {
+        loggedInPresenter.switchToHistoryView();
+    }
+
 }

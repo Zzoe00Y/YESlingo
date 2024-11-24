@@ -9,8 +9,8 @@ import entity.ChatMessage;
 public class ChatBotState {
     private String username = "";
     private String userInput = "";
-    private String inputLan = "English";
-    private String outputLan = "English";
+    private String inputLan = "ENGLISH";
+    private String outputLan = "ENGLISH";
     private ArrayList<ChatMessage> chatHistoryMessages = new ArrayList<>();
     private ChatMessage newResponse;
 
@@ -19,6 +19,7 @@ public class ChatBotState {
     }
 
     public ChatBotState(String username, String inputLan, String outputLan, ArrayList<ChatMessage> chatHistoryMessages) {
+        this();
         this.username = username;
         this.inputLan = inputLan;
         this.outputLan = outputLan;
