@@ -11,6 +11,9 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.chatbot.ChatBotViewModel;
 import interface_adapter.file_translation.FileTranslationController;
 import interface_adapter.file_translation.FileTranslationPresenter;
+import interface_adapter.history.HistoryController;
+import interface_adapter.history.HistoryPresenter;
+import interface_adapter.history.HistoryViewModel;
 import interface_adapter.loggedin_homepage.LoggedInController;
 import interface_adapter.loggedin_homepage.LoggedInPresenter;
 import interface_adapter.loggedin_homepage.LoggedInViewModel;
@@ -28,6 +31,8 @@ import interface_adapter.text_translation.TextTranslationController;
 import interface_adapter.text_translation.TextTranslationPresenter;
 import use_case.file_translation.FileTranslationInteractor;
 import use_case.file_translation.FileTranslationOutputBoundary;
+import use_case.history.HistoryInteractor;
+import use_case.history.HistoryOutputBoundary;
 import use_case.loggedin.LoggedInInputBoundary;
 import use_case.loggedin.LoggedInInteractor;
 import use_case.loggedin.LoggedInOutputBoundary;
@@ -63,6 +68,7 @@ public class Main {
                 .addProfileView()
                 .addChangePasswordView()
                 .addChangeLanguageView()
+                .addHistoryView()
                 .addChatBotView()
                 .addSignupUseCase()
                 .addLoginUseCase()
@@ -143,5 +149,12 @@ public class Main {
         ChangeLanguageInteractor changeLanguageUseCaseInteractor = new ChangeLanguageInteractor(changeLanguagePresenter, userFactory);
         ChangeLanguageController changeLanguageController = new ChangeLanguageController(changeLanguageUseCaseInteractor);
         changeLanguageView.setChangeLanguageController(changeLanguageController);
+
+        HistoryViewModel historyViewModel = appBuilder.getHistoryViewModel();
+        HistoryView historyView = appBuilder.getHistoryView();
+        HistoryPresenter historyPresenter = new HistoryPresenter(viewManagerModel, loggedInViewModel, historyViewModel);
+        HistoryInteractor historyInteractor = new HistoryInteractor(historyPresenter, userFactory);
+        HistoryController historyController = new HistoryController(historyInteractor);
+        historyView.setHistoryController(historyController);
     }
 }

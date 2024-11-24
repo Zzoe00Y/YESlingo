@@ -23,7 +23,7 @@ public class FileTranslationInteractor implements FileTranslationInputBoundary {
             // Check if the file is a `.txt` file
             if (inputData.getFilePath().endsWith(".txt")) {
                 // Translate the text content of the file
-                String translatedText = fileTranslationService.translateFile(
+                String translatedText = fileTranslationService.translate(
                         inputData.getFilePath(),
                         inputData.getSourceLanguage(),
                         inputData.getTargetLanguage()

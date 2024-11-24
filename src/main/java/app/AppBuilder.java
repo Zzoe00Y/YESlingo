@@ -15,6 +15,7 @@ import external_services.TextToTextTranslationService;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.file_translation.FileTranslationController;
 import interface_adapter.file_translation.FileTranslationPresenter;
+import interface_adapter.history.HistoryViewModel;
 import interface_adapter.loggedin_homepage.LoggedInController;
 import interface_adapter.loggedin_homepage.LoggedInPresenter;
 import interface_adapter.loggedin_homepage.LoggedInViewModel;
@@ -94,6 +95,8 @@ public class AppBuilder {
     private ChangePasswordView changePasswordView;
     private ChangeLanguageViewModel changeLanguageViewModel;
     private ChangeLanguageView changeLanguageView;
+    private HistoryViewModel historyViewModel;
+    private HistoryView historyView;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -166,6 +169,17 @@ public class AppBuilder {
     }
 
     /**
+     * Adds the Profile View to the application.
+     * @return this builder
+     */
+    public AppBuilder addHistoryView() {
+        historyViewModel = new HistoryViewModel();
+        historyView = new HistoryView(historyViewModel);
+        cardPanel.add(historyView, historyView.getViewName());
+        return this;
+    }
+
+    /**
      * Adds the ChatBot View to the application.
      * @return this builder
      */
@@ -205,22 +219,6 @@ public class AppBuilder {
         loginView.setLoginController(loginController);
         return this;
     }
-
-//    /**
-//     * Adds the Logout Use Case to the application.
-//     * @return this builder
-//     */
-//    public AppBuilder addLogoutUseCase() {
-//        final LogoutOutputBoundary logoutOutputBoundary = new LogoutPresenter(viewManagerModel,
-//                loggedInViewModel, loginViewModel);
-//
-//        final LogoutInputBoundary logoutInteractor =
-//                new LogoutInteractor(userDataAccessObject, logoutOutputBoundary);
-//
-//        final LogoutController logoutController = new LogoutController(logoutInteractor);
-//        loggedInView.setLogoutController(logoutController);
-//        return this;
-//    }
 
     /**
      * Adds the Login Use Case to the application.
@@ -365,4 +363,8 @@ public class AppBuilder {
     public ChangeLanguageViewModel getChangeLanguageViewModel() {return changeLanguageViewModel;}
 
     public ChangeLanguageView getChangeLanguageView() {return changeLanguageView;}
+
+    public HistoryView getHistoryView() {return historyView;}
+
+    public HistoryViewModel getHistoryViewModel() {return historyViewModel;}
 }
