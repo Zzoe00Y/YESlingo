@@ -24,8 +24,8 @@ public class LoggedInController {
     /**
      * Executes the "switch to ProfileView" Use Case.
      */
-    public void switchToHistoryView() {
-        loggedInUseCaseInteractor.switchToHistoryView();
+    public void switchToHistoryView(String username) {
+        loggedInUseCaseInteractor.switchToHistoryView(username);
     }
 
     /**
