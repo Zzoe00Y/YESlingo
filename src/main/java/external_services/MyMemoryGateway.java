@@ -1,11 +1,12 @@
 package external_services;
 
 import entity.Translation;
+import entity.User;
 import okhttp3.*;
 import org.json.JSONObject;
 import use_case.text_translation.TextTranslationDataAccessInterface;
 
-public class MyMemoryGateway implements TextTranslationDataAccessInterface {
+public class MyMemoryGateway{
     private final String API_URL = "https://api.mymemory.translated.net/get";
     private final OkHttpClient client;
 
@@ -17,7 +18,7 @@ public class MyMemoryGateway implements TextTranslationDataAccessInterface {
                 .build();
     }
 
-    @Override
+//    @Override
     public Translation translateText(String sourceText, String sourceLang, String targetLang) {
         try {
             System.out.println("Sending translation request to API: " + API_URL);

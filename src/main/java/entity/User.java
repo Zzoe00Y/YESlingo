@@ -34,4 +34,8 @@ public interface User {
     ArrayList<ChatMessage> getChatHistoryMessagesEng();
 
     void addChatHistoryMessagesEng(ChatMessage newMessagesEng);
+
+    ArrayList<String> getHistory();
+
+    void setHistory(ArrayList<String> history);
 }

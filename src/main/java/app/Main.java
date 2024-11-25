@@ -88,14 +88,13 @@ public class Main {
         LoggedInView loggedInView = appBuilder.getLoggedInView();
 
         // Initialize gateway and service for translation
-        TextTranslationDataAccessInterface textTranslationDataAccessInterface = new MyMemoryGateway();
 
         // Set up text translation components
         TextTranslationOutputBoundary textTranslationOutputBoundary =
                 new TextTranslationPresenter(loggedInView);
 
         TextTranslationInteractor textTranslationInteractor =
-                new TextTranslationInteractor(textTranslationDataAccessInterface, textTranslationOutputBoundary);
+                new TextTranslationInteractor(appBuilder.getUserDataAccessObject(), textTranslationOutputBoundary);
 
         TextTranslationController textTranslationController =
                 new TextTranslationController(textTranslationInteractor);

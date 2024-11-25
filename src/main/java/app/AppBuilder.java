@@ -123,6 +123,10 @@ public class AppBuilder {
         return this;
     }
 
+    public InMemoryUserDataAccessObject getUserDataAccessObject() {
+        return userDataAccessObject;
+    }
+
     /**
      * Adds the Login View to the application.
      * @return this builder
@@ -290,7 +294,7 @@ public class AppBuilder {
      */
     public AppBuilder addHistoryUseCase() {
         final HistoryOutputBoundary historyOutputBoundary = new HistoryPresenter(viewManagerModel, loggedInViewModel, historyViewModel);
-        final HistoryInputBoundary historyInteractor = new HistoryInteractor(historyOutputBoundary, userFactory);
+        final HistoryInputBoundary historyInteractor = new HistoryInteractor(userDataAccessObject, historyOutputBoundary, userFactory);
 
         final HistoryController controller = new HistoryController(historyInteractor);
         historyView.setHistoryController(controller);
