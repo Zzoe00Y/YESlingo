@@ -317,10 +317,20 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addFileTranslationUseCase() {
-        FileTranslationInteractor fileTranslationInteractor = createFileTranslationInteractor();
-        FileTranslationController fileTranslationController = new FileTranslationController(fileTranslationInteractor);
+        FileTranslationService fileTranslationService = new FileTranslationService();
 
-        // Inject the controller into the LoggedInView
+        FileTranslationOutputBoundary fileTranslationOutputBoundary =
+                new FileTranslationPresenter(loggedInView);
+
+        FileTranslationInteractor fileTranslationInteractor =
+                new FileTranslationInteractor(
+                        fileTranslationService,
+                        fileTranslationOutputBoundary
+                );
+
+        FileTranslationController fileTranslationController =
+                new FileTranslationController(fileTranslationInteractor);
+
         loggedInView.setFileTranslationController(fileTranslationController);
 
         return this;
