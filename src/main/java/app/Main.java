@@ -100,22 +100,6 @@ public class Main {
 
         loggedInView.setTextTranslationController(textTranslationController);
 
-        FileTranslationService fileTranslationService = new FileTranslationService();
-
-        FileTranslationOutputBoundary fileTranslationOutputBoundary =
-                new FileTranslationPresenter(loggedInView);
-
-        FileTranslationInteractor fileTranslationInteractor =
-                new FileTranslationInteractor(
-                        fileTranslationService,
-                        fileTranslationOutputBoundary
-                );
-
-        FileTranslationController fileTranslationController =
-                new FileTranslationController(fileTranslationInteractor);
-
-        loggedInView.setFileTranslationController(fileTranslationController);
-
         ViewManagerModel viewManagerModel = appBuilder.getViewManagerModel();
         LoggedInViewModel loggedInViewModel = appBuilder.getLoggedInViewModel();
         ProfileViewModel profileViewModel = appBuilder.getProfileViewModel();
