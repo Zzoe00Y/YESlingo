@@ -72,11 +72,13 @@ public class Main {
                 .addChatBotView()
                 .addSignupUseCase()
                 .addLoginUseCase()
-                                            .addLoggedinUseCase()
-                //.addProfileUseCase()
+                .addLoggedinUseCase()
+                .addProfileUseCase()
+                .addChangePasswordUseCase()
+                .addChangeLanguageUseCase()
+                .addHistoryUseCase()
+                .addHistoryUseCase()
                 .addChatBotUseCase()
-//                                            .addChangePasswordUseCase()
-//                                            .addLogoutUseCase()
                 .build();
 
         application.pack();
@@ -115,46 +117,5 @@ public class Main {
                 new FileTranslationController(fileTranslationInteractor);
 
         loggedInView.setFileTranslationController(fileTranslationController);
-
-        ViewManagerModel viewManagerModel = appBuilder.getViewManagerModel();
-        LoggedInViewModel loggedInViewModel = appBuilder.getLoggedInViewModel();
-        ProfileViewModel profileViewModel = appBuilder.getProfileViewModel();
-        UserFactory userFactory = appBuilder.getUserFactory();
-
-        LoggedInOutputBoundary loggedInOutputBoundary = new LoggedInPresenter(viewManagerModel, loggedInViewModel, profileViewModel, new HistoryViewModel(), new ChatBotViewModel());
-        LoggedInInteractor loggedInInteractor = new LoggedInInteractor(loggedInOutputBoundary, userFactory);
-        LoggedInController loggedInController = new LoggedInController(loggedInInteractor);
-//        loggedInView.setLoggedInController(loggedInController);
-
-        ProfileView profileView = appBuilder.getProfileView();
-        ChangePasswordViewModel changePasswordViewModel = appBuilder.getChangePasswordViewModel();
-        LoginViewModel loginViewModel = appBuilder.getLoginViewModel();
-        ChangeLanguageViewModel changeLanguageViewModel = appBuilder.getChangeLanguageViewModel();
-        ProfilePresenter profilePresenter = new ProfilePresenter(viewManagerModel, loggedInViewModel, profileViewModel,
-                changePasswordViewModel, loginViewModel, changeLanguageViewModel);
-        ProfileInteractor profileInteractor = new ProfileInteractor(profilePresenter, userFactory);
-        ProfileController profileController = new ProfileController(profileInteractor);
-        profileView.setProfileController(profileController);
-
-
-        ChangePasswordView changePasswordView = appBuilder.getChangePasswordView();
-        ChangePasswordPresenter changePasswordPresenter = new ChangePasswordPresenter(viewManagerModel, changePasswordViewModel, profileViewModel);
-        ChangePasswordInteractor changePasswordUseCaseInteractor = new ChangePasswordInteractor(changePasswordPresenter, userFactory);
-        ChangePasswordController changePasswordController = new ChangePasswordController(changePasswordUseCaseInteractor);
-        changePasswordView.setChangePasswordController(changePasswordController);
-
-
-        ChangeLanguageView changeLanguageView = appBuilder.getChangeLanguageView();
-        ChangeLanguagePresenter changeLanguagePresenter = new ChangeLanguagePresenter(viewManagerModel, changeLanguageViewModel, profileViewModel);
-        ChangeLanguageInteractor changeLanguageUseCaseInteractor = new ChangeLanguageInteractor(changeLanguagePresenter, userFactory);
-        ChangeLanguageController changeLanguageController = new ChangeLanguageController(changeLanguageUseCaseInteractor);
-        changeLanguageView.setChangeLanguageController(changeLanguageController);
-
-        HistoryViewModel historyViewModel = appBuilder.getHistoryViewModel();
-        HistoryView historyView = appBuilder.getHistoryView();
-        HistoryPresenter historyPresenter = new HistoryPresenter(viewManagerModel, loggedInViewModel, historyViewModel);
-        HistoryInteractor historyInteractor = new HistoryInteractor(historyPresenter, userFactory);
-        HistoryController historyController = new HistoryController(historyInteractor);
-        historyView.setHistoryController(historyController);
     }
 }
