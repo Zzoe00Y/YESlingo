@@ -221,7 +221,7 @@ public class AppBuilder {
      */
     public AppBuilder addLoginUseCase() {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel, signupViewModel);
+                loggedInViewModel, loginViewModel, signupViewModel, profileViewModel, changePasswordViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, loginOutputBoundary);
 
@@ -264,7 +264,7 @@ public class AppBuilder {
      */
     public AppBuilder addChangePasswordUseCase() {
         final ChangePasswordOutputBoundary changePasswordOutputBoundary = new ChangePasswordPresenter(viewManagerModel, changePasswordViewModel, profileViewModel);
-        final ChangePasswordInputBoundary changePasswordInteractor = new ChangePasswordInteractor(changePasswordOutputBoundary, userFactory);
+        final ChangePasswordInputBoundary changePasswordInteractor = new ChangePasswordInteractor(changePasswordOutputBoundary, userFactory, userDataAccessObject);
 
         final ChangePasswordController controller = new ChangePasswordController(changePasswordInteractor);
         changePasswordView.setChangePasswordController(controller);

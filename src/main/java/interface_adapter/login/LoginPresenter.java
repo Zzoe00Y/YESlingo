@@ -3,9 +3,15 @@ package interface_adapter.login;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.loggedin_homepage.LoggedInState;
 import interface_adapter.loggedin_homepage.LoggedInViewModel;
+import interface_adapter.profile.ProfileState;
+import interface_adapter.profile.ProfileViewModel;
+import interface_adapter.profile.change_password.ChangePasswordPresenter;
+import interface_adapter.profile.change_password.ChangePasswordState;
+import interface_adapter.profile.change_password.ChangePasswordViewModel;
 import interface_adapter.signup.SignupViewModel;
 import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginOutputData;
+import view.ChangePasswordView;
 
 /**
  * The Presenter for the Login Use Case.
@@ -16,15 +22,21 @@ public class LoginPresenter implements LoginOutputBoundary {
     private final LoggedInViewModel loggedInViewModel;
     private final ViewManagerModel viewManagerModel;
     private final SignupViewModel signupViewModel;
+    private final ProfileViewModel profileViewModel;
+    private final ChangePasswordViewModel changePasswordViewModel;
 
     public LoginPresenter(ViewManagerModel viewManagerModel,
                           LoggedInViewModel loggedInViewModel,
                           LoginViewModel loginViewModel,
-                          SignupViewModel signupViewModel) {
+                          SignupViewModel signupViewModel,
+                          ProfileViewModel profileViewModel,
+                          ChangePasswordViewModel changePasswordViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInViewModel;
         this.loginViewModel = loginViewModel;
         this.signupViewModel = signupViewModel;
+        this.profileViewModel = profileViewModel;
+        this.changePasswordViewModel = changePasswordViewModel;
     }
 
     @Override
@@ -35,6 +47,18 @@ public class LoginPresenter implements LoginOutputBoundary {
         loggedInState.setUsername(response.getUsername());
         this.loggedInViewModel.setState(loggedInState);
         this.loggedInViewModel.firePropertyChanged();
+
+        final ProfileState profileState = profileViewModel.getState();
+        profileState.setUsername(response.getUsername());
+        profileState.setPassword(response.getPassword());
+        this.profileViewModel.setState(profileState);
+        this.profileViewModel.firePropertyChanged();
+
+        final ChangePasswordState changePasswordState = changePasswordViewModel.getState();
+        changePasswordState.setUsername(response.getUsername());
+        changePasswordState.setOldPassword(response.getPassword());
+        this.changePasswordViewModel.setState(changePasswordState);
+        this.changePasswordViewModel.firePropertyChanged();
 
         this.viewManagerModel.setState(loggedInViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();

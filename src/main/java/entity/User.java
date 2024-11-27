@@ -19,6 +19,8 @@ public interface User {
      */
     String getPassword();
 
+    void setPassword(String password);
+
     String getOutputLan();
 
     void setOutputLan(String outputLan);
