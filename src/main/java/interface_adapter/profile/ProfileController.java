@@ -1,5 +1,6 @@
 package interface_adapter.profile;
 
+import use_case.login.LoginOutputData;
 import use_case.profile.ProfileInputBoundary;
 
 public class ProfileController {
@@ -19,8 +20,8 @@ public class ProfileController {
     /**
      * Executes the "switch to ChangePasswordView" Use Case.
      */
-    public void switchToChangePasswordView() {
-        profileInteractor.switchToChangePasswordView();
+    public void switchToChangePasswordView(LoginOutputData loginOutputData) {
+        profileInteractor.switchToChangePasswordView(loginOutputData);
     }
 
     /**

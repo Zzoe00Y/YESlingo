@@ -3,6 +3,7 @@ package view;
 import interface_adapter.profile.ProfileController;
 import interface_adapter.profile.ProfileState;
 import interface_adapter.profile.ProfileViewModel;
+import use_case.login.LoginOutputData;
 
 import javax.swing.*;
 import java.awt.*;
@@ -78,7 +79,9 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
         changePassword.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        profileController.switchToChangePasswordView();
+                        final ProfileState currentState = profileViewModel.getState();
+                        LoginOutputData loginOutputData = new LoginOutputData(currentState.getUsername(), currentState.getPassword(), false);
+                        profileController.switchToChangePasswordView(loginOutputData);
                     }
                 }
         );

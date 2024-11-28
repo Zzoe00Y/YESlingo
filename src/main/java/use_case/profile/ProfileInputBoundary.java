@@ -1,5 +1,7 @@
 package use_case.profile;
 
+import use_case.login.LoginOutputData;
+
 public interface ProfileInputBoundary {
 
     /**
@@ -10,7 +12,7 @@ public interface ProfileInputBoundary {
     /**
      * Executes the switch to change password view use case.
      */
-    void switchToChangePasswordView();
+    void switchToChangePasswordView(LoginOutputData loginOutputData);
 
     /**
      * Executes the switch to log in view use case.

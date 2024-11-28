@@ -1,6 +1,8 @@
 package use_case.profile;
 
 import entity.UserFactory;
+import use_case.login.LoginOutputBoundary;
+import use_case.login.LoginOutputData;
 
 /**
  * The Profile Interactor.
@@ -21,8 +23,8 @@ public class ProfileInteractor implements ProfileInputBoundary {
     }
 
     @Override
-    public void switchToChangePasswordView() {
-        profilePresenter.switchToChangePasswordView();
+    public void switchToChangePasswordView(LoginOutputData loginOutputData) {
+        profilePresenter.switchToChangePasswordView(loginOutputData);
     }
 
     public void switchToLogInView() {
