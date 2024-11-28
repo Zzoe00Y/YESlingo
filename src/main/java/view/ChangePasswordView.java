@@ -36,10 +36,6 @@ public class ChangePasswordView extends JPanel implements ActionListener, Proper
         final LabelTextPanel repeatNewPassword = new LabelTextPanel(new JLabel("Repeat new password: "), repeatNewPasswordField);
         final JButton ok = new JButton("OK");
 
-        addOldPasswordListener();
-        addNewPasswordListener();
-        addRepeatNewPasswordListener();
-
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
@@ -87,6 +83,10 @@ public class ChangePasswordView extends JPanel implements ActionListener, Proper
                     }
                 }
         );
+
+        addOldPasswordListener();
+        addNewPasswordListener();
+        addRepeatNewPasswordListener();
     }
 
     private void addOldPasswordListener() {
@@ -94,7 +94,7 @@ public class ChangePasswordView extends JPanel implements ActionListener, Proper
 
             private void documentListenerHelper() {
                 final ChangePasswordState currentState = changePasswordViewModel.getState();
-                currentState.setOldPassword(new String(oldPasswordField.getText()));
+                currentState.setOldPassword(oldPasswordField.getText());
                 changePasswordViewModel.setState(currentState);
             }
 
@@ -120,7 +120,7 @@ public class ChangePasswordView extends JPanel implements ActionListener, Proper
 
             private void documentListenerHelper() {
                 final ChangePasswordState currentState = changePasswordViewModel.getState();
-                currentState.setNewPassword(new String(newPasswordField.getText()));
+                currentState.setNewPassword(newPasswordField.getText());
                 changePasswordViewModel.setState(currentState);
             }
 
@@ -146,7 +146,7 @@ public class ChangePasswordView extends JPanel implements ActionListener, Proper
 
             private void documentListenerHelper() {
                 final ChangePasswordState currentState = changePasswordViewModel.getState();
-                currentState.setNewPassword(new String(repeatNewPasswordField.getText()));
+                currentState.setRepeatPassword(repeatNewPasswordField.getText());
                 changePasswordViewModel.setState(currentState);
             }
 
@@ -169,6 +169,7 @@ public class ChangePasswordView extends JPanel implements ActionListener, Proper
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        JOptionPane.showMessageDialog(this, "Cancel not implemented yet.");
     }
 
     @Override

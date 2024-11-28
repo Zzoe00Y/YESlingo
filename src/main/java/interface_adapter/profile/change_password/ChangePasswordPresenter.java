@@ -28,7 +28,7 @@ public class ChangePasswordPresenter implements ChangePasswordOutputBoundary {
     @Override
     public void prepareSuccessView(ChangePasswordOutputData response) {
         final ProfileState profileState = profileViewModel.getState();
-        profileState.setUsername(response.getUsername());
+        //profileState.setUsername(response.getUsername());
         profileState.setPassword(response.getPassword());
         this.profileViewModel.setState(profileState);
         profileViewModel.firePropertyChanged();
