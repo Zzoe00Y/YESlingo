@@ -11,11 +11,14 @@ import use_case.history.HistoryOutputBoundary;
 public class HistoryPresenter implements HistoryOutputBoundary {
 
     private final ViewManagerModel viewManagerModel;
+    private final HistoryViewModel historyViewModel;
     private final LoggedInViewModel loggedInViewModel;
 
     public HistoryPresenter(ViewManagerModel viewManagerModel,
+                            HistoryViewModel historyViewModel,
                             LoggedInViewModel loggedInViewModel) {
         this.viewManagerModel = viewManagerModel;
+        this.historyViewModel = historyViewModel;
         this.loggedInViewModel = loggedInViewModel;
     }
 

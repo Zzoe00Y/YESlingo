@@ -290,8 +290,8 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addHistoryUseCase() {
-        final HistoryOutputBoundary historyOutputBoundary = new HistoryPresenter(viewManagerModel, loggedInViewModel);
-        final HistoryInputBoundary historyInteractor = new HistoryInteractor(historyOutputBoundary, userFactory);
+        final HistoryOutputBoundary historyOutputBoundary = new HistoryPresenter(viewManagerModel, historyViewModel, loggedInViewModel);
+        final HistoryInputBoundary historyInteractor = new HistoryInteractor(userDataAccessObject, historyOutputBoundary, userFactory);
 
 
         final HistoryController controller = new HistoryController(historyInteractor);
