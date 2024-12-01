@@ -7,24 +7,24 @@ import interface_adapter.profile.change_language.ChangeLanguageViewModel;
 import interface_adapter.profile.change_password.ChangePasswordViewModel;
 import use_case.profile.ProfileOutputBoundary;
 
+/**
+ * The Presenter for the Profile Use Case.
+ */
 public class ProfilePresenter implements ProfileOutputBoundary {
 
     private final ViewManagerModel viewManagerModel;
     private final LoggedInViewModel loggedInViewModel;
-    private final ProfileViewModel profileViewModel;
     private final ChangePasswordViewModel changePasswordViewModel;
     private final LoginViewModel loginViewModel;
     private final ChangeLanguageViewModel changeLanguageViewModel;
 
     public ProfilePresenter(ViewManagerModel viewManagerModel,
                             LoggedInViewModel loggedInViewModel,
-                            ProfileViewModel profileViewModel,
                             ChangePasswordViewModel changePasswordViewModel,
                             LoginViewModel loginViewModel,
                             ChangeLanguageViewModel changeLanguageViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInViewModel;
-        this.profileViewModel = profileViewModel;
         this.changePasswordViewModel = changePasswordViewModel;
         this.loginViewModel = loginViewModel;
         this.changeLanguageViewModel = changeLanguageViewModel;
@@ -44,7 +44,6 @@ public class ProfilePresenter implements ProfileOutputBoundary {
 
     @Override
     public void switchToLogInView() {
-
         viewManagerModel.setState(loginViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }

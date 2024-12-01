@@ -15,6 +15,11 @@ public class ChangeLanguageController {
         this.changeLanguageUseCaseInteractor = changeLanguageUseCaseInteractor;
     }
 
+    /**
+     * Executes the Change Language Case.
+     * @param username the username of the user
+     * @param selectedLanguage the default language of the user
+     */
     public void execute(String username, ChangeLanguageView.LanguageItem selectedLanguage) {
         final ChangeLanguageInputData changeLanguageInputData = new ChangeLanguageInputData(username, selectedLanguage);
         changeLanguageUseCaseInteractor.execute(changeLanguageInputData);

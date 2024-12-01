@@ -83,39 +83,5 @@ public class Main {
 
         application.pack();
         application.setVisible(true);
-
-        // Get reference to LoggedInView
-        LoggedInView loggedInView = appBuilder.getLoggedInView();
-
-        // Initialize gateway and service for translation
-        TextTranslationDataAccessInterface textTranslationDataAccessInterface = new MyMemoryGateway();
-
-        // Set up text translation components
-        TextTranslationOutputBoundary textTranslationOutputBoundary =
-                new TextTranslationPresenter(loggedInView);
-
-        TextTranslationInteractor textTranslationInteractor =
-                new TextTranslationInteractor(textTranslationDataAccessInterface, textTranslationOutputBoundary);
-
-        TextTranslationController textTranslationController =
-                new TextTranslationController(textTranslationInteractor);
-
-        loggedInView.setTextTranslationController(textTranslationController);
-
-        FileTranslationService fileTranslationService = new FileTranslationService();
-
-        FileTranslationOutputBoundary fileTranslationOutputBoundary =
-                new FileTranslationPresenter(loggedInView);
-
-        FileTranslationInteractor fileTranslationInteractor =
-                new FileTranslationInteractor(
-                        fileTranslationService,
-                        fileTranslationOutputBoundary
-                );
-
-        FileTranslationController fileTranslationController =
-                new FileTranslationController(fileTranslationInteractor);
-
-        loggedInView.setFileTranslationController(fileTranslationController);
     }
 }

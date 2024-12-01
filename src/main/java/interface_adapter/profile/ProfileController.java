@@ -1,8 +1,10 @@
 package interface_adapter.profile;
 
-import use_case.login.LoginOutputData;
 import use_case.profile.ProfileInputBoundary;
 
+/**
+ * Controller for the Profile Use Case.
+ */
 public class ProfileController {
     private final ProfileInputBoundary profileInteractor;
 

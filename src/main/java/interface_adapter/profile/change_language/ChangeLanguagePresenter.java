@@ -6,6 +6,9 @@ import interface_adapter.profile.ProfileViewModel;
 import use_case.profile.change_language.ChangeLanguageOutputBoundary;
 import use_case.profile.change_language.ChangeLanguageOutputData;
 
+/**
+ * The Presenter for the Change Language Use Case.
+ */
 public class ChangeLanguagePresenter implements ChangeLanguageOutputBoundary {
 
     private final ViewManagerModel viewManagerModel;
@@ -37,6 +40,7 @@ public class ChangeLanguagePresenter implements ChangeLanguageOutputBoundary {
         //TODO textTranslation
 
     }
+
     public void switchToProfileView(){
         viewManagerModel.setState(profileViewModel.getViewName());
         viewManagerModel.firePropertyChanged();

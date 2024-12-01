@@ -10,8 +10,6 @@ import data_access.InMemoryUserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.UserFactory;
 import external_services.FileTranslationService;
-import external_services.MyMemoryGateway;
-import external_services.TextToTextTranslationService;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.file_translation.FileTranslationController;
 import interface_adapter.file_translation.FileTranslationPresenter;
@@ -250,7 +248,7 @@ public class AppBuilder {
      */
     public AppBuilder addProfileUseCase() {
         final ProfileOutputBoundary profileOutputBoundary = new ProfilePresenter(viewManagerModel,
-                loggedInViewModel, profileViewModel, changePasswordViewModel, loginViewModel, changeLanguageViewModel);
+                loggedInViewModel, changePasswordViewModel, loginViewModel, changeLanguageViewModel);
         final ProfileInputBoundary profileInteractor = new ProfileInteractor(profileOutputBoundary);
 
         final ProfileController controller = new ProfileController(profileInteractor);
@@ -289,7 +287,7 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addHistoryUseCase() {
-        final HistoryOutputBoundary historyOutputBoundary = new HistoryPresenter(viewManagerModel, loggedInViewModel, historyViewModel);
+        final HistoryOutputBoundary historyOutputBoundary = new HistoryPresenter(viewManagerModel, loggedInViewModel);
         final HistoryInputBoundary historyInteractor = new HistoryInteractor(historyOutputBoundary, userFactory);
 
         final HistoryController controller = new HistoryController(historyInteractor);
@@ -327,18 +325,13 @@ public class AppBuilder {
     }
 
     private FileTranslationInteractor createFileTranslationInteractor() {
-        // Ensure dependencies are correctly initialized
         if (loggedInView == null) {
             throw new IllegalStateException("LoggedInView is not initialized");
         }
 
-        // Initialize the FileTranslationService
         FileTranslationService fileTranslationService = new FileTranslationService();
-
-        // Initialize the presenter for the FileTranslationInteractor
         FileTranslationPresenter fileTranslationPresenter = new FileTranslationPresenter(loggedInView);
 
-        // Create and return the FileTranslationInteractor with required dependencies
         return new FileTranslationInteractor(fileTranslationService, fileTranslationPresenter);
     }
 
@@ -358,48 +351,4 @@ public class AppBuilder {
 
         return application;
     }
-
-    public LoggedInView getLoggedInView() {
-        return loggedInView;
-    }
-
-    public LoggedInViewModel getLoggedInViewModel() {
-        return loggedInViewModel;
-    }
-
-    public ProfileViewModel getProfileViewModel() {
-        return profileViewModel;
-    }
-
-    public ViewManagerModel getViewManagerModel() {
-        return viewManagerModel;
-    }
-
-    public UserFactory getUserFactory() {
-        return userFactory;
-    }
-
-    public ProfileView getProfileView() {
-        return profileView;
-    }
-
-    public ChangePasswordViewModel getChangePasswordViewModel() {
-        return changePasswordViewModel;
-    }
-
-    public ChangePasswordView getChangePasswordView() {
-        return changePasswordView;
-    }
-
-    public LoginViewModel getLoginViewModel() {
-        return loginViewModel;
-    }
-
-    public ChangeLanguageViewModel getChangeLanguageViewModel() {return changeLanguageViewModel;}
-
-    public ChangeLanguageView getChangeLanguageView() {return changeLanguageView;}
-
-    public HistoryView getHistoryView() {return historyView;}
-
-    public HistoryViewModel getHistoryViewModel() {return historyViewModel;}
 }

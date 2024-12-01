@@ -10,17 +10,9 @@ public class ProfileState {
     private String password = "";
     private String language = "English";
 
-    public ProfileState(ProfileState copy) {
-        this.username = copy.username;
-        this.password = copy.password;
-        this.language = copy.language;
+    public String getUsername() {
+        return username;
     }
-
-    public ProfileState() {
-
-    }
-
-    public String getUsername() { return username; }
 
     public void setUsername(String username) {
         this.username = username;
