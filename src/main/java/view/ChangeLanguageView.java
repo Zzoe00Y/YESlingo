@@ -24,7 +24,7 @@ public class ChangeLanguageView extends JPanel implements ActionListener, Proper
         final String displayName;
         final String code;
 
-        LanguageItem(String displayName, String code) {
+        public LanguageItem(String displayName, String code) {
             this.displayName = displayName;
             this.code = code;
         }

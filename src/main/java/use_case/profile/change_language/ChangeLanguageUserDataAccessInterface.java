@@ -4,7 +4,9 @@ import entity.User;
 import view.ChangeLanguageView;
 
 public interface ChangeLanguageUserDataAccessInterface {
+
     void changeOutputLanguage(String username, ChangeLanguageView.LanguageItem selectedLanguage);
 
-    //User get(String username);
+    void save(User user);
+
 }
