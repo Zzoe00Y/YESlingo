@@ -4,11 +4,7 @@ import javax.swing.JFrame;
 
 import external_services.FileTranslationService;
 import external_services.TextTranslationService;
-import external_services.MyMemoryGateway;
-import external_services.TextToTextTranslationService;
-import external_services.SpeechToTextService;  // ADDING VOICE TRANSLATION SERVICE IMPORT
-import interface_adapter.ViewManagerModel;
-import interface_adapter.chatbot.ChatBotViewModel;
+import external_services.SpeechToTextService;
 import interface_adapter.file_translation.FileTranslationController;
 import interface_adapter.file_translation.FileTranslationPresenter;
 import interface_adapter.text_translation.TextTranslationController;
@@ -20,7 +16,6 @@ import use_case.file_translation.FileTranslationOutputBoundary;
 import use_case.text_translation.TextTranslationDataAccessInterface;
 import use_case.text_translation.TextTranslationInteractor;
 import use_case.text_translation.TextTranslationOutputBoundary;
-import use_case.text_translation.TextTranslationUseCase;
 import use_case.voice_translation.VoiceTranslationInteractor;  // VOICE TRANSLATION INTERACTOR IMPORT
 import use_case.voice_translation.VoiceTranslationOutputBoundary;  // VOICE TRANSLATION OUTPUT BOUNDARY IMPORT
 import view.*;
