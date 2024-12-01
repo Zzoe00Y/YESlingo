@@ -1,7 +1,6 @@
 package view;
 
 import interface_adapter.file_translation.FileTranslationController;
-import interface_adapter.history.HistoryController;
 import interface_adapter.loggedin_homepage.LoggedInState;
 import interface_adapter.loggedin_homepage.LoggedInViewModel;
 import interface_adapter.loggedin_homepage.LoggedInController;
@@ -188,14 +187,14 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
             if (voiceTranslationController != null) {
                 LanguageItem sourceItem = (LanguageItem) inputLanguageComboBox.getSelectedItem();
                 LanguageItem targetItem = (LanguageItem) outputLanguageComboBox.getSelectedItem();
-                if (sourceItem != null && targetItem != null && !sourceItem.code.equals(targetItem.code)) {
+                if (sourceItem != null && sourceItem.code == "en" && targetItem != null && !sourceItem.code.equals(targetItem.code)) {
                     // Specify the silence threshold in milliseconds (adjust as needed)
-                    long silenceThresholdMillis = 1000; // Example: 1 second of silence ends the recognition
 
                     // Pass the parameters to the controller
-                    voiceTranslationController.translateVoice();
+                    voiceTranslationController.speechToText();
                 } else {
-                    JOptionPane.showMessageDialog(this, "Select valid and different source/target languages.");
+                    JOptionPane.showMessageDialog(this, "Select valid and different source/target languages. \n" +
+                            "Voice Input only supports English!");
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Voice translation is not available.");

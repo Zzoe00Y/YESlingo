@@ -24,13 +24,10 @@ public class VoiceTranslationController {
      * Initiates the voice translation process.
      * Converts speech to text, then translates the text.
      */
-    public void translateVoice() {
+    public void speechToText() {
         System.out.println("Controller received voice translation request");
         try {
-            // Step 1: Create input data for the interactor
-            // VoiceTranslationInputData inputData = new VoiceTranslationInputData(sourceLang, targetLang);
 
-            // Step 2: Delegate the task to the interactor to handle speech recognition and translation
             voiceTranslationInteractor.translate();
 
         } catch (Exception e) {
