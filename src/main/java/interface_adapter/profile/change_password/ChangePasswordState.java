@@ -10,19 +10,6 @@ public class ChangePasswordState {
     private String oldPassword = "";
     private String oldPasswordError;
 
-//    public ChangePasswordState(ChangePasswordState copy) {
-//        this.username = copy.username;
-//        this.newPassword = copy.newPassword;
-//        this.repeatPassword = copy.repeatPassword;
-//        this.oldPassword = copy.oldPassword;
-//        this.oldPasswordError = copy.oldPasswordError;
-//        this.repeatPasswordError = copy.repeatPasswordError;
-//    }
-//
-//    public ChangePasswordState() {
-//
-//    }
-
     public String getUsername() { return username; }
 
     public void setUsername(String username) { this.username = username; }
