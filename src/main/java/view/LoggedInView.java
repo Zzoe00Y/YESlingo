@@ -187,17 +187,15 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
             if (voiceTranslationController != null) {
                 LanguageItem sourceItem = (LanguageItem) inputLanguageComboBox.getSelectedItem();
                 LanguageItem targetItem = (LanguageItem) outputLanguageComboBox.getSelectedItem();
-                if (sourceItem != null && sourceItem.code == "en" && targetItem != null && !sourceItem.code.equals(targetItem.code)) {
-                    // Specify the silence threshold in milliseconds (adjust as needed)
-
-                    // Pass the parameters to the controller
+                if (sourceItem != null && sourceItem.code.equals("en") && targetItem != null &&
+                        !sourceItem.code.equals(targetItem.code)) {
                     voiceTranslationController.speechToText();
                 } else {
                     JOptionPane.showMessageDialog(this, "Select valid and different source/target languages. \n" +
                             "Voice Input only supports English!");
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Voice translation is not available.");
+                JOptionPane.showMessageDialog(this, "Speech to Text is not available.");
             }
         });
 
