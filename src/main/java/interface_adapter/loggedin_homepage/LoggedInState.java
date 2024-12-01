@@ -5,7 +5,6 @@ package interface_adapter.loggedin_homepage;
  */
 public class LoggedInState {
     private String username = "";
-
     private String password = "";
     private String passwordError;
 

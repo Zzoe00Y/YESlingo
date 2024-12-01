@@ -1,6 +1,7 @@
 package use_case.text_translation;
 
 import entity.Translation;
+import entity.User;
 
 /**
  * Gateway interface for text translation operations.
@@ -17,4 +18,17 @@ public interface TextTranslationDataAccessInterface {
      * @throws RuntimeException if the translation operation fails
      */
     Translation translateText(String sourceText, String sourceLang, String targetLang);
+
+    /**
+     * Saves the user.
+     * @param user the user to save
+     */
+    void save(User user);
+
+    /**
+     * return the user
+     * @param username the username of the user
+     * @return the User object
+     */
+    User get(String username);
 }

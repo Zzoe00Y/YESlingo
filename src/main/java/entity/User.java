@@ -19,6 +19,8 @@ public interface User {
      */
     String getPassword();
 
+    void setPassword(String password);
+
     String getOutputLan();
 
     void setOutputLan(String outputLan);
@@ -34,4 +36,8 @@ public interface User {
     ArrayList<ChatMessage> getChatHistoryMessagesEng();
 
     void addChatHistoryMessagesEng(ChatMessage newMessagesEng);
+
+    ArrayList<String> getHistory();
+
+    void setHistory(ArrayList<String> history);
 }

@@ -118,6 +118,10 @@ public class AppBuilder {
         return this;
     }
 
+    public InMemoryUserDataAccessObject getUserDataAccessObject() {
+        return userDataAccessObject;
+    }
+
     /**
      * Adds the Login View to the application.
      * @return this builder
@@ -216,7 +220,8 @@ public class AppBuilder {
      */
     public AppBuilder addLoginUseCase() {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel, signupViewModel);
+                loggedInViewModel, loginViewModel, signupViewModel, profileViewModel, changePasswordViewModel, changeLanguageViewModel);
+      
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, loginOutputBoundary);
 
@@ -245,8 +250,9 @@ public class AppBuilder {
      */
     public AppBuilder addProfileUseCase() {
         final ProfileOutputBoundary profileOutputBoundary = new ProfilePresenter(viewManagerModel,
-                loggedInViewModel, profileViewModel, changePasswordViewModel, loginViewModel, changeLanguageViewModel);
-        final ProfileInputBoundary profileInteractor = new ProfileInteractor(profileOutputBoundary, userFactory);
+                loggedInViewModel, changePasswordViewModel, loginViewModel, changeLanguageViewModel);
+
+        final ProfileInputBoundary profileInteractor = new ProfileInteractor(profileOutputBoundary);
 
         final ProfileController controller = new ProfileController(profileInteractor);
         profileView.setProfileController(controller);
@@ -258,8 +264,8 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addChangePasswordUseCase() {
-        final ChangePasswordOutputBoundary changePasswordOutputBoundary = new ChangePasswordPresenter(viewManagerModel, changePasswordViewModel, profileViewModel);
-        final ChangePasswordInputBoundary changePasswordInteractor = new ChangePasswordInteractor(changePasswordOutputBoundary, userFactory);
+        final ChangePasswordOutputBoundary changePasswordOutputBoundary = new ChangePasswordPresenter(viewManagerModel, changePasswordViewModel, profileViewModel, loginViewModel);
+        final ChangePasswordInputBoundary changePasswordInteractor = new ChangePasswordInteractor(changePasswordOutputBoundary, userDataAccessObject);
 
         final ChangePasswordController controller = new ChangePasswordController(changePasswordInteractor);
         changePasswordView.setChangePasswordController(controller);
@@ -272,7 +278,7 @@ public class AppBuilder {
      */
     public AppBuilder addChangeLanguageUseCase() {
         final ChangeLanguageOutputBoundary changeLanguageOutputBoundary = new ChangeLanguagePresenter(viewManagerModel, changeLanguageViewModel, profileViewModel);
-        final ChangeLanguageInputBoundary changeLanguageInteractor = new ChangeLanguageInteractor(changeLanguageOutputBoundary, userFactory);
+        final ChangeLanguageInputBoundary changeLanguageInteractor = new ChangeLanguageInteractor(changeLanguageOutputBoundary, userDataAccessObject);
 
         final ChangeLanguageController controller = new ChangeLanguageController(changeLanguageInteractor);
         changeLanguageView.setChangeLanguageController(controller);
@@ -284,8 +290,9 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addHistoryUseCase() {
-        final HistoryOutputBoundary historyOutputBoundary = new HistoryPresenter(viewManagerModel, loggedInViewModel, historyViewModel);
+        final HistoryOutputBoundary historyOutputBoundary = new HistoryPresenter(viewManagerModel, loggedInViewModel);
         final HistoryInputBoundary historyInteractor = new HistoryInteractor(historyOutputBoundary, userFactory);
+
 
         final HistoryController controller = new HistoryController(historyInteractor);
         historyView.setHistoryController(controller);
@@ -322,18 +329,13 @@ public class AppBuilder {
     }
 
     private FileTranslationInteractor createFileTranslationInteractor() {
-        // Ensure dependencies are correctly initialized
         if (loggedInView == null) {
             throw new IllegalStateException("LoggedInView is not initialized");
         }
 
-        // Initialize the FileTranslationService
         FileTranslationService fileTranslationService = new FileTranslationService();
-
-        // Initialize the presenter for the FileTranslationInteractor
         FileTranslationPresenter fileTranslationPresenter = new FileTranslationPresenter(loggedInView);
 
-        // Create and return the FileTranslationInteractor with required dependencies
         return new FileTranslationInteractor(fileTranslationService, fileTranslationPresenter);
     }
 
@@ -354,3 +356,4 @@ public class AppBuilder {
         return application;
     }
 }
+

@@ -13,6 +13,7 @@ public class CommonUser implements User {
     private String outputLan = "ENGLISH";
     private ArrayList<ChatMessage> chatHistoryMessagesDisplay = new ArrayList<>();
     private ArrayList<ChatMessage> chatHistoryMessagesEng = new ArrayList<>();
+    private ArrayList<String> history = new ArrayList<>();
 
     public CommonUser(String name, String password) {
         this.name = name;
@@ -28,6 +29,9 @@ public class CommonUser implements User {
     public String getPassword() {
         return password;
     }
+
+    @Override
+    public void setPassword(String password) {this.password = password;}
 
     @Override
     public String getOutputLan() {
@@ -67,5 +71,15 @@ public class CommonUser implements User {
     @Override
     public void addChatHistoryMessagesEng(ChatMessage newMessagesEng) {
         this.chatHistoryMessagesEng.add(newMessagesEng);
+    }
+
+    @Override
+    public ArrayList<String> getHistory() {
+        return history;
+    }
+
+    @Override
+    public void setHistory(ArrayList<String> history) {
+        this.history = history;
     }
 }

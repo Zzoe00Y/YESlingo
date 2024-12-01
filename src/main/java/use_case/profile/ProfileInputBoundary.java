@@ -1,5 +1,7 @@
 package use_case.profile;
 
+import use_case.login.LoginOutputData;
+
 public interface ProfileInputBoundary {
 
     /**

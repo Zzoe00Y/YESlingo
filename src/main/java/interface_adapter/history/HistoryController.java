@@ -2,6 +2,9 @@ package interface_adapter.history;
 
 import use_case.history.HistoryInputBoundary;
 
+/**
+ * Controller for the History Use Case.
+ */
 public class HistoryController {
     private HistoryInputBoundary historyInteractor;
 
@@ -14,5 +17,13 @@ public class HistoryController {
      */
     public void switchToLoggedInView() {
         historyInteractor.switchToLoggedInView();
+    }
+
+    public void pullUser(String username) {
+        historyInteractor.pullUser(username);
+    }
+
+    public void clearAll(String username) {
+        historyInteractor.clearAll(username);
     }
 }

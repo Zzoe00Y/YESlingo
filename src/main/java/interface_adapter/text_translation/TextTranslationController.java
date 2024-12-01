@@ -26,13 +26,15 @@ public class TextTranslationController {
      * @param text the text to be translated
      * @param sourceLang the language code of the source text (e.g., "en" for English)
      * @param targetLang the language code of the desired translation (e.g., "es" for Spanish)
+     * @param username the username of the currently logged in user
      */
-    public void translate(String text, String sourceLang, String targetLang) {
-        System.out.println("Controller received translation request"); // Debug print
+    public void translate(String text, String sourceLang, String targetLang, String username) {
+        System.out.println("Controller received translation request");
         TextTranslationInputData requestModel = new TextTranslationInputData(
                 text,
                 sourceLang,
-                targetLang
+                targetLang,
+                username
         );
         translationInteractor.translate(requestModel);
     }
