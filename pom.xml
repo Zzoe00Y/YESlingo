@@ -106,4 +106,13 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+<!--    <plugin>-->
+<!--        <groupId>org.apache.maven.plugins</groupId>-->
+<!--        <artifactId>maven-checkstyle-plugin</artifactId>-->
+<!--        <version>3.2.0</version> &lt;!&ndash; 对应 Checkstyle 10.x &ndash;&gt;-->
+<!--        <configuration>-->
+<!--            <configLocation>checkstyle.xml</configLocation>-->
+<!--        </configuration>-->
+<!--    </plugin>-->
+
 </project>
