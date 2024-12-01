@@ -1,5 +1,6 @@
 package interface_adapter.profile.change_language;
 
+import external_services.TextTranslationService;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.profile.ProfileState;
 import interface_adapter.profile.ProfileViewModel;
@@ -34,15 +35,15 @@ public class ChangeLanguagePresenter implements ChangeLanguageOutputBoundary {
         changeLanguageState.setLanguage(language);
         this.changeLanguageViewModel.setState(changeLanguageState);
 
+
         viewManagerModel.setState(profileViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
-
-        //TODO textTranslation
-
     }
 
-    public void switchToProfileView(){
+
+    public void switchToProfileView() {
         viewManagerModel.setState(profileViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 }
+

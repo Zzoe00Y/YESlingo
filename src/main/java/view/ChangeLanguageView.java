@@ -124,3 +124,4 @@ public class ChangeLanguageView extends JPanel implements ActionListener, Proper
         this.changeLanguageController = changeLanguageController;
     }
 }
+

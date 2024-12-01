@@ -13,6 +13,7 @@ import use_case.text_translation.TextTranslationDataAccessInterface;
 public class TextTranslationService implements TextTranslationDataAccessInterface {
     private static final String API_URL = "https://api.mymemory.translated.net/get";
     private final OkHttpClient client;
+    private String defaultTargetLanguage = "en";
 
     public TextTranslationService() {
         this.client = new OkHttpClient.Builder()
@@ -75,5 +76,13 @@ public class TextTranslationService implements TextTranslationDataAccessInterfac
                 translatedText.toUpperCase().contains("ERROR")) {
             throw new RuntimeException("Translation failed: " + translatedText);
         }
+    }
+
+    public void setDefaultTargetLanguage(String languageCode) {
+        this.defaultTargetLanguage = languageCode;
+    }
+
+    public String getDefaultTargetLanguage() {
+        return defaultTargetLanguage;
     }
 }

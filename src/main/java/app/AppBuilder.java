@@ -290,11 +290,20 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addChangeLanguageUseCase() {
-        final ChangeLanguageOutputBoundary changeLanguageOutputBoundary = new ChangeLanguagePresenter(viewManagerModel, changeLanguageViewModel, profileViewModel);
-        final ChangeLanguageInputBoundary changeLanguageInteractor = new ChangeLanguageInteractor(changeLanguageOutputBoundary, userDataAccessObject);
+        TextTranslationDataAccessInterface translationService = new TextTranslationService();
+
+        final ChangeLanguageOutputBoundary changeLanguageOutputBoundary = new ChangeLanguagePresenter(
+                viewManagerModel,
+                changeLanguageViewModel,
+                profileViewModel
+        );
+
+        final ChangeLanguageInputBoundary changeLanguageInteractor =
+                new ChangeLanguageInteractor(changeLanguageOutputBoundary, userDataAccessObject);
 
         final ChangeLanguageController controller = new ChangeLanguageController(changeLanguageInteractor);
         changeLanguageView.setChangeLanguageController(controller);
+
         return this;
     }
 
