@@ -12,7 +12,7 @@ public interface ProfileInputBoundary {
     /**
      * Executes the switch to change password view use case.
      */
-    void switchToChangePasswordView(LoginOutputData loginOutputData);
+    void switchToChangePasswordView();
 
     /**
      * Executes the switch to log in view use case.

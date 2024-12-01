@@ -9,7 +9,6 @@ public class ChangePasswordState {
     private String repeatPassword = "";
     private String oldPassword = "";
     private String oldPasswordError;
-    private String repeatPasswordError;
 
 //    public ChangePasswordState(ChangePasswordState copy) {
 //        this.username = copy.username;
@@ -52,12 +51,6 @@ public class ChangePasswordState {
 
     public void setOldPasswordError(String oldPasswordError) {
         this.oldPasswordError = oldPasswordError;
-    }
-
-    public String getRepeatPasswordError() { return repeatPasswordError; }
-
-    public void setRepeatPasswordError(String repeatPasswordError) {
-        this.repeatPasswordError = repeatPasswordError;
     }
 
 }

@@ -10,15 +10,12 @@ import javax.swing.*;
  */
 public class ChangePasswordInteractor implements ChangePasswordInputBoundary {
     private final ChangePasswordOutputBoundary changePasswordPresenter;
-    private final UserFactory userFactory;
     private final ChangePasswordUserDataAccessInterface changePasswordUserDataAccessObject;
 
     public ChangePasswordInteractor(ChangePasswordOutputBoundary changePasswordOutputBoundary,
-                                    UserFactory userFactory,
                                     ChangePasswordUserDataAccessInterface changePasswordUserDataAccessInterface
                                     ) {
         this.changePasswordPresenter = changePasswordOutputBoundary;
-        this.userFactory = userFactory;
         this.changePasswordUserDataAccessObject = changePasswordUserDataAccessInterface;
     }
 

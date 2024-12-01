@@ -61,6 +61,10 @@ public class ChangePasswordView extends JPanel implements ActionListener, Proper
         gbc.gridy = 4;
         this.add(ok, gbc);
 
+        addOldPasswordListener();
+        addNewPasswordListener();
+        addRepeatNewPasswordListener();
+
         exit.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
@@ -72,21 +76,17 @@ public class ChangePasswordView extends JPanel implements ActionListener, Proper
         ok.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(ok)) {
+                        //if (evt.getSource().equals(ok)) {
                             final ChangePasswordState currentState = changePasswordViewModel.getState();
                             changePasswordController.execute(currentState.getUsername(),
                                                              currentState.getNewPassword(),
                                                              currentState.getRepeatPassword(),
                                                              currentState.getOldPassword()
                             );
-                        }
                     }
+
                 }
         );
-
-        addOldPasswordListener();
-        addNewPasswordListener();
-        addRepeatNewPasswordListener();
     }
 
     private void addOldPasswordListener() {

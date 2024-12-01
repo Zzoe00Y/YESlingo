@@ -20,8 +20,8 @@ public class ProfileController {
     /**
      * Executes the "switch to ChangePasswordView" Use Case.
      */
-    public void switchToChangePasswordView(LoginOutputData loginOutputData) {
-        profileInteractor.switchToChangePasswordView(loginOutputData);
+    public void switchToChangePasswordView() {
+        profileInteractor.switchToChangePasswordView();
     }
 
     /**

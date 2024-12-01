@@ -79,9 +79,7 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
         changePassword.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        final ProfileState currentState = profileViewModel.getState();
-                        LoginOutputData loginOutputData = new LoginOutputData(currentState.getUsername(), currentState.getPassword(), false);
-                        profileController.switchToChangePasswordView(loginOutputData);
+                        profileController.switchToChangePasswordView();
                     }
                 }
         );
