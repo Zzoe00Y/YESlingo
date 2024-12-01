@@ -41,6 +41,5 @@ public class ChangePasswordInteractor implements ChangePasswordInputBoundary {
     @Override
     public void switchToProfileView() {
         changePasswordPresenter.switchToProfileView();
-
     }
 }

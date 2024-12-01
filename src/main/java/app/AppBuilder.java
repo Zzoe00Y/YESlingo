@@ -370,7 +370,6 @@ public class AppBuilder {
         return new VoiceTranslationInteractor(speechToTextService, voiceTranslationPresenter);
     }
 
-
     /**
      * Creates the JFrame for the application and initially sets the SignupView to be displayed.
      * @return the application
