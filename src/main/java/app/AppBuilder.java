@@ -339,7 +339,6 @@ public class AppBuilder {
         return new FileTranslationInteractor(fileTranslationService, fileTranslationPresenter);
     }
 
-
     /**
      * Creates the JFrame for the application and initially sets the SignupView to be displayed.
      * @return the application
