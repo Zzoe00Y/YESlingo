@@ -30,7 +30,7 @@ public class TextTranslationController {
      */
     public void translate(String text, String sourceLang, String targetLang, String username) {
         System.out.println("Controller received translation request");
-        TextTranslationInputData requestModel = new TextTranslationInputData(
+        final TextTranslationInputData requestModel = new TextTranslationInputData(
                 text,
                 sourceLang,
                 targetLang,

@@ -32,6 +32,7 @@ public class Main {
                 .addHistoryUseCase()
                 .addHistoryUseCase()
                 .addChatBotUseCase()
+                .addTextTranslationUseCase()
                 .addVoiceTranslationUseCase()
                 .addFileTranslationUseCase()
                 .build();
