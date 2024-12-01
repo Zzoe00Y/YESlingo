@@ -223,6 +223,7 @@ public class AppBuilder {
     public AppBuilder addLoginUseCase() {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
                 loggedInViewModel, loginViewModel, signupViewModel, profileViewModel, changePasswordViewModel, changeLanguageViewModel);
+      
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, loginOutputBoundary);
 
@@ -252,6 +253,7 @@ public class AppBuilder {
     public AppBuilder addProfileUseCase() {
         final ProfileOutputBoundary profileOutputBoundary = new ProfilePresenter(viewManagerModel,
                 loggedInViewModel, changePasswordViewModel, loginViewModel, changeLanguageViewModel);
+
         final ProfileInputBoundary profileInteractor = new ProfileInteractor(profileOutputBoundary);
 
         final ProfileController controller = new ProfileController(profileInteractor);

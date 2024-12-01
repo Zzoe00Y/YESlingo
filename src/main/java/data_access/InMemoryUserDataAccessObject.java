@@ -119,6 +119,7 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
         // Replace the old entry with the new password
         this.currentPassword = password;
         get(user.getName()).setPassword(password);
+
     }
 
     @Override

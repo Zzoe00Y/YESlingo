@@ -44,6 +44,7 @@ public class ProfilePresenter implements ProfileOutputBoundary {
 
     @Override
     public void switchToLogInView() {
+
         viewManagerModel.setState(loginViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }

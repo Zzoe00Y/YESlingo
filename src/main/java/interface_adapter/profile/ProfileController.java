@@ -1,5 +1,6 @@
 package interface_adapter.profile;
 
+import use_case.login.LoginOutputData;
 import use_case.profile.ProfileInputBoundary;
 
 /**

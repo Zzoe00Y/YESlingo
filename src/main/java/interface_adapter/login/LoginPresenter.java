@@ -35,6 +35,7 @@ public class LoginPresenter implements LoginOutputBoundary {
                           ProfileViewModel profileViewModel,
                           ChangePasswordViewModel changePasswordViewModel,
                           ChangeLanguageViewModel changeLanguageViewModel) {
+
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInViewModel;
         this.loginViewModel = loginViewModel;
@@ -66,7 +67,6 @@ public class LoginPresenter implements LoginOutputBoundary {
         final ChangeLanguageState changeLanguageState = changeLanguageViewModel.getState();
         changeLanguageState.setUsername(response.getUsername());
         this.changeLanguageViewModel.setState(changeLanguageState);
-
         this.viewManagerModel.setState(loggedInViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
     }
