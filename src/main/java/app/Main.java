@@ -2,24 +2,6 @@ package app;
 
 import javax.swing.JFrame;
 
-import external_services.FileTranslationService;
-import external_services.TextTranslationService;
-import external_services.SpeechToTextService;
-import interface_adapter.file_translation.FileTranslationController;
-import interface_adapter.file_translation.FileTranslationPresenter;
-import interface_adapter.text_translation.TextTranslationController;
-import interface_adapter.text_translation.TextTranslationPresenter;
-import interface_adapter.voice_translation.VoiceTranslationController;  // IMPORT FOR VOICE TRANSLATION CONTROLLER
-import interface_adapter.voice_translation.VoiceTranslationPresenter;  // IMPORT FOR VOICE TRANSLATION PRESENTER
-import use_case.file_translation.FileTranslationInteractor;
-import use_case.file_translation.FileTranslationOutputBoundary;
-import use_case.text_translation.TextTranslationDataAccessInterface;
-import use_case.text_translation.TextTranslationInteractor;
-import use_case.text_translation.TextTranslationOutputBoundary;
-import use_case.voice_translation.VoiceTranslationInteractor;  // VOICE TRANSLATION INTERACTOR IMPORT
-import use_case.voice_translation.VoiceTranslationOutputBoundary;  // VOICE TRANSLATION OUTPUT BOUNDARY IMPORT
-import view.*;
-
 import java.io.IOException;
 
 /**
@@ -50,6 +32,8 @@ public class Main {
                 .addHistoryUseCase()
                 .addHistoryUseCase()
                 .addChatBotUseCase()
+                .addVoiceTranslationUseCase()
+                .addFileTranslationUseCase()
                 .build();
 
         application.pack();
