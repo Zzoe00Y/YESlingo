@@ -10,8 +10,6 @@ import data_access.InMemoryUserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.UserFactory;
 import external_services.FileTranslationService;
-import external_services.MyMemoryGateway;
-import external_services.TextToTextTranslationService;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.file_translation.FileTranslationController;
 import interface_adapter.file_translation.FileTranslationPresenter;
@@ -66,7 +64,6 @@ import use_case.profile.change_password.ChangePasswordOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import use_case.text_translation.TextTranslationUseCase;
 import view.*;
 
 /**
@@ -320,25 +317,15 @@ public class AppBuilder {
      * Adds the File Translation Use Case to the application.
      * @return this builder
      */
-//    public AppBuilder addFileTranslationUseCase() {
-//        FileTranslationService fileTranslationService = new FileTranslationService();
-//
-//        FileTranslationOutputBoundary fileTranslationOutputBoundary =
-//                new FileTranslationPresenter(loggedInView);
-//
-//        FileTranslationInteractor fileTranslationInteractor =
-//                new FileTranslationInteractor(
-//                        fileTranslationService,
-//                        fileTranslationOutputBoundary
-//                );
-//
-//        FileTranslationController fileTranslationController =
-//                new FileTranslationController(fileTranslationInteractor);
-//
-//        loggedInView.setFileTranslationController(fileTranslationController);
-//
-//        return this;
-//    }
+    public AppBuilder addFileTranslationUseCase() {
+        FileTranslationInteractor fileTranslationInteractor = createFileTranslationInteractor();
+        FileTranslationController fileTranslationController = new FileTranslationController(fileTranslationInteractor);
+
+        // Inject the controller into the LoggedInView
+        loggedInView.setFileTranslationController(fileTranslationController);
+
+        return this;
+    }
 
     private FileTranslationInteractor createFileTranslationInteractor() {
         // Ensure dependencies are correctly initialized
