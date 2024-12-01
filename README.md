@@ -12,7 +12,7 @@ Yuchen Zhao(emily-zhao-zz)
 
 YESlingo is a translator application platform that provides users with translation capabilities across various mediums. It supports:
 * **Text Translation**: Allows users to translate text into a specified language.
-* **Image Translation**: Enables users to upload images, extract text, and translate them (such as reading signs, menus, and documents).
+* **File Translation**: Enables users to upload files, extract text, and translate them.
 * **Speech Translation**: Uses voice input to recognize and translate spoken language.
 
 The application also includes:
@@ -43,7 +43,7 @@ _Logout:_ Logs users out of their account.
 ### Translation Use Cases
 
 _ProcessTextTranslation:_ Handles the text translation.\
-_ProcessImageTranslation:_ Manages text extraction from images and translation.\
+_ProcessFileTranslation:_ Manages text extraction from files and translation.\
 _ProcessSpeechTranslation:_ Manages voice recognition and translation.
 
 ### History Use Cases
@@ -74,6 +74,6 @@ Navigation is handled by _ViewManager_, which manages transitions between views.
 
 API:
 1. Text to Text Translation: [https://libretranslate.com/](https://mymemory.translated.net/)
-2. Image to Text API key: https://app.nanonets.com/#keys 33a63559-9ed3-11ef-9412-8ac686cb80af
+2. File to Text API key: https://libretranslate.com/translate
 3. ChatBot Cohere API: https://docs.cohere.com/v1/reference/chat O40OXvNOKzdUtm6vQlpLiE7erjfv81ZeFUeHbvmg
 
