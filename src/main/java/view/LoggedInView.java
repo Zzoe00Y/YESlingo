@@ -1,12 +1,12 @@
 package view;
 
 import interface_adapter.file_translation.FileTranslationController;
-import interface_adapter.history.HistoryController;
 import interface_adapter.loggedin_homepage.LoggedInState;
 import interface_adapter.loggedin_homepage.LoggedInViewModel;
 import interface_adapter.loggedin_homepage.LoggedInController;
 import interface_adapter.text_translation.TextTranslationController;
 import interface_adapter.translation.TranslationViewInterface;
+import interface_adapter.voice_translation.VoiceTranslationController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,6 +20,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
     private LoggedInController loggedInController;
     private FileTranslationController fileTranslationController;
     private TextTranslationController textTranslationController;
+    private VoiceTranslationController voiceTranslationController;
 
     private final JLabel usernameLabel;
     private final JComboBox<LanguageItem> inputLanguageComboBox;
@@ -182,6 +183,22 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
             }
         });
 
+        voiceInputButton.addActionListener(e -> {
+            if (voiceTranslationController != null) {
+                LanguageItem sourceItem = (LanguageItem) inputLanguageComboBox.getSelectedItem();
+                LanguageItem targetItem = (LanguageItem) outputLanguageComboBox.getSelectedItem();
+                if (sourceItem != null && sourceItem.code.equals("en") && targetItem != null &&
+                        !sourceItem.code.equals(targetItem.code)) {
+                    voiceTranslationController.speechToText();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Select valid and different source/target languages. \n" +
+                            "Voice Input only supports English!");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Speech to Text is not available.");
+            }
+        });
+
         chatBotButton.addActionListener(
                 evt -> {
                     if (evt.getSource().equals(chatBotButton)) {
@@ -228,6 +245,10 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
         }
     }
 
+    public void displayRecognizedText(String recognizedText) {
+        SwingUtilities.invokeLater(() -> textArea.setText(recognizedText));
+    }
+
     public String getViewName() {
         return viewName;
     }
@@ -242,5 +263,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
 
     public void setFileTranslationController(FileTranslationController controller) {
         this.fileTranslationController = controller;
+    }
+
+    public void setVoiceTranslationController(VoiceTranslationController controller) {
+        this.voiceTranslationController = controller;
     }
 }
