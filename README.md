@@ -3,7 +3,7 @@ Group 177's CSC207 Final Project
 
 ## Team members(github username):
 Yucan Miao(heibaihaiermao)\
-Zhuxin Sun(juliexsun)\
+Zhu Xin Sun(juliexsun)\
 Ying Zhang(Zzoe00Y)\
 Jiner Zhang(jinerfreya)\
 Yuchen Zhao(emily-zhao-zz)
@@ -80,6 +80,7 @@ API:
 1. Text to Text Translation: [https://libretranslate.com/](https://mymemory.translated.net/)
 2. File to Text API key: https://libretranslate.com/translate
 3. ChatBot Cohere API: https://docs.cohere.com/v1/reference/chat O40OXvNOKzdUtm6vQlpLiE7erjfv81ZeFUeHbvmg
+4. Speech to Text API - Sphinx4: https://cmusphinx.github.io/doc/sphinx4/javadoc/
 
 
 ## License
