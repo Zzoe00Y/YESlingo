@@ -17,7 +17,6 @@ import java.util.Map;
  */
 public class FileUserDataAccessObject implements SignupUserDataAccessInterface,
                                                  LoginUserDataAccessInterface,
-                                                 ChangePasswordUserDataAccessInterface,
         ChatBotUserDataAccessInterface {
 
     private static final String HEADER = "username,password";
@@ -105,8 +104,7 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface,
         return accounts.containsKey(identifier);
     }
 
-    @Override
-    public void changePassword(User user) {
+    public void changePassword(User user, String newPassword) {
         // Replace the User object in the map
         accounts.put(user.getName(), user);
         save();

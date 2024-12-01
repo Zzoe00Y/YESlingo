@@ -6,8 +6,7 @@ package use_case.signup;
 public class SignupOutputData {
 
     private final String username;
-
-    private final boolean useCaseFailed;
+    private boolean useCaseFailed = false;
 
     public SignupOutputData(String username, boolean useCaseFailed) {
         this.username = username;
@@ -16,9 +15,5 @@ public class SignupOutputData {
 
     public String getUsername() {
         return username;
-    }
-
-    public boolean isUseCaseFailed() {
-        return useCaseFailed;
     }
 }

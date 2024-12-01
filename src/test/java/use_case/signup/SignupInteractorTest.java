@@ -42,6 +42,34 @@ class SignupInteractorTest {
     }
 
     @Test
+    void switchToLoginViewTest() {
+        SignupUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
+
+        final boolean[] isSwitchToLoginViewCalled = {false};
+
+        SignupOutputBoundary testPresenter = new SignupOutputBoundary() {
+            @Override
+            public void prepareSuccessView(SignupOutputData user) {
+                fail("prepareSuccessView should not be called in this test.");
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                fail("prepareFailView should not be called in this test.");
+            }
+
+            @Override
+            public void switchToLoginView() {
+                isSwitchToLoginViewCalled[0] = true;
+            }
+        };
+
+        SignupInputBoundary interactor = new SignupInteractor(userRepository, testPresenter, new CommonUserFactory());
+        interactor.switchToLoginView();
+        assertTrue(isSwitchToLoginViewCalled[0], "switchToLoginView was not called as expected.");
+    }
+
+    @Test
     void failurePasswordMismatchTest() {
         SignupInputData inputData = new SignupInputData("Paul", "password", "wrong");
         SignupUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
@@ -89,7 +117,7 @@ class SignupInteractorTest {
 
             @Override
             public void prepareFailView(String error) {
-                assertEquals("User already exists.", error);
+                assertEquals("User already exists. Please try another one or go to log in.", error);
             }
 
             @Override
