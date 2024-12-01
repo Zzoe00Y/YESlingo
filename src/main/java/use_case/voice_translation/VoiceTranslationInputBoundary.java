@@ -7,7 +7,7 @@ package use_case.voice_translation;
 public interface VoiceTranslationInputBoundary {
     /**
      * Start processing speech input and translating it into text.
-     * This method runs until silence is detected or another condition stops it.
+     * This method runs until silence is detected.
      */
     void translate();
 }

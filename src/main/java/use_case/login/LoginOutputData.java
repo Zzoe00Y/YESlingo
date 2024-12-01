@@ -19,5 +19,7 @@ public class LoginOutputData {
         return username;
     }
 
-    public String getPassword() { return password; }
+    public String getPassword() {
+        return password;
+    }
 }

@@ -74,6 +74,8 @@ import use_case.text_translation.TextTranslationInteractor;
 import use_case.text_translation.TextTranslationOutputBoundary;
 import use_case.voice_translation.VoiceTranslationInteractor;
 import view.*;
+import use_case.voice_translation.VoiceTranslationInteractor;
+
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -387,14 +389,17 @@ public class AppBuilder {
         loggedInView.setVoiceTranslationController(voiceTranslationController);
         return this;
     }
+
     private VoiceTranslationInteractor createVoiceTranslationInteractor() throws IOException {
         // Ensure dependencies are correctly initialized
         if (loggedInView == null) {
             throw new IllegalStateException("LoggedInView is not initialized");
         }
+
         SpeechToTextService speechToTextService = new SpeechToTextService();
         // Initialize the presenter for the FileTranslationInteractor
         VoiceTranslationPresenter voiceTranslationPresenter = new VoiceTranslationPresenter(loggedInView);
+
         // Create and return the FileTranslationInteractor with required dependencies
         return new VoiceTranslationInteractor(speechToTextService, voiceTranslationPresenter);
     }
