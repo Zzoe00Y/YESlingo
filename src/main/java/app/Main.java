@@ -55,50 +55,5 @@ public class Main {
 
         application.pack();
         application.setVisible(true);
-
-        LoggedInView loggedInView = appBuilder.getLoggedInView();
-
-        TextTranslationDataAccessInterface translationService = new TextTranslationService();
-
-        TextTranslationOutputBoundary textTranslationOutputBoundary =
-                new TextTranslationPresenter(loggedInView);
-
-        TextTranslationInteractor textTranslationInteractor =
-                new TextTranslationInteractor(
-                        translationService,
-                        textTranslationOutputBoundary
-                );
-
-        TextTranslationController textTranslationController =
-                new TextTranslationController(textTranslationInteractor);
-
-        loggedInView.setTextTranslationController(textTranslationController);
-
-        FileTranslationService fileTranslationService = new FileTranslationService();
-
-        FileTranslationOutputBoundary fileTranslationOutputBoundary =
-                new FileTranslationPresenter(loggedInView);
-
-        FileTranslationInteractor fileTranslationInteractor =
-                new FileTranslationInteractor(
-                        fileTranslationService,
-                        fileTranslationOutputBoundary
-                );
-
-        FileTranslationController fileTranslationController =
-                new FileTranslationController(fileTranslationInteractor);
-
-        loggedInView.setFileTranslationController(fileTranslationController);
-
-        SpeechToTextService speechToTextService = new SpeechToTextService();
-
-        VoiceTranslationOutputBoundary voiceTranslationOutputBoundary = new VoiceTranslationPresenter(loggedInView);
-
-        VoiceTranslationInteractor voiceTranslationInteractor = new VoiceTranslationInteractor(
-                speechToTextService, voiceTranslationOutputBoundary);
-
-        VoiceTranslationController voiceTranslationController = new VoiceTranslationController(voiceTranslationInteractor);
-
-        loggedInView.setVoiceTranslationController(voiceTranslationController);
     }
 }
