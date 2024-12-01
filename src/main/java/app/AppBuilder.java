@@ -1,6 +1,7 @@
 package app;
 
 import java.awt.CardLayout;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,6 +11,7 @@ import data_access.InMemoryUserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.UserFactory;
 import external_services.FileTranslationService;
+import external_services.SpeechToTextService;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.file_translation.FileTranslationController;
 import interface_adapter.file_translation.FileTranslationPresenter;
@@ -37,6 +39,8 @@ import interface_adapter.profile.change_password.ChangePasswordViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
+import interface_adapter.voice_translation.VoiceTranslationController;
+import interface_adapter.voice_translation.VoiceTranslationPresenter;
 import use_case.chatbot.ChatBotInputBoundary;
 import use_case.chatbot.ChatBotInteractor;
 import use_case.chatbot.ChatBotOutputBoundary;
@@ -63,6 +67,8 @@ import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
 import view.*;
+import use_case.voice_translation.VoiceTranslationInteractor;
+
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -337,6 +343,31 @@ public class AppBuilder {
         FileTranslationPresenter fileTranslationPresenter = new FileTranslationPresenter(loggedInView);
 
         return new FileTranslationInteractor(fileTranslationService, fileTranslationPresenter);
+    }
+
+    public AppBuilder addVoiceTranslationUseCase() throws IOException {
+        VoiceTranslationInteractor voiceTranslationInteractor = createVoiceTranslationInteractor();
+        VoiceTranslationController voiceTranslationController = new VoiceTranslationController(voiceTranslationInteractor);
+
+        // Inject the controller into the LoggedInView
+        loggedInView.setVoiceTranslationController(voiceTranslationController);
+
+        return this;
+    }
+
+    private VoiceTranslationInteractor createVoiceTranslationInteractor() throws IOException {
+        // Ensure dependencies are correctly initialized
+        if (loggedInView == null) {
+            throw new IllegalStateException("LoggedInView is not initialized");
+        }
+
+        SpeechToTextService speechToTextService = new SpeechToTextService();
+
+        // Initialize the presenter for the FileTranslationInteractor
+        VoiceTranslationPresenter voiceTranslationPresenter = new VoiceTranslationPresenter(loggedInView);
+
+        // Create and return the FileTranslationInteractor with required dependencies
+        return new VoiceTranslationInteractor(speechToTextService, voiceTranslationPresenter);
     }
 
 
