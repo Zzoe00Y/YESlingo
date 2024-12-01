@@ -8,7 +8,6 @@ package use_case.voice_translation;
 public class VoiceTranslationOutputData {
 
     private final String recognizedText;
-//    private final String translatedText;
 
     /**
      * Constructor for VoiceTranslationOutputData.
@@ -17,7 +16,6 @@ public class VoiceTranslationOutputData {
      */
     public VoiceTranslationOutputData(String recognizedText) {
         this.recognizedText = recognizedText;
-        // this.translatedText = translatedText;
     }
 
     /**
@@ -28,13 +26,4 @@ public class VoiceTranslationOutputData {
     public String getRecognizedText() {
         return recognizedText;
     }
-
-//    /**
-//     * Retrieves the translated text.
-//     *
-//     * @return The translated text.
-//     */
-//    public String getTranslatedText() {
-//        return translatedText;
-//    }
 }

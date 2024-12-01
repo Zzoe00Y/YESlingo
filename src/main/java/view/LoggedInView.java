@@ -193,7 +193,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
                     long silenceThresholdMillis = 1000; // Example: 1 second of silence ends the recognition
 
                     // Pass the parameters to the controller
-                    voiceTranslationController.translateVoice(silenceThresholdMillis, sourceItem.code, targetItem.code);
+                    voiceTranslationController.translateVoice();
                 } else {
                     JOptionPane.showMessageDialog(this, "Select valid and different source/target languages.");
                 }

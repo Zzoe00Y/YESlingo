@@ -30,12 +30,10 @@ public class SpeechToTextService {
     /**
      * Starts speech recognition from the microphone.
      * Stops automatically after detecting prolonged silence.
-     *
-     * @param silenceThresholdMillis Maximum duration of silence (in milliseconds) before stopping recognition.
      * @return Recognized text from the speech input.
      * @throws Exception If an error occurs during recognition.
      */
-    public String recognizeSpeech(long silenceThresholdMillis) {
+    public String recognizeSpeech() {
         System.out.println("Listening for speech...");
 
         recognizer.startRecognition(true);

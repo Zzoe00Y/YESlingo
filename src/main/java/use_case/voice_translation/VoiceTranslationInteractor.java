@@ -1,7 +1,5 @@
 package use_case.voice_translation;
 
-// import external_services.TextToTextTranslationService;
-import use_case.text_translation.TextTranslationDataAccessInterface;
 import external_services.SpeechToTextService;
 import java.util.logging.Logger;
 
@@ -15,8 +13,7 @@ public class VoiceTranslationInteractor implements VoiceTranslationInputBoundary
 
     private static final Logger logger = Logger.getLogger(VoiceTranslationInteractor.class.getName());
 
-    private final SpeechToTextService speechToTextService;  // For speech-to-text conversion
-    // private final TextTranslationDataAccessInterface textTranslationService;    // For text-to-text translation
+    private final SpeechToTextService speechToTextService;
     private final VoiceTranslationOutputBoundary outputBoundary;
 
     /**
@@ -28,20 +25,17 @@ public class VoiceTranslationInteractor implements VoiceTranslationInputBoundary
     public VoiceTranslationInteractor(SpeechToTextService speechToTextService,
                                       VoiceTranslationOutputBoundary outputBoundary) {
         this.speechToTextService = speechToTextService;
-        // this.textTranslationService = textTranslationService;
         this.outputBoundary = outputBoundary;
     }
 
     /**
      * Translates the recognized speech into text and then translates the text to the target language.
-     *
-     * @param inputData The input data containing the silence threshold, source, and target languages.
      */
     @Override
-    public void translate(VoiceTranslationInputData inputData) {
+    public void translate() {
         try {
-            // Step 1: Convert speech to text
-            String recognizedText = speechToTextService.recognizeSpeech(inputData.getSilenceThresholdMillis());
+            // Convert speech to text
+            String recognizedText = speechToTextService.recognizeSpeech();
 
             if (recognizedText == null || recognizedText.isEmpty()) {
                 // Handle case where no speech was recognized
@@ -50,16 +44,7 @@ public class VoiceTranslationInteractor implements VoiceTranslationInputBoundary
 
             logger.info("Speech recognized: " + recognizedText);
 
-//            // Step 2: Perform text translation
-//            String translatedText = textTranslationService.translateText(
-//                    recognizedText,
-//                    inputData.getSourceLanguage(),
-//                    inputData.getTargetLanguage() // Assuming source language is auto-detected
-//            );
-
-//            logger.info("Translation successful! Translated text: " + translatedText);
-//
-            // Step 3: Prepare the output data and pass it to the output boundary (UI)
+            // Prepare the output data and pass it to the output boundary (UI)
             VoiceTranslationOutputData outputData = new VoiceTranslationOutputData(recognizedText);
             outputBoundary.prepareSuccessView(outputData);
 

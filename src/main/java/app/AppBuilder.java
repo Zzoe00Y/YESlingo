@@ -320,25 +320,25 @@ public class AppBuilder {
      * Adds the File Translation Use Case to the application.
      * @return this builder
      */
-    public AppBuilder addFileTranslationUseCase() {
-        FileTranslationService fileTranslationService = new FileTranslationService();
-
-        FileTranslationOutputBoundary fileTranslationOutputBoundary =
-                new FileTranslationPresenter(loggedInView);
-
-        FileTranslationInteractor fileTranslationInteractor =
-                new FileTranslationInteractor(
-                        fileTranslationService,
-                        fileTranslationOutputBoundary
-                );
-
-        FileTranslationController fileTranslationController =
-                new FileTranslationController(fileTranslationInteractor);
-
-        loggedInView.setFileTranslationController(fileTranslationController);
-
-        return this;
-    }
+//    public AppBuilder addFileTranslationUseCase() {
+//        FileTranslationService fileTranslationService = new FileTranslationService();
+//
+//        FileTranslationOutputBoundary fileTranslationOutputBoundary =
+//                new FileTranslationPresenter(loggedInView);
+//
+//        FileTranslationInteractor fileTranslationInteractor =
+//                new FileTranslationInteractor(
+//                        fileTranslationService,
+//                        fileTranslationOutputBoundary
+//                );
+//
+//        FileTranslationController fileTranslationController =
+//                new FileTranslationController(fileTranslationInteractor);
+//
+//        loggedInView.setFileTranslationController(fileTranslationController);
+//
+//        return this;
+//    }
 
     private FileTranslationInteractor createFileTranslationInteractor() {
         // Ensure dependencies are correctly initialized
