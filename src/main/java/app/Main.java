@@ -7,6 +7,7 @@ import entity.UserFactory;
 import external_services.FileTranslationService;
 import external_services.MyMemoryGateway;
 import external_services.TextToTextTranslationService;
+import external_services.SpeechToTextService;  // ADDING VOICE TRANSLATION SERVICE IMPORT
 import interface_adapter.ViewManagerModel;
 import interface_adapter.chatbot.ChatBotViewModel;
 import interface_adapter.file_translation.FileTranslationController;
@@ -29,6 +30,8 @@ import interface_adapter.profile.change_password.ChangePasswordPresenter;
 import interface_adapter.profile.change_password.ChangePasswordViewModel;
 import interface_adapter.text_translation.TextTranslationController;
 import interface_adapter.text_translation.TextTranslationPresenter;
+import interface_adapter.voice_translation.VoiceTranslationController;  // IMPORT FOR VOICE TRANSLATION CONTROLLER
+import interface_adapter.voice_translation.VoiceTranslationPresenter;  // IMPORT FOR VOICE TRANSLATION PRESENTER
 import use_case.file_translation.FileTranslationInteractor;
 import use_case.file_translation.FileTranslationOutputBoundary;
 import use_case.history.HistoryInteractor;
@@ -48,6 +51,8 @@ import use_case.text_translation.TextTranslationDataAccessInterface;
 import use_case.text_translation.TextTranslationInteractor;
 import use_case.text_translation.TextTranslationOutputBoundary;
 import use_case.text_translation.TextTranslationUseCase;
+import use_case.voice_translation.VoiceTranslationInteractor;  // VOICE TRANSLATION INTERACTOR IMPORT
+import use_case.voice_translation.VoiceTranslationOutputBoundary;  // VOICE TRANSLATION OUTPUT BOUNDARY IMPORT
 import view.*;
 
 /**
@@ -58,7 +63,7 @@ public class Main {
      * Builds and runs the CA architecture of the application.
      * @param args unused arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         final AppBuilder appBuilder = new AppBuilder();
         // add the Logout Use Case to the app using the appBuilder
         final JFrame application = appBuilder
@@ -115,6 +120,18 @@ public class Main {
                 new FileTranslationController(fileTranslationInteractor);
 
         loggedInView.setFileTranslationController(fileTranslationController);
+        
+        SpeechToTextService speechToTextService = new SpeechToTextService();
+
+        VoiceTranslationOutputBoundary voiceTranslationOutputBoundary = new VoiceTranslationPresenter(loggedInView);
+
+        VoiceTranslationInteractor voiceTranslationInteractor = new VoiceTranslationInteractor(
+                speechToTextService, voiceTranslationOutputBoundary);
+
+        VoiceTranslationController voiceTranslationController = new VoiceTranslationController(voiceTranslationInteractor);
+
+        loggedInView.setVoiceTranslationController(voiceTranslationController);
+
 
         ViewManagerModel viewManagerModel = appBuilder.getViewManagerModel();
         LoggedInViewModel loggedInViewModel = appBuilder.getLoggedInViewModel();

@@ -1,14 +1,22 @@
 package use_case.voice_translation;
 
 /**
- * The output boundary interface for the voice translation use case.
- * Defines the contract for handling recognized speech output.
+ * Output boundary for the voice translation use case.
+ * Defines methods for preparing success and failure views based on the results of the voice translation process.
  */
 public interface VoiceTranslationOutputBoundary {
+
     /**
-     * Handles the recognized text and forwards it for further processing or display.
+     * Prepares the view with the translated text and recognition results.
      *
-     * @param outputData The output data containing the recognized text.
+     * @param outputData The data containing the recognized speech and translated text.
      */
-    void handleRecognitionResult(VoiceTranslationOutputData outputData);
+    void prepareSuccessView(VoiceTranslationOutputData outputData);
+
+    /**
+     * Prepares the view for a failure scenario.
+     *
+     * @param error The error message explaining why the translation failed.
+     */
+    void prepareFailView(String error);
 }

@@ -11,6 +11,7 @@ import entity.CommonUserFactory;
 import entity.UserFactory;
 import external_services.FileTranslationService;
 import external_services.MyMemoryGateway;
+//import external_services.SpeechToTextService;
 import external_services.TextToTextTranslationService;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.file_translation.FileTranslationController;
@@ -35,6 +36,8 @@ import interface_adapter.profile.change_password.ChangePasswordViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
+//import interface_adapter.voice_translation.VoiceTranslationController;
+//import interface_adapter.voice_translation.VoiceTranslationPresenter;
 import use_case.chatbot.ChatBotInputBoundary;
 import use_case.chatbot.ChatBotInteractor;
 import use_case.chatbot.ChatBotOutputBoundary;
@@ -57,6 +60,10 @@ import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
 import use_case.text_translation.TextTranslationUseCase;
+//import use_case.voice_translation.VoiceTranslationInputBoundary;
+//import use_case.voice_translation.VoiceTranslationInteractor;
+//import use_case.voice_translation.VoiceTranslationOutputBoundary;
+
 import view.*;
 
 /**
@@ -258,6 +265,18 @@ public class AppBuilder {
         return this;
     }
 
+//    public AppBuilder addVoiceTranslationUseCase() throws Exception {
+//        VoiceTranslationInteractor voiceTranslationInteractor = createVoiceTranslationInteractor();
+//        VoiceTranslationController voiceTranslationController =
+//                new VoiceTranslationController(voiceTranslationInteractor);
+//
+//        // Inject the controller into the LoggedInView
+//        loggedInView.setVoiceTranslationController(voiceTranslationController);
+//
+//        return this;
+//    }
+
+
 
     /**
      * Adds the ChatBot Use Case to the application.
@@ -306,6 +325,23 @@ public class AppBuilder {
         // Create and return the FileTranslationInteractor with required dependencies
         return new FileTranslationInteractor(fileTranslationService, fileTranslationPresenter);
     }
+
+//    private VoiceTranslationInteractor createVoiceTranslationInteractor() throws Exception {
+//
+//        // Initialize the SpeechToTextService
+//        SpeechToTextService speechToTextService = new SpeechToTextService();
+//
+//        // Initialize the TextToTextTranslationService with a gateway
+//        TextToTextTranslationService textToTextTranslationService =
+//                new TextToTextTranslationService(new MyMemoryGateway());
+//
+//        // Initialize the presenter for the VoiceTranslationInteractor
+//        VoiceTranslationPresenter voiceTranslationPresenter =
+//                new VoiceTranslationPresenter(loggedInView);
+//
+//        // Create and return the VoiceTranslationInteractor
+//        return new VoiceTranslationInteractor(speechToTextService, voiceTranslationPresenter);
+//    }
 
 
     /**
