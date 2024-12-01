@@ -43,6 +43,34 @@ public class ChangePasswordInteractorTest {
     }
 
     @Test
+    void switchToProfileViewTest() {
+        ChangePasswordUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
+
+        final boolean[] isSwitchToProfileViewCalled = {false};
+
+        ChangePasswordOutputBoundary testPresenter = new ChangePasswordOutputBoundary() {
+            @Override
+            public void prepareSuccessView(ChangePasswordOutputData user) {
+                fail("prepareSuccessView should not be called in this test.");
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                fail("prepareFailView should not be called in this test.");
+            }
+
+            @Override
+            public void switchToProfileView() {
+                isSwitchToProfileViewCalled[0] = true;
+            }
+        };
+
+        ChangePasswordInputBoundary interactor = new ChangePasswordInteractor(testPresenter, userRepository);
+        interactor.switchToProfileView();
+        assertTrue(isSwitchToProfileViewCalled[0], "switchToProfileView was not called as expected.");
+    }
+
+    @Test
     void failureOldPasswordMismatchTest() {
         ChangePasswordInputData inputData = new ChangePasswordInputData("Emily", "new password", "new password", "wrong");
         ChangePasswordUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
