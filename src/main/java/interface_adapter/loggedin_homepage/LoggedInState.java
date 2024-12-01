@@ -7,17 +7,7 @@ public class LoggedInState {
     private String username = "";
     private String password = "";
     private String passwordError;
-
-    public LoggedInState(LoggedInState copy) {
-        username = copy.username;
-        password = copy.password;
-        passwordError = copy.passwordError;
-    }
-
-    // Because of the previous copy constructor, the default constructor must be explicit.
-    public LoggedInState() {
-
-    }
+    private String language = "English";
 
     public String getUsername() {
         return username;
@@ -37,5 +27,13 @@ public class LoggedInState {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 }
