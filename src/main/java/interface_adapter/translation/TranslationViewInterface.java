@@ -18,4 +18,6 @@ public interface TranslationViewInterface {
      * @param error The error message to display.
      */
     void displayError(String error);
+
+    void displayRecognizedText(String recognizedText);
 }

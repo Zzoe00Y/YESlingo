@@ -1,48 +1,44 @@
 package use_case.text_translation;
 
 import entity.Translation;
-import external_services.TranslationServiceAdapter;
+import java.util.logging.Logger;
 
-/**
- * Interactor for the Text Translation Use Case.
- */
+public class TextTranslationInteractor implements TextTranslationInputBoundary {
+    private static final Logger logger = Logger.getLogger(TextTranslationInteractor.class.getName());
 
-public class TextTranslationInteractor extends TextTranslationUseCase implements TextTranslationInputBoundary {
-    private final TextTranslationDataAccessInterface textTranslationDataAccessInterface;
+    private final TextTranslationDataAccessInterface translationService;
     private final TextTranslationOutputBoundary outputBoundary;
 
-    /**
-     * Constructs a TextTranslationInteractor with the necessary gateway and presenter.
-     *
-     * @param textTranslationDataAccessInterface gateway for accessing external translation services
-     * @param outputBoundary used for presenting success or failure of the translation process
-     */
-    public TextTranslationInteractor(TextTranslationDataAccessInterface textTranslationDataAccessInterface,
-                                     TextTranslationOutputBoundary outputBoundary) {
-        super(new TranslationServiceAdapter(textTranslationDataAccessInterface));
-        this.textTranslationDataAccessInterface = textTranslationDataAccessInterface;
+    public TextTranslationInteractor(
+            TextTranslationDataAccessInterface translationService,
+            TextTranslationOutputBoundary outputBoundary) {
+        this.translationService = translationService;
         this.outputBoundary = outputBoundary;
     }
 
     @Override
-    public TextTranslationOutputData translate(TextTranslationInputData request) {
+    public void translate(TextTranslationInputData inputData) {
         try {
-            // Use translationGateway directly instead of calling super.translate
-            Translation translation = textTranslationDataAccessInterface.translateText(
-                    request.getSourceText(),
-                    request.getSourceLang(),  // Actually use the source language
-                    request.getTargetLang()
+            Translation translation = translationService.translateText(
+                    inputData.getSourceText(),
+                    inputData.getSourceLang(),
+                    inputData.getTargetLang()
             );
 
-            // Create success response
-            return outputBoundary.prepareSuccessView(new TextTranslationOutputData(
-                    request.getSourceText(),
+            logger.info("Translation successful! Translated text: " + translation.getTranslatedText());
+
+            TextTranslationOutputData outputData = new TextTranslationOutputData(
+                    translation.getSourceText(),
                     translation.getTranslatedText(),
-                    request.getSourceLang(),
-                    request.getTargetLang()
-            ));
+                    translation.getSourceLang(),
+                    translation.getTargetLang()
+            );
+
+            outputBoundary.prepareSuccessView(outputData);
+
         } catch (Exception e) {
-            return outputBoundary.prepareFailView("Translation failed: " + e.getMessage());
+            logger.severe("Error during translation: " + e.getMessage());
+            outputBoundary.prepareFailView("Translation failed: " + e.getMessage());
         }
     }
 }

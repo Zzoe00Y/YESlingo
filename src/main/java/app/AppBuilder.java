@@ -64,7 +64,6 @@ import use_case.profile.change_password.ChangePasswordOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import use_case.text_translation.TextTranslationUseCase;
 import view.*;
 
 /**
@@ -119,6 +118,10 @@ public class AppBuilder {
         signupView = new SignupView(signupViewModel);
         cardPanel.add(signupView, signupView.getViewName());
         return this;
+    }
+
+    public InMemoryUserDataAccessObject getUserDataAccessObject() {
+        return userDataAccessObject;
     }
 
     /**
@@ -290,6 +293,7 @@ public class AppBuilder {
         final HistoryOutputBoundary historyOutputBoundary = new HistoryPresenter(viewManagerModel, loggedInViewModel);
         final HistoryInputBoundary historyInteractor = new HistoryInteractor(historyOutputBoundary, userFactory);
 
+
         final HistoryController controller = new HistoryController(historyInteractor);
         historyView.setHistoryController(controller);
         return this;
@@ -352,3 +356,4 @@ public class AppBuilder {
         return application;
     }
 }
+
