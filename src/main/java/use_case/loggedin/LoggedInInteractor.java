@@ -26,8 +26,8 @@ public class LoggedInInteractor implements LoggedInInputBoundary{
     }
 
     @Override
-    public void switchToHistoryView() {
-        loggedInPresenter.switchToHistoryView();
+    public void switchToHistoryView(String username) {
+        loggedInPresenter.switchToHistoryView(username);
     }
 
 }

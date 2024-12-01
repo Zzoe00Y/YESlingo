@@ -10,7 +10,7 @@ import java.nio.file.Files;
 public class FileTranslationService {
 
     private static final String API_URL = "https://libretranslate.com/translate";
-    private static final String API_KEY = "dc756137-1bea-4261-aa01-15c9105034a2";
+    private static final String API_KEY = "aafecfa0-294e-4518-a2d7-7e446e37690d";
 
     /**
      * Translates text from a `.txt` file using the LibreTranslate API.
