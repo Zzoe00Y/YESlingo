@@ -10,8 +10,6 @@ import data_access.InMemoryUserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.UserFactory;
 import external_services.FileTranslationService;
-import external_services.MyMemoryGateway;
-import external_services.TextToTextTranslationService;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.file_translation.FileTranslationController;
 import interface_adapter.file_translation.FileTranslationPresenter;
@@ -49,14 +47,12 @@ import use_case.history.HistoryOutputBoundary;
 import use_case.loggedin.LoggedInInputBoundary;
 import use_case.loggedin.LoggedInInteractor;
 import use_case.loggedin.LoggedInOutputBoundary;
-import use_case.loggedin.LoggedInUserDataAccessInterface;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
 import use_case.profile.ProfileInputBoundary;
 import use_case.profile.ProfileInteractor;
 import use_case.profile.ProfileOutputBoundary;
-import use_case.profile.ProfileUserDataAccessInterface;
 import use_case.profile.change_language.ChangeLanguageInputBoundary;
 import use_case.profile.change_language.ChangeLanguageInteractor;
 import use_case.profile.change_language.ChangeLanguageOutputBoundary;
@@ -66,7 +62,6 @@ import use_case.profile.change_password.ChangePasswordOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import use_case.text_translation.TextTranslationUseCase;
 import view.*;
 
 /**
@@ -321,20 +316,10 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addFileTranslationUseCase() {
-        FileTranslationService fileTranslationService = new FileTranslationService();
+        FileTranslationInteractor fileTranslationInteractor = createFileTranslationInteractor();
+        FileTranslationController fileTranslationController = new FileTranslationController(fileTranslationInteractor);
 
-        FileTranslationOutputBoundary fileTranslationOutputBoundary =
-                new FileTranslationPresenter(loggedInView);
-
-        FileTranslationInteractor fileTranslationInteractor =
-                new FileTranslationInteractor(
-                        fileTranslationService,
-                        fileTranslationOutputBoundary
-                );
-
-        FileTranslationController fileTranslationController =
-                new FileTranslationController(fileTranslationInteractor);
-
+        // Inject the controller into the LoggedInView
         loggedInView.setFileTranslationController(fileTranslationController);
 
         return this;
