@@ -28,6 +28,7 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     private final Map<String, User> users = new HashMap<>();
 
     private String currentUsername;
+    private String currentPassword;
 
     @Override
     public boolean existsByName(String identifier) {
@@ -110,9 +111,14 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     }
 
     @Override
-    public void changePassword(User user) {
+    public void changePassword(User user, String password) {
         // Replace the old entry with the new password
-        users.put(user.getName(), user);
+        this.currentPassword = password;
+        get(user.getName()).setPassword(password);
+    }
+
+    public String getCurrentPassword() {
+        return currentPassword;
     }
 
     @Override

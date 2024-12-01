@@ -222,7 +222,7 @@ public class AppBuilder {
      */
     public AppBuilder addLoginUseCase() {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel, signupViewModel);
+                loggedInViewModel, loginViewModel, signupViewModel, profileViewModel, changePasswordViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, loginOutputBoundary);
 
@@ -252,7 +252,7 @@ public class AppBuilder {
     public AppBuilder addProfileUseCase() {
         final ProfileOutputBoundary profileOutputBoundary = new ProfilePresenter(viewManagerModel,
                 loggedInViewModel, profileViewModel, changePasswordViewModel, loginViewModel, changeLanguageViewModel);
-        final ProfileInputBoundary profileInteractor = new ProfileInteractor(profileOutputBoundary, userFactory);
+        final ProfileInputBoundary profileInteractor = new ProfileInteractor(profileOutputBoundary);
 
         final ProfileController controller = new ProfileController(profileInteractor);
         profileView.setProfileController(controller);
@@ -264,8 +264,8 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addChangePasswordUseCase() {
-        final ChangePasswordOutputBoundary changePasswordOutputBoundary = new ChangePasswordPresenter(viewManagerModel, changePasswordViewModel, profileViewModel);
-        final ChangePasswordInputBoundary changePasswordInteractor = new ChangePasswordInteractor(changePasswordOutputBoundary, userFactory);
+        final ChangePasswordOutputBoundary changePasswordOutputBoundary = new ChangePasswordPresenter(viewManagerModel, changePasswordViewModel, profileViewModel, loginViewModel);
+        final ChangePasswordInputBoundary changePasswordInteractor = new ChangePasswordInteractor(changePasswordOutputBoundary, userDataAccessObject);
 
         final ChangePasswordController controller = new ChangePasswordController(changePasswordInteractor);
         changePasswordView.setChangePasswordController(controller);
