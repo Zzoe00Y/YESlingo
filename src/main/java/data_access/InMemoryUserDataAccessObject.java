@@ -2,7 +2,6 @@ package data_access;
 
 import entity.Translation;
 import entity.User;
-import external_services.MyMemoryGateway;
 import okhttp3.*;
 import org.json.JSONObject;
 import use_case.history.HistoryUserDataAccessInterface;
