@@ -31,12 +31,13 @@ public class FileTranslationController {
         System.out.println("Controller received file translation request");
         try {
             // Create input data for the interactor
-            FileTranslationInputData inputData = new FileTranslationInputData(filePath, sourceLang, targetLang);
+            final FileTranslationInputData inputData = new FileTranslationInputData(filePath, sourceLang, targetLang);
 
             // Delegate the file translation task to the interactor
             fileTranslationInteractor.translate(inputData);
 
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             System.err.println("Error in FileTranslationController: " + e.getMessage());
             throw new RuntimeException("Failed to initiate file translation: " + e.getMessage(), e);
         }
