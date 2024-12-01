@@ -8,9 +8,21 @@ Ying Zhang(Zzoe00Y)\
 Jiner Zhang(jinerfreya)\
 Yuchen Zhao(emily-zhao-zz)
 
+## Table of Contents
+
+1. [Project Description](#project-description)
+2. [User Stories](#user-stories)
+3. [Installation Instructions & Usage](#installation-instructions--usage)
+5. [Entities](#entities)
+6. [Use Cases](#use-cases)
+7. [Views](#views)
+8. [Attributions](#attributions)
+6. [License](#license)
+
+
 ## Project Description
 
-YESlingo is a translator application platform that provides users with translation capabilities across various mediums. It supports:
+YESlingo is a comprehensive translation application platform designed to make language translation accessible and versatile for users. It provides a range of translation features across different mediums, offering convenience and flexibility for diverse use cases.
 * **Text Translation**: Allows users to translate text into a specified language.
 * **File Translation**: Enables users to upload files, extract text, and translate them.
 * **Speech Translation**: Uses voice input to recognize and translate spoken language.
@@ -18,6 +30,18 @@ YESlingo is a translator application platform that provides users with translati
 The application also includes:
 * Translation **History** to track and manage previous translations.
 * A **Chatbot** feature for users to practice and study language interactively.
+
+#### Purpose of the Project
+YESlingo was created to bridge language barriers and enhance communication across cultures. By providing multiple translation modes, it caters to users with varied needs, whether for academic, professional, or personal purposes.
+
+#### Problem Solved
+YESlingo solves the problem of language inaccessibility by offering:
+
+* Convenient and accurate translation of text, files, and speech.
+* A user-friendly platform to practice and improve language skills.
+* A history feature to organize and retrieve past translations easily.
+
+This project is highly useful for individuals, professionals, and learners seeking to communicate or understand content in languages they are unfamiliar with. It combines practicality with innovative features to meet diverse translation needs.
 
 ## User Stories
 1. As a user, I want to log into the system with my username and password so that I can access personalized translation settings.
@@ -27,32 +51,109 @@ The application also includes:
 5. As a user, I want my text translations to be automatically saved to history, and the history can be cleared if I want to.
 6. As a user, I want to simulate real time conversation with a chatbot in specified input and output languages.
 
-## Installation Instructions & Usage
-
-### Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Zzoe00Y/YESlingo.git
-2. Run the main file: Open your IDE or terminal, navigate to the main file, and run it to start your translation journey!
-
-### Usage
-1. **Select your source and target language:**  
-   Use the language selection bar in the UI to choose the languages for translation. For example, select English as the source language and French as the target language.
-
-2. **Choose your desired translation method:**
-    - **Text translation:** Type text directly into the input field to translate.
-    - **File translation:** Prepare a `.txt` file with the text to be translated and upload it using the file upload button.
-    - **Voice translation:** Enable your microphone and start speaking to have your voice detected and translated into the target language.
-    - **Chatbox:** Click on the chatbox feature to interact with the system in real time. The chatbox will simulate a conversation in specified input and output languages.
-    - **Translation history:** Log in with your username to access your translation history. The history section allows you to view and reuse your previously translated content.
-
-
 ## Entities
 
 The primary entities within the application include:
 * User: Base class for all users with basic profile information and preferred language.
 * Translation: Represents a translation, containing source text, translated text, source language, and translated language.
 * ChatMessage: Represents messages exchanged in the chatbot feature.
+
+## Key Features
+
+### **User Management**
+Personalize your YESlingo experience with user management features.
+
+- **Signup:** Register and create a user account.
+- **Login:** Access your account securely to enable personalized features.
+- **Check Profile:** View your username, password (hidden), and preferences.
+- **Change Password:** Update your password securely.
+- **Change Preferred Language:** Set a default language for translation output.
+- **Logout:** Log out securely from your account.
+- **Screenshot:** 
+
+### Text Translation
+Translate any text input from one language to another with ease.
+
+- **Description:** Input text directly into the translation box, select your source and target language, and get instant translations.
+- **Use Case:** Ideal for users who want to translate phrases or paragraphs without uploading files.
+- **Example:** 
+  - Input: "Hello, how are you?"
+  - Target Language: French
+  - Output: "Bonjour, comment ça va ?"
+  - Screenshot: 
+
+### **File Translation**
+Upload `.txt` files and translate their contents seamlessly.
+
+- **Description:** Upload a `.txt` file, select the source and target languages, and receive a translated version of the file.
+- **Use Case:** Best for users with large amounts of text or structured content they wish to translate in bulk.
+- **Example:**
+    - **Uploaded File Content:** "Nice to meet you."
+    - **Target Language:** French
+    - **Output:** "Bienvenido a YESlingo."
+- **Screenshot:** *(Insert Screenshot Here)*
+
+
+### **Voice Translation**
+Translate spoken language in real time.
+
+- **Description:** Speak into your microphone to have your voice detected, transcribed, and translated into the desired language.
+- **Use Case:** Perfect for travelers, meetings, or real-time communication.
+- **Example:**
+    - **Input:** Speech: "Can you help me find a restaurant?"
+    - **Target Language:** Japanese
+    - **Output:** "レストランを見つけるのを手伝ってくれませんか？"
+- **Screenshot:** *(Insert Screenshot Here)*
+
+### **Chatbox**
+Simulate real-time conversations with translation assistance.
+
+- **Description:** Interact with a chatbot to practice language learning or get translations for conversational inputs.
+- **Use Case:** Ideal for users who want an interactive, conversational translation experience.
+- **Example:**
+    - **Input:** "How do you say 'good morning' in German?"
+    - **Chatbot Output:** "Guten Morgen."
+- **Screenshot:** *(Insert Screenshot Here)*
+
+### **Translation History**
+Access and manage previous translations.
+
+- **Description:** Keep track of past translations, view their results, and reuse them if needed.
+- **Use Case:** Great for users who frequently translate similar content and need to refer back to prior work.
+- **Example:**
+    - **Previous Input:** "Welcome to YESlingo."
+    - **Output:** "Bienvenue à YESlingo."
+- **Screenshot:** *(Insert Screenshot Here)*
+
+
+## Installation Instructions
+1. **Install required packages:** Make sure you have the necessary dependencies installed. We recommend downloading one of the version 17 JDKs to get started, but anything 11+ will be sufficient for this project.
+
+2. **Clone the repository:**
+   Clone the project repository from GitHub using the following command:
+   ```bash
+   git clone https://github.com/Zzoe00Y/YESlingo.git
+
+3. **Open your IDE:** Open your preferred IDE and navigate to 'Main' (`src/java/app/Main`).
+4. **Run the application:** Click the green Run button in your IDE to start the application. The YESlingo interface will pop up, ready for you to begin your translation journey.
+5. **Additional setup:**
+- - For file translation, ensure the file is in .txt format. Unsupported file formats will not be accepted.
+- - For voice translation, ensure your system has a working microphone.
+
+### Common Issues & Solutions
+1. Java version mismatch:\
+If you encounter a `java.lang.UnsupportedClassVersionError`, make sure you're using Java 11 or above:
+```bash
+    java -version
+```
+If not, install or update to the correct version.
+2. Dependencies not found:\
+Use gradle dependencies to verify all required dependencies are installed. If not, add them to your build.gradle or pom.xml file.
+
+## Usage
+1. Select your source and target language
+2. Choose your desired translation method
+3. Translate!
 
 ## Use Cases
 
