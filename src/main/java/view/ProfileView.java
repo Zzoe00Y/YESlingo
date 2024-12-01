@@ -22,6 +22,7 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
     private ProfileController profileController;
     private final JLabel username;
     private final JLabel password;
+    private final JLabel preferredLanguage;
 
     public ProfileView(ProfileViewModel profileViewModel) {
 
@@ -33,7 +34,7 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
         username = new JLabel("Username: ");
         password = new JLabel("Password: ");
         final JButton changePassword = new JButton("Change Password");
-        final JLabel preferredLanguage = new JLabel("Preferred Language: ");
+        preferredLanguage = new JLabel("Preferred Language: ");
         final JButton changeLanguage = new JButton("Change Language");
         final JButton logout = new JButton("Log Out");
 
@@ -113,6 +114,7 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
             ProfileState state = (ProfileState) evt.getNewValue();
             username.setText("Username: " + state.getUsername());
             password.setText("Password: " + state.getPassword());
+            preferredLanguage.setText("Preferred Language: " + state.getLanguage());
     }
 
     public String getViewName() {

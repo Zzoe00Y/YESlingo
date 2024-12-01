@@ -9,4 +9,6 @@ public interface ChangeLanguageOutputBoundary {
      * Switches to the Profile View.
      */
     void switchToProfileView();
+
+    void prepareSuccessView(ChangeLanguageOutputData changeLanguageOutputData);
 }

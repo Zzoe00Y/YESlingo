@@ -1,11 +1,14 @@
 package interface_adapter.profile;
 
+import view.ChangeLanguageView;
+
 /**
  * The state for the Profile View Model.
  */
 public class ProfileState {
     private String username = "";
     private String password = "";
+    private String language = "English";
 
     public ProfileState(ProfileState copy) {
         this.username = copy.username;
@@ -28,5 +31,13 @@ public class ProfileState {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 }

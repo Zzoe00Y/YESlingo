@@ -2,6 +2,7 @@ package data_access;
 
 import entity.Translation;
 import entity.User;
+import use_case.profile.change_language.ChangeLanguageUserDataAccessInterface;
 import okhttp3.*;
 import org.json.JSONObject;
 import use_case.history.HistoryUserDataAccessInterface;
@@ -9,6 +10,7 @@ import use_case.profile.change_password.ChangePasswordUserDataAccessInterface;
 import use_case.chatbot.ChatBotUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
+import view.ChangeLanguageView;
 import use_case.text_translation.TextTranslationDataAccessInterface;
 
 import java.util.HashMap;
@@ -21,6 +23,7 @@ import java.util.Map;
 public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterface,
         LoginUserDataAccessInterface,
         ChangePasswordUserDataAccessInterface,
+        ChangeLanguageUserDataAccessInterface,
         ChatBotUserDataAccessInterface,
         HistoryUserDataAccessInterface,
         TextTranslationDataAccessInterface {
@@ -29,6 +32,7 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
 
     private String currentUsername;
     private String currentPassword;
+    private String currentLanguage;
 
     @Override
     public boolean existsByName(String identifier) {
@@ -115,10 +119,7 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
         // Replace the old entry with the new password
         this.currentPassword = password;
         get(user.getName()).setPassword(password);
-    }
 
-    public String getCurrentPassword() {
-        return currentPassword;
     }
 
     @Override
@@ -129,5 +130,11 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     @Override
     public String getCurrentUsername() {
         return this.currentUsername;
+    }
+
+    @Override
+    public void changeOutputLanguage(String username, ChangeLanguageView.LanguageItem selectedLanguage) {
+        this.currentLanguage = selectedLanguage.getDisplayName();
+        get(username).setOutputLan(selectedLanguage.getDisplayName());
     }
 }

@@ -13,8 +13,7 @@ public class ChangePasswordInteractor implements ChangePasswordInputBoundary {
     private final ChangePasswordUserDataAccessInterface changePasswordUserDataAccessObject;
 
     public ChangePasswordInteractor(ChangePasswordOutputBoundary changePasswordOutputBoundary,
-                                    ChangePasswordUserDataAccessInterface changePasswordUserDataAccessInterface
-                                    ) {
+                                    ChangePasswordUserDataAccessInterface changePasswordUserDataAccessInterface) {
         this.changePasswordPresenter = changePasswordOutputBoundary;
         this.changePasswordUserDataAccessObject = changePasswordUserDataAccessInterface;
     }
