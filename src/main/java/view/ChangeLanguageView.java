@@ -81,7 +81,7 @@ public class ChangeLanguageView extends JPanel implements ActionListener, Proper
         ok.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        final ChangeLanguageState currentState = new ChangeLanguageState();
+                        final ChangeLanguageState currentState = changeLanguageViewModel.getState();
                         changeLanguageController.execute(currentState.getUsername(), (LanguageItem) defaultOutputLanguage.getSelectedItem());
                     }
                 }

@@ -64,8 +64,8 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     }
 
     @Override
-    public void changeOutputLanguage(User user, ChangeLanguageView.LanguageItem selectedLanguage) {
+    public void changeOutputLanguage(String username, ChangeLanguageView.LanguageItem selectedLanguage) {
         this.currentLanguage = selectedLanguage.getDisplayName();
-        get(user.getName()).setOutputLan(selectedLanguage.getDisplayName());
+        get(username).setOutputLan(selectedLanguage.getDisplayName());
     }
 }

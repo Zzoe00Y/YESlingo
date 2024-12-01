@@ -21,10 +21,10 @@ public class ChangeLanguageInteractor implements ChangeLanguageInputBoundary {
     @Override
     public void execute(ChangeLanguageInputData changeLanguageInputData) {
         String username = changeLanguageInputData.getUsername();
-        User user = changeLanguageUserDataAccessObject.get(username);
+        //User user = changeLanguageUserDataAccessObject.get(username);
         ChangeLanguageView.LanguageItem selectedLanguage = changeLanguageInputData.getLanguage();
 
-        changeLanguageUserDataAccessObject.changeOutputLanguage(user, selectedLanguage);
+        changeLanguageUserDataAccessObject.changeOutputLanguage(username, selectedLanguage);
 
         final ChangeLanguageOutputData changeLanguageOutputData = new ChangeLanguageOutputData(username, selectedLanguage);
         changeLanguagePresenter.prepareSuccessView(changeLanguageOutputData);

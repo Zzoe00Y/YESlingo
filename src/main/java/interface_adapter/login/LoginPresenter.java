@@ -5,6 +5,8 @@ import interface_adapter.loggedin_homepage.LoggedInState;
 import interface_adapter.loggedin_homepage.LoggedInViewModel;
 import interface_adapter.profile.ProfileState;
 import interface_adapter.profile.ProfileViewModel;
+import interface_adapter.profile.change_language.ChangeLanguageState;
+import interface_adapter.profile.change_language.ChangeLanguageViewModel;
 import interface_adapter.profile.change_password.ChangePasswordPresenter;
 import interface_adapter.profile.change_password.ChangePasswordState;
 import interface_adapter.profile.change_password.ChangePasswordViewModel;
@@ -24,19 +26,22 @@ public class LoginPresenter implements LoginOutputBoundary {
     private final SignupViewModel signupViewModel;
     private final ProfileViewModel profileViewModel;
     private final ChangePasswordViewModel changePasswordViewModel;
+    private final ChangeLanguageViewModel changeLanguageViewModel;
 
     public LoginPresenter(ViewManagerModel viewManagerModel,
                           LoggedInViewModel loggedInViewModel,
                           LoginViewModel loginViewModel,
                           SignupViewModel signupViewModel,
                           ProfileViewModel profileViewModel,
-                          ChangePasswordViewModel changePasswordViewModel) {
+                          ChangePasswordViewModel changePasswordViewModel,
+                          ChangeLanguageViewModel changeLanguageViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInViewModel;
         this.loginViewModel = loginViewModel;
         this.signupViewModel = signupViewModel;
         this.profileViewModel = profileViewModel;
         this.changePasswordViewModel = changePasswordViewModel;
+        this.changeLanguageViewModel = changeLanguageViewModel;
     }
 
     @Override
@@ -58,6 +63,10 @@ public class LoginPresenter implements LoginOutputBoundary {
         changePasswordState.setUsername(response.getUsername());
         changePasswordState.setOldPassword(response.getPassword());
         this.changePasswordViewModel.setState(changePasswordState);
+
+        final ChangeLanguageState changeLanguageState = changeLanguageViewModel.getState();
+        changeLanguageState.setUsername(response.getUsername());
+        this.changeLanguageViewModel.setState(changeLanguageState);
 
         this.viewManagerModel.setState(loggedInViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
