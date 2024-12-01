@@ -33,7 +33,7 @@ public class TextTranslationPresenter implements TextTranslationOutputBoundary {
         }
 
         try {
-            String translatedText = translation.getTranslatedText().trim();
+            final String translatedText = translation.getTranslatedText().trim();
             if (translatedText.isEmpty()) {
                 prepareFailView("Empty translation result");
                 return;
@@ -57,7 +57,7 @@ public class TextTranslationPresenter implements TextTranslationOutputBoundary {
     @Override
     public void prepareFailView(String error) {
         try {
-            String errorMessage = "Translation failed: " + (error != null ? error : "Unknown error");
+            final String errorMessage = "Translation failed: " + (error != null ? error : "Unknown error");
             System.err.println("Preparing fail view: " + errorMessage);
             view.displayError(errorMessage);
         }
@@ -66,7 +66,8 @@ public class TextTranslationPresenter implements TextTranslationOutputBoundary {
             e.printStackTrace();
             try {
                 view.displayError("Critical error in translation system. Please try again.");
-            } catch (Exception ignored) {
+            }
+            catch (Exception ignored) {
                 System.err.println("Failed to display error to user");
             }
         }

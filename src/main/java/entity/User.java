@@ -21,6 +21,10 @@ public interface User {
 
     void setPassword(String password);
 
+    /**
+     * Returns the output language of the user.
+     * @return the output language of the user.
+     */
     String getOutputLan();
 
     void setOutputLan(String outputLan);

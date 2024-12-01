@@ -1,10 +1,10 @@
-// TextTranslationService.java
 package external_services;
 
 import entity.Translation;
 import entity.User;
 import okhttp3.*;
 import org.json.JSONObject;
+
 import use_case.text_translation.TextTranslationDataAccessInterface;
 
 /**
@@ -25,11 +25,11 @@ public class TextTranslationService implements TextTranslationDataAccessInterfac
     @Override
     public Translation translateText(String sourceText, String sourceLang, String targetLang) {
         try {
-            HttpUrl.Builder urlBuilder = HttpUrl.parse(API_URL).newBuilder();
+            final HttpUrl.Builder urlBuilder = HttpUrl.parse(API_URL).newBuilder();
             urlBuilder.addQueryParameter("q", sourceText);
             urlBuilder.addQueryParameter("langpair", sourceLang + "|" + targetLang);
 
-            Request request = new Request.Builder()
+            final Request request = new Request.Builder()
                     .url(urlBuilder.build())
                     .get()
                     .build();
@@ -39,15 +39,16 @@ public class TextTranslationService implements TextTranslationDataAccessInterfac
                     throw new RuntimeException("API call failed: " + response.code());
                 }
 
-                JSONObject jsonResponse = new JSONObject(response.body().string());
+                final JSONObject jsonResponse = new JSONObject(response.body().string());
                 validateResponse(jsonResponse);
 
-                String translatedText = jsonResponse.getJSONObject("responseData")
+                final String translatedText = jsonResponse.getJSONObject("responseData")
                         .getString("translatedText");
 
                 return new Translation(sourceText, translatedText, sourceLang, targetLang);
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             throw new RuntimeException("Translation service error: " + e.getMessage());
         }
     }
@@ -64,14 +65,15 @@ public class TextTranslationService implements TextTranslationDataAccessInterfac
     }
 
     private void validateResponse(JSONObject jsonResponse) {
-        String responseDetails = jsonResponse.optString("responseDetails", "");
+        final String responseDetails = jsonResponse.optString("responseDetails", "");
         if (!responseDetails.isEmpty()) {
             throw new RuntimeException(responseDetails);
         }
 
-        String translatedText = jsonResponse.getJSONObject("responseData")
+        final String translatedText = jsonResponse.getJSONObject("responseData")
                 .getString("translatedText");
-        if (translatedText.toUpperCase().contains("INVALID") ||
+        if (translatedText.toUpperCase().contains("INVALID")
+                ||
                 translatedText.toUpperCase().contains("ERROR")) {
             throw new RuntimeException("Translation failed: " + translatedText);
         }

@@ -108,7 +108,7 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        ProfileState state = (ProfileState) evt.getNewValue();
+        final ProfileState state = (ProfileState) evt.getNewValue();
         username.setText("Username: " + state.getUsername());
         password.setText("Password: " + state.getPassword());
         preferredLanguage.setText("Preferred Language: " + state.getLanguage());
