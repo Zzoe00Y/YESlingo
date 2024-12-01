@@ -20,10 +20,32 @@ The application also includes:
 * A **Chatbot** feature for users to practice and study language interactively.
 
 ## User Stories
-TODO
+1. As a user, I want to log into the system with my username and password so that I can access personalized translation settings.
+2. As a user, I want to translate text into a different language so that I can understand content written in a language I don’t speak.
+3. As a user, I want to upload a .txt file and have its content translated into my desired language so that I can easily understand text in languages I am unfamiliar with.
+4. As a user, I want to be able to speak English and have my speech recognized as text, then translated into my desired different language.
+5. As a user, I want my text translations to be automatically saved to history, and the history can be cleared if I want to.
+6. As a user, I want to simulate real time conversation with a chatbot in specified input and output languages.
 
-## Installation instructions & Usage
-TODO
+## Installation Instructions & Usage
+
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Zzoe00Y/YESlingo.git
+2. Run the main file: Open your IDE or terminal, navigate to the main file, and run it to start your translation journey!
+
+### Usage
+1. **Select your source and target language:**  
+   Use the language selection bar in the UI to choose the languages for translation. For example, select English as the source language and French as the target language.
+
+2. **Choose your desired translation method:**
+    - **Text translation:** Type text directly into the input field to translate.
+    - **File translation:** Prepare a `.txt` file with the text to be translated and upload it using the file upload button.
+    - **Voice translation:** Enable your microphone and start speaking to have your voice detected and translated into the target language.
+    - **Chatbox:** Click on the chatbox feature to interact with the system in real time. The chatbox will simulate a conversation in specified input and output languages.
+    - **Translation history:** Log in with your username to access your translation history. The history section allows you to view and reuse your previously translated content.
+
 
 ## Entities
 
