@@ -7,7 +7,6 @@ import entity.UserFactory;
 import external_services.FileTranslationService;
 import external_services.MyMemoryGateway;
 import external_services.TextToTextTranslationService;
-import external_services.SpeechToTextService;  // ADDING VOICE TRANSLATION SERVICE IMPORT
 import interface_adapter.ViewManagerModel;
 import interface_adapter.chatbot.ChatBotViewModel;
 import interface_adapter.file_translation.FileTranslationController;
@@ -30,8 +29,6 @@ import interface_adapter.profile.change_password.ChangePasswordPresenter;
 import interface_adapter.profile.change_password.ChangePasswordViewModel;
 import interface_adapter.text_translation.TextTranslationController;
 import interface_adapter.text_translation.TextTranslationPresenter;
-import interface_adapter.voice_translation.VoiceTranslationController;  // IMPORT FOR VOICE TRANSLATION CONTROLLER
-import interface_adapter.voice_translation.VoiceTranslationPresenter;  // IMPORT FOR VOICE TRANSLATION PRESENTER
 import use_case.file_translation.FileTranslationInteractor;
 import use_case.file_translation.FileTranslationOutputBoundary;
 import use_case.history.HistoryInteractor;
@@ -51,8 +48,6 @@ import use_case.text_translation.TextTranslationDataAccessInterface;
 import use_case.text_translation.TextTranslationInteractor;
 import use_case.text_translation.TextTranslationOutputBoundary;
 import use_case.text_translation.TextTranslationUseCase;
-import use_case.voice_translation.VoiceTranslationInteractor;  // VOICE TRANSLATION INTERACTOR IMPORT
-import use_case.voice_translation.VoiceTranslationOutputBoundary;  // VOICE TRANSLATION OUTPUT BOUNDARY IMPORT
 import view.*;
 
 /**
@@ -63,7 +58,7 @@ public class Main {
      * Builds and runs the CA architecture of the application.
      * @param args unused arguments
      */
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         final AppBuilder appBuilder = new AppBuilder();
         // add the Logout Use Case to the app using the appBuilder
         final JFrame application = appBuilder
@@ -77,11 +72,13 @@ public class Main {
                 .addChatBotView()
                 .addSignupUseCase()
                 .addLoginUseCase()
-                                            .addLoggedinUseCase()
-                //.addProfileUseCase()
+                .addLoggedinUseCase()
+                .addProfileUseCase()
+                .addChangePasswordUseCase()
+                .addChangeLanguageUseCase()
+                .addHistoryUseCase()
+                .addHistoryUseCase()
                 .addChatBotUseCase()
-//                                            .addChangePasswordUseCase()
-//                                            .addLogoutUseCase()
                 .build();
 
         application.pack();
@@ -91,14 +88,13 @@ public class Main {
         LoggedInView loggedInView = appBuilder.getLoggedInView();
 
         // Initialize gateway and service for translation
-        TextTranslationDataAccessInterface textTranslationDataAccessInterface = new MyMemoryGateway();
 
         // Set up text translation components
         TextTranslationOutputBoundary textTranslationOutputBoundary =
                 new TextTranslationPresenter(loggedInView);
 
         TextTranslationInteractor textTranslationInteractor =
-                new TextTranslationInteractor(textTranslationDataAccessInterface, textTranslationOutputBoundary);
+                new TextTranslationInteractor(appBuilder.getUserDataAccessObject(), textTranslationOutputBoundary);
 
         TextTranslationController textTranslationController =
                 new TextTranslationController(textTranslationInteractor);
@@ -120,58 +116,5 @@ public class Main {
                 new FileTranslationController(fileTranslationInteractor);
 
         loggedInView.setFileTranslationController(fileTranslationController);
-        
-        SpeechToTextService speechToTextService = new SpeechToTextService();
-
-        VoiceTranslationOutputBoundary voiceTranslationOutputBoundary = new VoiceTranslationPresenter(loggedInView);
-
-        VoiceTranslationInteractor voiceTranslationInteractor = new VoiceTranslationInteractor(
-                speechToTextService, voiceTranslationOutputBoundary);
-
-        VoiceTranslationController voiceTranslationController = new VoiceTranslationController(voiceTranslationInteractor);
-
-        loggedInView.setVoiceTranslationController(voiceTranslationController);
-
-
-        ViewManagerModel viewManagerModel = appBuilder.getViewManagerModel();
-        LoggedInViewModel loggedInViewModel = appBuilder.getLoggedInViewModel();
-        ProfileViewModel profileViewModel = appBuilder.getProfileViewModel();
-        UserFactory userFactory = appBuilder.getUserFactory();
-
-        LoggedInOutputBoundary loggedInOutputBoundary = new LoggedInPresenter(viewManagerModel, loggedInViewModel, profileViewModel, new HistoryViewModel(), new ChatBotViewModel());
-        LoggedInInteractor loggedInInteractor = new LoggedInInteractor(loggedInOutputBoundary, userFactory);
-        LoggedInController loggedInController = new LoggedInController(loggedInInteractor);
-//        loggedInView.setLoggedInController(loggedInController);
-
-        ProfileView profileView = appBuilder.getProfileView();
-        ChangePasswordViewModel changePasswordViewModel = appBuilder.getChangePasswordViewModel();
-        LoginViewModel loginViewModel = appBuilder.getLoginViewModel();
-        ChangeLanguageViewModel changeLanguageViewModel = appBuilder.getChangeLanguageViewModel();
-        ProfilePresenter profilePresenter = new ProfilePresenter(viewManagerModel, loggedInViewModel, profileViewModel,
-                changePasswordViewModel, loginViewModel, changeLanguageViewModel);
-        ProfileInteractor profileInteractor = new ProfileInteractor(profilePresenter, userFactory);
-        ProfileController profileController = new ProfileController(profileInteractor);
-        profileView.setProfileController(profileController);
-
-
-        ChangePasswordView changePasswordView = appBuilder.getChangePasswordView();
-        ChangePasswordPresenter changePasswordPresenter = new ChangePasswordPresenter(viewManagerModel, changePasswordViewModel, profileViewModel);
-        ChangePasswordInteractor changePasswordUseCaseInteractor = new ChangePasswordInteractor(changePasswordPresenter, userFactory);
-        ChangePasswordController changePasswordController = new ChangePasswordController(changePasswordUseCaseInteractor);
-        changePasswordView.setChangePasswordController(changePasswordController);
-
-
-        ChangeLanguageView changeLanguageView = appBuilder.getChangeLanguageView();
-        ChangeLanguagePresenter changeLanguagePresenter = new ChangeLanguagePresenter(viewManagerModel, changeLanguageViewModel, profileViewModel);
-        ChangeLanguageInteractor changeLanguageUseCaseInteractor = new ChangeLanguageInteractor(changeLanguagePresenter, userFactory);
-        ChangeLanguageController changeLanguageController = new ChangeLanguageController(changeLanguageUseCaseInteractor);
-        changeLanguageView.setChangeLanguageController(changeLanguageController);
-
-        HistoryViewModel historyViewModel = appBuilder.getHistoryViewModel();
-        HistoryView historyView = appBuilder.getHistoryView();
-        HistoryPresenter historyPresenter = new HistoryPresenter(viewManagerModel, loggedInViewModel, historyViewModel);
-        HistoryInteractor historyInteractor = new HistoryInteractor(historyPresenter, userFactory);
-        HistoryController historyController = new HistoryController(historyInteractor);
-        historyView.setHistoryController(historyController);
     }
 }

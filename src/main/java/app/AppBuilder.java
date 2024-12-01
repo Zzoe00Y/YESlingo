@@ -11,11 +11,12 @@ import entity.CommonUserFactory;
 import entity.UserFactory;
 import external_services.FileTranslationService;
 import external_services.MyMemoryGateway;
-//import external_services.SpeechToTextService;
 import external_services.TextToTextTranslationService;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.file_translation.FileTranslationController;
 import interface_adapter.file_translation.FileTranslationPresenter;
+import interface_adapter.history.HistoryController;
+import interface_adapter.history.HistoryPresenter;
 import interface_adapter.history.HistoryViewModel;
 import interface_adapter.loggedin_homepage.LoggedInController;
 import interface_adapter.loggedin_homepage.LoggedInPresenter;
@@ -26,22 +27,25 @@ import interface_adapter.chatbot.ChatBotViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
-import interface_adapter.logout.LogoutController;
-import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.profile.ProfileController;
 import interface_adapter.profile.ProfilePresenter;
 import interface_adapter.profile.ProfileViewModel;
+import interface_adapter.profile.change_language.ChangeLanguageController;
+import interface_adapter.profile.change_language.ChangeLanguagePresenter;
 import interface_adapter.profile.change_language.ChangeLanguageViewModel;
+import interface_adapter.profile.change_password.ChangePasswordController;
+import interface_adapter.profile.change_password.ChangePasswordPresenter;
 import interface_adapter.profile.change_password.ChangePasswordViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
-//import interface_adapter.voice_translation.VoiceTranslationController;
-//import interface_adapter.voice_translation.VoiceTranslationPresenter;
 import use_case.chatbot.ChatBotInputBoundary;
 import use_case.chatbot.ChatBotInteractor;
 import use_case.chatbot.ChatBotOutputBoundary;
 import use_case.file_translation.FileTranslationInteractor;
+import use_case.history.HistoryInputBoundary;
+import use_case.history.HistoryInteractor;
+import use_case.history.HistoryOutputBoundary;
 import use_case.loggedin.LoggedInInputBoundary;
 import use_case.loggedin.LoggedInInteractor;
 import use_case.loggedin.LoggedInOutputBoundary;
@@ -49,21 +53,20 @@ import use_case.loggedin.LoggedInUserDataAccessInterface;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
-import use_case.logout.LogoutInputBoundary;
-import use_case.logout.LogoutInteractor;
-import use_case.logout.LogoutOutputBoundary;
 import use_case.profile.ProfileInputBoundary;
 import use_case.profile.ProfileInteractor;
 import use_case.profile.ProfileOutputBoundary;
 import use_case.profile.ProfileUserDataAccessInterface;
+import use_case.profile.change_language.ChangeLanguageInputBoundary;
+import use_case.profile.change_language.ChangeLanguageInteractor;
+import use_case.profile.change_language.ChangeLanguageOutputBoundary;
+import use_case.profile.change_password.ChangePasswordInputBoundary;
+import use_case.profile.change_password.ChangePasswordInteractor;
+import use_case.profile.change_password.ChangePasswordOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
 import use_case.text_translation.TextTranslationUseCase;
-//import use_case.voice_translation.VoiceTranslationInputBoundary;
-//import use_case.voice_translation.VoiceTranslationInteractor;
-//import use_case.voice_translation.VoiceTranslationOutputBoundary;
-
 import view.*;
 
 /**
@@ -118,6 +121,10 @@ public class AppBuilder {
         signupView = new SignupView(signupViewModel);
         cardPanel.add(signupView, signupView.getViewName());
         return this;
+    }
+
+    public InMemoryUserDataAccessObject getUserDataAccessObject() {
+        return userDataAccessObject;
     }
 
     /**
@@ -255,28 +262,44 @@ public class AppBuilder {
         return this;
     }
 
-    public AppBuilder addFileTranslationUseCase() {
-        FileTranslationInteractor fileTranslationInteractor = createFileTranslationInteractor();
-        FileTranslationController fileTranslationController = new FileTranslationController(fileTranslationInteractor);
+    /**
+     * Adds the Change Password Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addChangePasswordUseCase() {
+        final ChangePasswordOutputBoundary changePasswordOutputBoundary = new ChangePasswordPresenter(viewManagerModel, changePasswordViewModel, profileViewModel);
+        final ChangePasswordInputBoundary changePasswordInteractor = new ChangePasswordInteractor(changePasswordOutputBoundary, userFactory);
 
-        // Inject the controller into the LoggedInView
-        loggedInView.setFileTranslationController(fileTranslationController);
-
+        final ChangePasswordController controller = new ChangePasswordController(changePasswordInteractor);
+        changePasswordView.setChangePasswordController(controller);
         return this;
     }
 
-//    public AppBuilder addVoiceTranslationUseCase() throws Exception {
-//        VoiceTranslationInteractor voiceTranslationInteractor = createVoiceTranslationInteractor();
-//        VoiceTranslationController voiceTranslationController =
-//                new VoiceTranslationController(voiceTranslationInteractor);
-//
-//        // Inject the controller into the LoggedInView
-//        loggedInView.setVoiceTranslationController(voiceTranslationController);
-//
-//        return this;
-//    }
+    /**
+     * Adds the Change Language Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addChangeLanguageUseCase() {
+        final ChangeLanguageOutputBoundary changeLanguageOutputBoundary = new ChangeLanguagePresenter(viewManagerModel, changeLanguageViewModel, profileViewModel);
+        final ChangeLanguageInputBoundary changeLanguageInteractor = new ChangeLanguageInteractor(changeLanguageOutputBoundary, userFactory);
 
+        final ChangeLanguageController controller = new ChangeLanguageController(changeLanguageInteractor);
+        changeLanguageView.setChangeLanguageController(controller);
+        return this;
+    }
 
+    /**
+     * Adds the History Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addHistoryUseCase() {
+        final HistoryOutputBoundary historyOutputBoundary = new HistoryPresenter(viewManagerModel, loggedInViewModel, historyViewModel);
+        final HistoryInputBoundary historyInteractor = new HistoryInteractor(userDataAccessObject, historyOutputBoundary, userFactory);
+
+        final HistoryController controller = new HistoryController(historyInteractor);
+        historyView.setHistoryController(controller);
+        return this;
+    }
 
     /**
      * Adds the ChatBot Use Case to the application.
@@ -294,21 +317,28 @@ public class AppBuilder {
     }
 
     /**
-     * Adds the Change Password Use Case to the application.
+     * Adds the File Translation Use Case to the application.
      * @return this builder
      */
-//    public AppBuilder addChangePasswordUseCase() {
-//        final ChangePasswordOutputBoundary changePasswordOutputBoundary =
-//                new ChangePasswordPresenter(loggedInViewModel);
-//
-//        final ChangePasswordInputBoundary changePasswordInteractor =
-//                new ChangePasswordInteractor(userDataAccessObject, changePasswordOutputBoundary, userFactory);
-//
-//        final ChangePasswordController changePasswordController =
-//                new ChangePasswordController(changePasswordInteractor);
-//        loggedInView.setChangePasswordController(changePasswordController);
-//        return this;
-//    }
+    public AppBuilder addFileTranslationUseCase() {
+        FileTranslationService fileTranslationService = new FileTranslationService();
+
+        FileTranslationOutputBoundary fileTranslationOutputBoundary =
+                new FileTranslationPresenter(loggedInView);
+
+        FileTranslationInteractor fileTranslationInteractor =
+                new FileTranslationInteractor(
+                        fileTranslationService,
+                        fileTranslationOutputBoundary
+                );
+
+        FileTranslationController fileTranslationController =
+                new FileTranslationController(fileTranslationInteractor);
+
+        loggedInView.setFileTranslationController(fileTranslationController);
+
+        return this;
+    }
 
     private FileTranslationInteractor createFileTranslationInteractor() {
         // Ensure dependencies are correctly initialized
@@ -325,23 +355,6 @@ public class AppBuilder {
         // Create and return the FileTranslationInteractor with required dependencies
         return new FileTranslationInteractor(fileTranslationService, fileTranslationPresenter);
     }
-
-//    private VoiceTranslationInteractor createVoiceTranslationInteractor() throws Exception {
-//
-//        // Initialize the SpeechToTextService
-//        SpeechToTextService speechToTextService = new SpeechToTextService();
-//
-//        // Initialize the TextToTextTranslationService with a gateway
-//        TextToTextTranslationService textToTextTranslationService =
-//                new TextToTextTranslationService(new MyMemoryGateway());
-//
-//        // Initialize the presenter for the VoiceTranslationInteractor
-//        VoiceTranslationPresenter voiceTranslationPresenter =
-//                new VoiceTranslationPresenter(loggedInView);
-//
-//        // Create and return the VoiceTranslationInteractor
-//        return new VoiceTranslationInteractor(speechToTextService, voiceTranslationPresenter);
-//    }
 
 
     /**

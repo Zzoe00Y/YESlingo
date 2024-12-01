@@ -158,7 +158,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
                 LanguageItem sourceItem = (LanguageItem) inputLanguageComboBox.getSelectedItem();
                 LanguageItem targetItem = (LanguageItem) outputLanguageComboBox.getSelectedItem();
                 if (sourceItem != null && targetItem != null && !sourceItem.code.equals(targetItem.code)) {
-                    textTranslationController.translate(textToTranslate, sourceItem.code, targetItem.code);
+                    textTranslationController.translate(textToTranslate, sourceItem.code, targetItem.code, loggedInViewModel.getState().getUsername());
                 } else {
                     JOptionPane.showMessageDialog(this, "Select valid and different source/target languages.");
                 }
@@ -223,7 +223,8 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
         historyButton.addActionListener(
                 evt -> {
                     if (evt.getSource().equals(historyButton)) {
-                        loggedInController.switchToHistoryView();
+                        final LoggedInState currentState = loggedInViewModel.getState();
+                        loggedInController.switchToHistoryView(currentState.getUsername());
                     }
                 }
         );

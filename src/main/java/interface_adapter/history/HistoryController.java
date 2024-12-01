@@ -15,4 +15,12 @@ public class HistoryController {
     public void switchToLoggedInView() {
         historyInteractor.switchToLoggedInView();
     }
+
+    public void pullUser(String username) {
+        historyInteractor.pullUser(username);
+    }
+
+    public void clearAll(String username) {
+        historyInteractor.clearAll(username);
+    }
 }
