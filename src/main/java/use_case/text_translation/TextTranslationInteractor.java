@@ -1,7 +1,8 @@
 package use_case.text_translation;
 
-import entity.Translation;
 import java.util.logging.Logger;
+
+import entity.Translation;
 
 public class TextTranslationInteractor implements TextTranslationInputBoundary {
     private static final Logger logger = Logger.getLogger(TextTranslationInteractor.class.getName());
@@ -19,7 +20,7 @@ public class TextTranslationInteractor implements TextTranslationInputBoundary {
     @Override
     public void translate(TextTranslationInputData inputData) {
         try {
-            Translation translation = translationService.translateText(
+            final Translation translation = translationService.translateText(
                     inputData.getSourceText(),
                     inputData.getSourceLang(),
                     inputData.getTargetLang()
@@ -27,7 +28,7 @@ public class TextTranslationInteractor implements TextTranslationInputBoundary {
 
             logger.info("Translation successful! Translated text: " + translation.getTranslatedText());
 
-            TextTranslationOutputData outputData = new TextTranslationOutputData(
+            final TextTranslationOutputData outputData = new TextTranslationOutputData(
                     translation.getSourceText(),
                     translation.getTranslatedText(),
                     translation.getSourceLang(),
@@ -36,7 +37,8 @@ public class TextTranslationInteractor implements TextTranslationInputBoundary {
 
             outputBoundary.prepareSuccessView(outputData);
 
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             logger.severe("Error during translation: " + e.getMessage());
             outputBoundary.prepareFailView("Translation failed: " + e.getMessage());
         }

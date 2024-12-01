@@ -1,16 +1,24 @@
 package external_services;
 
-import okhttp3.*;
-import org.json.JSONObject;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
+import org.json.JSONObject;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+/**
+ * Service for file translation.
+ */
 public class FileTranslationService {
 
     private static final String API_URL = "https://libretranslate.com/translate";
-    private static final String API_KEY = "dc756137-1bea-4261-aa01-15c9105034a2";
+    private static final String API_KEY = "aafecfa0-294e-4518-a2d7-7e446e37690d";
 
     /**
      * Translates text from a `.txt` file using the LibreTranslate API.
@@ -23,29 +31,29 @@ public class FileTranslationService {
      */
     public String translate(String filePath, String sourceLang, String targetLang) throws IOException {
         // Ensure the file exists
-        File file = new File(filePath);
+        final File file = new File(filePath);
         if (!file.exists()) {
             throw new IOException("File not found: " + filePath);
         }
 
         // Read the content of the `.txt` file
-        String fileContent = Files.readString(file.toPath());
+        final String fileContent = Files.readString(file.toPath());
 
         // Build the JSON payload for the LibreTranslate API
-        JSONObject jsonPayload = new JSONObject();
+        final JSONObject jsonPayload = new JSONObject();
         jsonPayload.put("q", fileContent);
         jsonPayload.put("source", sourceLang);
         jsonPayload.put("target", targetLang);
         jsonPayload.put("api_key", API_KEY);
 
         // Create the request
-        OkHttpClient client = new OkHttpClient();
-        RequestBody body = RequestBody.create(
+        final OkHttpClient client = new OkHttpClient();
+        final RequestBody body = RequestBody.create(
                 jsonPayload.toString(),
                 MediaType.parse("application/json")
         );
 
-        Request request = new Request.Builder()
+        final Request request = new Request.Builder()
                 .url(API_URL)
                 .post(body)
                 .build();
@@ -57,8 +65,8 @@ public class FileTranslationService {
             }
 
             // Parse the response to get the translated text
-            String responseBody = response.body().string();
-            JSONObject jsonResponse = new JSONObject(responseBody);
+            final String responseBody = response.body().string();
+            final JSONObject jsonResponse = new JSONObject(responseBody);
             return jsonResponse.getString("translatedText");
         }
     }

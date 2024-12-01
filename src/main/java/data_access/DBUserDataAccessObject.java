@@ -17,7 +17,6 @@ import java.io.IOException;
  */
 public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
         LoginUserDataAccessInterface,
-        ChangePasswordUserDataAccessInterface,
         ChatBotUserDataAccessInterface {
     private static final int SUCCESS_CODE = 200;
     private static final String CONTENT_TYPE_LABEL = "Content-Type";
@@ -120,8 +119,7 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
         }
     }
 
-    @Override
-    public void changePassword(User user) {
+    public void changePassword(User user, String newPassword) {
         final OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
 

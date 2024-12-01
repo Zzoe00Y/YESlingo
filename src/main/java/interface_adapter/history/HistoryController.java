@@ -2,6 +2,9 @@ package interface_adapter.history;
 
 import use_case.history.HistoryInputBoundary;
 
+/**
+ * Controller for the History Use Case.
+ */
 public class HistoryController {
     private HistoryInputBoundary historyInteractor;
 

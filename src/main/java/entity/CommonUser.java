@@ -31,6 +31,9 @@ public class CommonUser implements User {
     }
 
     @Override
+    public void setPassword(String password) {this.password = password;}
+
+    @Override
     public String getOutputLan() {
         return outputLan;
     }

@@ -3,6 +3,7 @@ package view;
 import interface_adapter.profile.ProfileController;
 import interface_adapter.profile.ProfileState;
 import interface_adapter.profile.ProfileViewModel;
+import use_case.login.LoginOutputData;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +20,9 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
     private final String viewName = "profile";
     private final ProfileViewModel profileViewModel;
     private ProfileController profileController;
+    private final JLabel username;
+    private final JLabel password;
+    private final JLabel preferredLanguage;
 
     public ProfileView(ProfileViewModel profileViewModel) {
 
@@ -27,10 +31,10 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
 
         final JLabel title = new JLabel("Profile");
         final JButton exit = new JButton("Exit");
-        final JLabel username = new JLabel("Username: ");
-        final JLabel password = new JLabel("Password: ");
+        username = new JLabel("Username: ");
+        password = new JLabel("Password: ");
         final JButton changePassword = new JButton("Change Password");
-        final JLabel preferredLanguage = new JLabel("Preferred Language: ");
+        preferredLanguage = new JLabel("Preferred Language: ");
         final JButton changeLanguage = new JButton("Change Language");
         final JButton logout = new JButton("Log Out");
 
@@ -98,6 +102,7 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
         );
     }
 
+
     @Override
     public void actionPerformed(ActionEvent e) {
         JOptionPane.showMessageDialog(this, "Not implemented yet.");
@@ -105,9 +110,11 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        final ProfileState state = (ProfileState) evt.getNewValue();
-//        if (state.getUsername() != null) {
-//            JOptionPane.showMessageDialog(this, state.getUsername());
+        //if ("state".equals(evt.getPropertyName())) {
+            ProfileState state = (ProfileState) evt.getNewValue();
+            username.setText("Username: " + state.getUsername());
+            password.setText("Password: " + state.getPassword());
+            preferredLanguage.setText("Preferred Language: " + state.getLanguage());
     }
 
     public String getViewName() {
@@ -117,6 +124,4 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
     public void setProfileController(ProfileController profileController) {
         this.profileController = profileController;
     }
-
-
 }
