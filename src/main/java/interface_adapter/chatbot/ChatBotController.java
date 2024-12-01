@@ -27,14 +27,15 @@ public class ChatBotController {
     }
 
     /**
-     * Executes the exit use case
+     * Executes the exit use case.
      */
     public void switchToLoggedInView() {
         chatBotUseCaseInteractor.switchToLoggedInView();
     }
 
     /**
-     * Executes the pull user info use case
+     * Executes the pull user info use case.
+     * @param username the username
      */
     public void pullUser(String username) {
         chatBotUseCaseInteractor.pullUser(username);

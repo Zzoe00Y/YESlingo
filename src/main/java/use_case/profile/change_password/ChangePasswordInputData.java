@@ -21,10 +21,15 @@ public class ChangePasswordInputData {
         return username;
     }
 
-    public String getNewPassword() { return newPassword; }
+    public String getNewPassword() {
+        return newPassword;
+    }
 
-    public String getRepeatPassword() { return repeatPassword; }
+    public String getRepeatPassword() {
+        return repeatPassword;
+    }
 
-    public String getOldPassword() { return oldPassword; }
-
+    public String getOldPassword() {
+        return oldPassword;
+    }
 }

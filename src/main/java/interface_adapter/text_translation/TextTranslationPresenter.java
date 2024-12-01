@@ -41,7 +41,8 @@ public class TextTranslationPresenter implements TextTranslationOutputBoundary {
 
             System.out.println("Preparing success view with translation: " + translatedText);
             view.displayTranslation(translatedText);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             System.err.println("Error in success view preparation: " + e.getMessage());
             e.printStackTrace();
             prepareFailView("Error displaying translation: " + e.getMessage());
@@ -59,7 +60,8 @@ public class TextTranslationPresenter implements TextTranslationOutputBoundary {
             String errorMessage = "Translation failed: " + (error != null ? error : "Unknown error");
             System.err.println("Preparing fail view: " + errorMessage);
             view.displayError(errorMessage);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             System.err.println("Error in presenter error handling: " + e.getMessage());
             e.printStackTrace();
             try {

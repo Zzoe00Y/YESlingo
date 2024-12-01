@@ -1,10 +1,5 @@
 package view;
 
-import interface_adapter.profile.change_password.ChangePasswordController;
-import interface_adapter.profile.change_password.ChangePasswordState;
-import interface_adapter.profile.change_password.ChangePasswordViewModel;
-import interface_adapter.signup.SignupState;
-
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -13,6 +8,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
+import interface_adapter.profile.change_password.ChangePasswordController;
+import interface_adapter.profile.change_password.ChangePasswordState;
+import interface_adapter.profile.change_password.ChangePasswordViewModel;
 
 public class ChangePasswordView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -33,11 +32,12 @@ public class ChangePasswordView extends JPanel implements ActionListener, Proper
         final JButton exit = new JButton("Exit");
         final LabelTextPanel oldPassword = new LabelTextPanel(new JLabel("Old password: "), oldPasswordField);
         final LabelTextPanel newPassword = new LabelTextPanel(new JLabel("New password: "), newPasswordField);
-        final LabelTextPanel repeatNewPassword = new LabelTextPanel(new JLabel("Repeat new password: "), repeatNewPasswordField);
+        final LabelTextPanel repeatNewPassword =
+                new LabelTextPanel(new JLabel("Repeat new password: "), repeatNewPasswordField);
         final JButton ok = new JButton("OK");
 
         this.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
+        final GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
@@ -76,13 +76,10 @@ public class ChangePasswordView extends JPanel implements ActionListener, Proper
         ok.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        //if (evt.getSource().equals(ok)) {
-                            final ChangePasswordState currentState = changePasswordViewModel.getState();
-                            changePasswordController.execute(currentState.getUsername(),
-                                                             currentState.getNewPassword(),
-                                                             currentState.getRepeatPassword(),
-                                                             currentState.getOldPassword()
-                            );
+                        final ChangePasswordState currentState = changePasswordViewModel.getState();
+                        changePasswordController.execute(currentState.getUsername(), currentState.getNewPassword(),
+                                currentState.getRepeatPassword(), currentState.getOldPassword()
+                        );
                     }
 
                 }
@@ -174,7 +171,7 @@ public class ChangePasswordView extends JPanel implements ActionListener, Proper
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        ChangePasswordState state = (ChangePasswordState) evt.getNewValue();
+        final ChangePasswordState state = (ChangePasswordState) evt.getNewValue();
         if (state.getOldPasswordError() != null) {
             JOptionPane.showMessageDialog(this, state.getOldPasswordError());
         }

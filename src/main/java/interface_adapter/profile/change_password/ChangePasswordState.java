@@ -10,13 +10,21 @@ public class ChangePasswordState {
     private String oldPassword = "";
     private String oldPasswordError;
 
-    public String getUsername() { return username; }
+    public String getUsername() {
+        return username;
+    }
 
-    public void setUsername(String username) { this.username = username; }
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-    public String getOldPassword() { return oldPassword; }
+    public String getOldPassword() {
+        return oldPassword;
+    }
 
-    public void setOldPassword(String oldPassword) { this.oldPassword = oldPassword; }
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
+    }
 
     public String getNewPassword() {
         return newPassword;
@@ -34,10 +42,11 @@ public class ChangePasswordState {
         this.repeatPassword = repeatPassword;
     }
 
-    public String getOldPasswordError() { return oldPasswordError; }
+    public String getOldPasswordError() {
+        return oldPasswordError;
+    }
 
     public void setOldPasswordError(String oldPasswordError) {
         this.oldPasswordError = oldPasswordError;
     }
-
 }

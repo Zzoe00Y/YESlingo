@@ -18,7 +18,8 @@ public class ChatBotState {
         chatHistoryMessages.add(new ChatMessage("SYSTEM", "Select an existing Chat Channel, or create a new Chat"));
     }
 
-    public ChatBotState(String username, String inputLan, String outputLan, ArrayList<ChatMessage> chatHistoryMessages) {
+    public ChatBotState(String username, String inputLan, String outputLan,
+                        ArrayList<ChatMessage> chatHistoryMessages) {
         this();
         this.username = username;
         this.inputLan = inputLan;
@@ -28,14 +29,6 @@ public class ChatBotState {
 
     public ArrayList<ChatMessage> getChatHistoryMessages() {
         return chatHistoryMessages;
-    }
-
-    public void setChatHistoryMessages(ArrayList<ChatMessage> chatHistoryMessages) {
-        this.chatHistoryMessages = chatHistoryMessages;
-    }
-
-    public void addChatHistoryMessage(ChatMessage message) {
-        this.chatHistoryMessages.add(message);
     }
 
     public String getUsername() {

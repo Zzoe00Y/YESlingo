@@ -1,15 +1,15 @@
 package view;
 
-import interface_adapter.profile.change_language.ChangeLanguageController;
-import interface_adapter.profile.change_language.ChangeLanguageState;
-import interface_adapter.profile.change_language.ChangeLanguageViewModel;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
+import interface_adapter.profile.change_language.ChangeLanguageController;
+import interface_adapter.profile.change_language.ChangeLanguageState;
+import interface_adapter.profile.change_language.ChangeLanguageViewModel;
 
 /**
  * The View for when the user want to change preferred language.
@@ -21,8 +21,8 @@ public class ChangeLanguageView extends JPanel implements ActionListener, Proper
     private ChangeLanguageController changeLanguageController;
 
     public static class LanguageItem {
-        final String displayName;
-        final String code;
+        private final String displayName;
+        private final String code;
 
         public LanguageItem(String displayName, String code) {
             this.displayName = displayName;
@@ -48,9 +48,8 @@ public class ChangeLanguageView extends JPanel implements ActionListener, Proper
         final JComboBox<LanguageItem> defaultOutputLanguage = createLanguageComboBox();
         final JButton ok = new JButton("OK");
 
-
         this.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
+        final GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
@@ -82,15 +81,16 @@ public class ChangeLanguageView extends JPanel implements ActionListener, Proper
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         final ChangeLanguageState currentState = changeLanguageViewModel.getState();
-                        changeLanguageController.execute(currentState.getUsername(), (LanguageItem) defaultOutputLanguage.getSelectedItem());
+                        changeLanguageController.execute(currentState.getUsername(),
+                                (LanguageItem) defaultOutputLanguage.getSelectedItem());
                     }
                 }
         );
     }
 
     private JComboBox<ChangeLanguageView.LanguageItem> createLanguageComboBox() {
-        DefaultComboBoxModel<ChangeLanguageView.LanguageItem> model = new DefaultComboBoxModel<>();
-        String[][] languages = {
+        final DefaultComboBoxModel<ChangeLanguageView.LanguageItem> model = new DefaultComboBoxModel<>();
+        final String[][] languages = {
                 {"English", "en"}, {"Spanish", "es"}, {"French", "fr"},
                 {"German", "de"}, {"Italian", "it"}, {"Portuguese", "pt"},
                 {"Chinese", "zh-CN"}, {"Japanese", "ja"}, {"Korean", "ko"},
@@ -104,8 +104,6 @@ public class ChangeLanguageView extends JPanel implements ActionListener, Proper
         return new JComboBox<>(model);
     }
 
-
-
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -113,7 +111,7 @@ public class ChangeLanguageView extends JPanel implements ActionListener, Proper
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        //JOptionPane.showMessageDialog(this, "Cancel not implemented yet.");
+
     }
 
     public String getViewName() {

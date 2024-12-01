@@ -1,14 +1,12 @@
 package interface_adapter.profile.change_password;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.loggedin_homepage.LoggedInViewModel;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.profile.ProfileState;
 import interface_adapter.profile.ProfileViewModel;
 import use_case.profile.change_password.ChangePasswordOutputBoundary;
 import use_case.profile.change_password.ChangePasswordOutputData;
-import view.ViewManager;
 
 /**
  * The Presenter for the Change Password Use Case.
@@ -56,7 +54,10 @@ public class ChangePasswordPresenter implements ChangePasswordOutputBoundary {
         changePasswordViewModel.firePropertyChanged();
     }
 
-    public void switchToProfileView(){
+    /**
+     * Switches to the profile view.
+     */
+    public void switchToProfileView() {
         viewManagerModel.setState(profileViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }

@@ -1,8 +1,5 @@
 package use_case.profile.change_language;
 
-import entity.User;
-import entity.UserFactory;
-import use_case.profile.change_password.ChangePasswordOutputBoundary;
 import view.ChangeLanguageView;
 
 /**
@@ -20,13 +17,13 @@ public class ChangeLanguageInteractor implements ChangeLanguageInputBoundary {
 
     @Override
     public void execute(ChangeLanguageInputData changeLanguageInputData) {
-        String username = changeLanguageInputData.getUsername();
-        //User user = changeLanguageUserDataAccessObject.get(username);
-        ChangeLanguageView.LanguageItem selectedLanguage = changeLanguageInputData.getLanguage();
+        final String username = changeLanguageInputData.getUsername();
+        final ChangeLanguageView.LanguageItem selectedLanguage = changeLanguageInputData.getLanguage();
 
         changeLanguageUserDataAccessObject.changeOutputLanguage(username, selectedLanguage);
 
-        final ChangeLanguageOutputData changeLanguageOutputData = new ChangeLanguageOutputData(username, selectedLanguage);
+        final ChangeLanguageOutputData changeLanguageOutputData =
+                new ChangeLanguageOutputData(username, selectedLanguage);
         changeLanguagePresenter.prepareSuccessView(changeLanguageOutputData);
     }
 

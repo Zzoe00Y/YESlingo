@@ -5,7 +5,7 @@ import entity.UserFactory;
 /**
  * The LoggedIn Interactor.
  */
-public class LoggedInInteractor implements LoggedInInputBoundary{
+public class LoggedInInteractor implements LoggedInInputBoundary {
     private final LoggedInOutputBoundary loggedInPresenter;
     private final UserFactory userFactory;
 
