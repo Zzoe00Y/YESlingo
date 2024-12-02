@@ -393,6 +393,7 @@ public class AppBuilder {
     /**
      * Adds the Voice Translation Use Case to the application.
      * @return this builder
+     * @throws IOException if there is an error with input/output operations
      */
     public AppBuilder addVoiceTranslationUseCase() throws IOException {
         final VoiceTranslationInteractor voiceTranslationInteractor = createVoiceTranslationInteractor();

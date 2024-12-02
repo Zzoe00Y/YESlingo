@@ -3,9 +3,8 @@ package external_services;
 import entity.Translation;
 import entity.User;
 import okhttp3.*;
-import org.json.JSONObject;
-
 import use_case.text_translation.TextTranslationDataAccessInterface;
+import org.json.JSONObject;
 
 /**
  * Service that handles text translation operations and user translation history.
@@ -13,12 +12,13 @@ import use_case.text_translation.TextTranslationDataAccessInterface;
 public class TextTranslationService implements TextTranslationDataAccessInterface {
     private static final String API_URL = "https://api.mymemory.translated.net/get";
     private final OkHttpClient client;
+    private static final int TIMEOUT_SECONDS = 30;
 
     public TextTranslationService() {
         this.client = new OkHttpClient.Builder()
-                .connectTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
-                .writeTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
-                .readTimeout(30, java.util.concurrent.TimeUnit.SECONDS)
+                .connectTimeout(TIMEOUT_SECONDS, java.util.concurrent.TimeUnit.SECONDS)
+                .writeTimeout(TIMEOUT_SECONDS, java.util.concurrent.TimeUnit.SECONDS)
+                .readTimeout(TIMEOUT_SECONDS, java.util.concurrent.TimeUnit.SECONDS)
                 .build();
     }
 
@@ -48,8 +48,8 @@ public class TextTranslationService implements TextTranslationDataAccessInterfac
                 return new Translation(sourceText, translatedText, sourceLang, targetLang);
             }
         }
-        catch (Exception e) {
-            throw new RuntimeException("Translation service error: " + e.getMessage());
+        catch (Exception exception) {
+            throw new RuntimeException("Translation service error: " + exception.getMessage());
         }
     }
 

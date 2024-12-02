@@ -15,6 +15,7 @@ public class Main {
     /**
      * Builds and runs the CA architecture of the application.
      * @param args unused arguments
+     * @throws IOException if there is an error with input/output operations
      */
     public static void main(String[] args) throws IOException {
         final UserFactory userFactory = new CommonUserFactory();

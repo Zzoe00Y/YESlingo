@@ -69,20 +69,22 @@ Personalize your YESlingo experience with user management features.
 - **Change Password:** Update your password securely.
 - **Change Preferred Language:** Set a default language for translation output.
 - **Logout:** Log out securely from your account.
-- **Screenshot:** ![signup_page.png](images/signup_page.png)
-![login_page.png](images/login_page.png)
-- ![profile.png](images/profile.png)
+- **Screenshot:**
+- <img alt="Signup Page" src="images/signup_page.png" width="200"/>
+  <img alt="Login Page" src="images/login_page.png" width="200"/>
+  <img alt="Profile Page" src="images/profile.png" width="200"/>
 
 ### Text Translation
 Translate any text input from one language to another with ease.
 
 - **Description:** Input text directly into the translation box, select your source and target language, and get instant translations.
 - **Use Case:** Ideal for users who want to translate phrases or paragraphs without uploading files.
-- **Example:** 
+- **Example:**
   - Input: "hello"
   - Target Language: Italian
   - Output: "ciao"
-  - Screenshot: ![text_translation.png](images/text_translation.png)
+  - Screenshot: 
+  <img alt="Text translation" src="images/text_translation.png" width="200"/>
 
 ### **File Translation**
 Upload `.txt` files and translate their contents seamlessly.
@@ -90,11 +92,12 @@ Upload `.txt` files and translate their contents seamlessly.
 - **Description:** Upload a `.txt` file, select the source and target languages, and receive a translated version of the file.
 - **Use Case:** Best for users with large amounts of text or structured content they wish to translate in bulk.
 - **Example:**
-    - **Uploaded File Content:** "Nice to meet you."
-    - **Target Language:** French
-    - **Output:** "Ravi de vous rencontrer !"
-- **Screenshot:** 
-![file_translation.png](images/file_translation.png)
+  - **Uploaded File Content:** "Nice to meet you."
+  - **Target Language:** French
+  - **Output:** "Ravi de vous rencontrer !"
+- **Screenshot:**
+  
+  <img alt="File translation" src="images/file_translation.png" width="200"/>
 
 ### **Voice Translation**
 Translate spoken language in real time.
@@ -102,20 +105,24 @@ Translate spoken language in real time.
 - **Description:** Speak into your microphone to have your voice detected, transcribed, and translated into the desired language.
 - **Use Case:** Perfect for travelers, meetings, or real-time communication.
 - **Example:**
-    - **Input:** Speech: "have a good night"
-    - **Target Language:** Japanese
-    - **Output:** "おやすみ。"
-- **Screenshot:** ![voice.png](images/voice.png)
+  - **Input:** Speech: "have a good night"
+  - **Target Language:** Japanese
+  - **Output:** "おやすみ。"
+- **Screenshot:**
+  
+  <img alt="Voice translation" src="images/voice.png" width="200"/>
 
-### **Chatbox**
+### **Chatbot**
 Simulate real-time conversations with translation assistance.
 
 - **Description:** Interact with a chatbot to practice language learning or get translations for conversational inputs.
 - **Use Case:** Ideal for users who want an interactive, conversational translation experience.
 - **Example:**
-    - **Input:** "How do you say 'good morning' in German?"
-    - **Chatbot Output:** "Guten Morgen."
-- **Screenshot:** *(Insert Screenshot Here)*
+  - **Input:** "How do you say 'good morning' in German?"
+  - **Chatbot Output:** "Guten Morgen" auf Deutsch ist "Guten Morgen."
+- **Screenshot:**
+  
+<img alt="chatbot" src="images/chatbot.png" width="200"/>
 
 ### **Translation History**
 Access and manage previous translations.
@@ -123,10 +130,11 @@ Access and manage previous translations.
 - **Description:** Keep track of past translations, view their results, and reuse them if needed.
 - **Use Case:** Great for users who frequently translate similar content and need to refer back to prior work.
 - **Example:**
-    - **Previous Input:** "Welcome to YESlingo."
-    - **Output:** "Bienvenue à YESlingo."
-- **Screenshot:** 
-![history.png](images/history.png)
+  - **Previous Input:** "Welcome to YESlingo."
+  - **Output:** "Bienvenue à YESlingo."
+- **Screenshot:**
+  
+  <img alt="History" src="images/history.png" width="200"/>
 
 ## Installation Instructions
 1. **Install required packages:** Make sure you have the necessary dependencies installed. We recommend downloading one of the version 17 JDKs to get started, but anything 11+ will be sufficient for this project.
@@ -144,14 +152,14 @@ Access and manage previous translations.
 
 ### Common Issues & Solutions
 1. Java version mismatch:\
-If you encounter a `java.lang.UnsupportedClassVersionError`, make sure you're using Java 11 or above:
+   If you encounter a `java.lang.UnsupportedClassVersionError`, make sure you're using Java 11 or above:
 ```bash
     java -version
 ```
 If not, install or update to the correct version.
 
 2. Dependencies not found:\
-Use `gradle dependencies` to verify all required dependencies are installed. If not, add them to your `build.gradle` or `pom.xml` file.
+   Use `mvn dependency::tree` in your bash to verify all required dependencies are installed. If not, make sure your `pom.xml` file matches the one in this repository. Right-click the `pom.xml` file, go to maven, and select reload project if any dependencies appear red.
 
 ## Usage
 1. Select your source and target language
@@ -167,30 +175,7 @@ API:
 
 
 ## License
-
-This project is licensed under the MIT License:
-
-MIT License
-
-Copyright (c) 2024 YESlingo Team
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+This project is licensed under the **MIT License**. For more information, refer to the [LICENSE](./LICENSE) file.
 
 ### Third-Party Licenses and Attributions
 

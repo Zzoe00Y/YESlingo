@@ -30,9 +30,9 @@ public class VoiceTranslationController {
             voiceTranslationInteractor.translate();
 
         }
-        catch (Exception e) {
-            System.err.println("Error in VoiceTranslationController: " + e.getMessage());
-            throw new RuntimeException("Failed to initiate voice translation: " + e.getMessage(), e);
+        catch (Exception exception) {
+            System.err.println("Error in VoiceTranslationController: " + exception.getMessage());
+            throw new RuntimeException("Failed to initiate voice translation: " + exception.getMessage(), exception);
         }
     }
 }
