@@ -10,7 +10,15 @@ public interface LoggedInOutputBoundary {
      */
     void switchToProfileView();
 
+    /**
+     * Switches to the ChatBot View.
+     * @param username the username
+     */
     void switchToChatBotView(String username);
-    
+
+    /**
+     * Switches to the History View.
+     * @param username the username
+     */
     void switchToHistoryView(String username);
 }

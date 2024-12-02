@@ -10,5 +10,9 @@ public interface ChangeLanguageOutputBoundary {
      */
     void switchToProfileView();
 
+    /**
+     * Prepares the failure view for the Login Use Case.
+     * @param changeLanguageOutputData the output data
+     */
     void prepareSuccessView(ChangeLanguageOutputData changeLanguageOutputData);
 }

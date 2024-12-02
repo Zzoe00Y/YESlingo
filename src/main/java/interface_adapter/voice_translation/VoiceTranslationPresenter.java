@@ -1,8 +1,8 @@
 package interface_adapter.voice_translation;
 
+import interface_adapter.translation.TranslationViewInterface;
 import use_case.voice_translation.VoiceTranslationOutputBoundary;
 import use_case.voice_translation.VoiceTranslationOutputData;
-import interface_adapter.translation.TranslationViewInterface;
 
 /**
  * Presenter for the Voice Translation use case.
@@ -24,7 +24,7 @@ public class VoiceTranslationPresenter implements VoiceTranslationOutputBoundary
     @Override
     public void prepareSuccessView(VoiceTranslationOutputData outputData) {
         // Display the translated text to the user
-        String translatedText = outputData.getRecognizedText();
+        final String translatedText = outputData.getRecognizedText();
         System.out.println("Presenter: Speech to text succesful! result: " + translatedText);
 
         // Call the view interface to update the UI with the translation

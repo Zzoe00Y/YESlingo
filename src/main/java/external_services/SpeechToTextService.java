@@ -18,7 +18,7 @@ public class SpeechToTextService {
      */
     public SpeechToTextService() throws java.io.IOException {
         // Configure Sphinx4 with the default acoustic model, dictionary, and language model
-        Configuration configuration = new Configuration();
+        final Configuration configuration = new Configuration();
         configuration.setAcousticModelPath("resource:/edu/cmu/sphinx/models/en-us/en-us");
         configuration.setDictionaryPath("resource:/edu/cmu/sphinx/models/en-us/cmudict-en-us.dict");
         configuration.setLanguageModelPath("resource:/edu/cmu/sphinx/models/en-us/en-us.lm.bin");
@@ -37,10 +37,10 @@ public class SpeechToTextService {
         System.out.println("Listening for speech...");
 
         recognizer.startRecognition(true);
-        StringBuilder recognizedText = new StringBuilder();
+        final StringBuilder recognizedText = new StringBuilder();
 
         // Get the hypothesis (recognized text)
-        String result = recognizer.getResult().getHypothesis();
+        final String result = recognizer.getResult().getHypothesis();
 
         if (result != null && !result.trim().isEmpty()) {
             System.out.println("Recognized: " + result);

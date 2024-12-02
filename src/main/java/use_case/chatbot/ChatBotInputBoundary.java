@@ -18,6 +18,7 @@ public interface ChatBotInputBoundary {
 
     /**
      * Executes the pull user use case.
+     * @param userName the username
      */
     void pullUser(String userName);
 }

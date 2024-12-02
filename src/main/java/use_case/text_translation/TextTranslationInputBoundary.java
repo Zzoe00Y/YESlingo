@@ -5,5 +5,10 @@ package use_case.text_translation;
  * Defines the contract for handling text translation operations.
  */
 public interface TextTranslationInputBoundary {
+
+    /**
+     * Translates.
+     * @param inputData the input data
+     */
     void translate(TextTranslationInputData inputData);
 }

@@ -20,11 +20,19 @@ public class HistoryController {
         historyInteractor.switchToLoggedInView();
     }
 
+    /**
+     * Pulls the user with the username.
+     * @param username the username
+     */
     public void pullUser(String username) {
         final HistoryInputData inputData = new HistoryInputData(username);
         historyInteractor.pullUser(inputData);
     }
 
+    /**
+     * Clears all the history of the user.
+     * @param username the username
+     */
     public void clearAll(String username) {
         final HistoryInputData inputData = new HistoryInputData(username);
         historyInteractor.clearAll(inputData);

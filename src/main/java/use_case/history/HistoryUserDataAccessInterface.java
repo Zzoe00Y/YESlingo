@@ -13,7 +13,7 @@ public interface HistoryUserDataAccessInterface {
     void save(User user);
 
     /**
-     * return the user
+     * Returns the user.
      * @param username the username of the user
      * @return the User object
      */

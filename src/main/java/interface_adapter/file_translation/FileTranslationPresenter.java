@@ -24,11 +24,12 @@ public class FileTranslationPresenter implements FileTranslationOutputBoundary {
     @Override
     public void prepareSuccessView(FileTranslationOutputData outputData) {
         // Display the translated file URL to the user
-        String translatedFileUrl = outputData.getTranslatedFileUrl();
-        String successMessage = translatedFileUrl;
+        final String translatedFileUrl = outputData.getTranslatedFileUrl();
+        final String successMessage = translatedFileUrl;
         System.out.println("Presenter: " + successMessage);
 
-        view.displayTranslation(successMessage); // Call the view interface to update the UI
+        // Call the view interface to update the UI
+        view.displayTranslation(successMessage);
     }
 
     @Override
@@ -36,6 +37,7 @@ public class FileTranslationPresenter implements FileTranslationOutputBoundary {
         // Log the error and display it in the view
         System.err.println("Presenter Error: " + errorMessage);
 
-        view.displayError("Translation failed: " + errorMessage); // Call the view interface to update the UI with an error
+        // Call the view interface to update the UI with an error
+        view.displayError("Translation failed: " + errorMessage);
     }
 }

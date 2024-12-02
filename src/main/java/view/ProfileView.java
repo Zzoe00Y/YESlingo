@@ -3,7 +3,6 @@ package view;
 import interface_adapter.profile.ProfileController;
 import interface_adapter.profile.ProfileState;
 import interface_adapter.profile.ProfileViewModel;
-import use_case.login.LoginOutputData;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,7 +38,7 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
         final JButton logout = new JButton("Log Out");
 
         this.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
+        final GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
@@ -102,7 +101,6 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
         );
     }
 
-
     @Override
     public void actionPerformed(ActionEvent e) {
         JOptionPane.showMessageDialog(this, "Not implemented yet.");
@@ -110,11 +108,10 @@ public class ProfileView extends JPanel implements ActionListener, PropertyChang
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        //if ("state".equals(evt.getPropertyName())) {
-            ProfileState state = (ProfileState) evt.getNewValue();
-            username.setText("Username: " + state.getUsername());
-            password.setText("Password: " + state.getPassword());
-            preferredLanguage.setText("Preferred Language: " + state.getLanguage());
+        final ProfileState state = (ProfileState) evt.getNewValue();
+        username.setText("Username: " + state.getUsername());
+        password.setText("Password: " + state.getPassword());
+        preferredLanguage.setText("Preferred Language: " + state.getLanguage());
     }
 
     public String getViewName() {

@@ -1,11 +1,11 @@
 package use_case.voice_translation;
 
-import external_services.SpeechToTextService;
 import java.util.logging.Logger;
+
+import external_services.SpeechToTextService;
 
 /**
  * The interactor class for the Voice Translation use case.
- *
  * This class coordinates the process of receiving transcribed speech,
  * performing text-to-text translation, and preparing the data for presentation via the UI.
  */
@@ -35,7 +35,7 @@ public class VoiceTranslationInteractor implements VoiceTranslationInputBoundary
     public void translate() {
         try {
             // Convert speech to text
-            String recognizedText = speechToTextService.recognizeSpeech();
+            final String recognizedText = speechToTextService.recognizeSpeech();
 
             if (recognizedText == null || recognizedText.isEmpty()) {
                 // Handle case where no speech was recognized
@@ -45,10 +45,11 @@ public class VoiceTranslationInteractor implements VoiceTranslationInputBoundary
             logger.info("Speech recognized: " + recognizedText);
 
             // Prepare the output data and pass it to the output boundary (UI)
-            VoiceTranslationOutputData outputData = new VoiceTranslationOutputData(recognizedText);
+            final VoiceTranslationOutputData outputData = new VoiceTranslationOutputData(recognizedText);
             outputBoundary.prepareSuccessView(outputData);
 
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             // Log and pass the error to the UI via the output boundary
             logger.severe("Error during voice translation: " + e.getMessage());
             outputBoundary.prepareFailView("Speech to text failed: " + e.getMessage());

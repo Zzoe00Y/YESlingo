@@ -7,13 +7,11 @@ import interface_adapter.profile.ProfileState;
 import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.profile.change_language.ChangeLanguageState;
 import interface_adapter.profile.change_language.ChangeLanguageViewModel;
-import interface_adapter.profile.change_password.ChangePasswordPresenter;
 import interface_adapter.profile.change_password.ChangePasswordState;
 import interface_adapter.profile.change_password.ChangePasswordViewModel;
 import interface_adapter.signup.SignupViewModel;
 import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginOutputData;
-import view.ChangePasswordView;
 
 /**
  * The Presenter for the Login Use Case.
@@ -78,6 +76,9 @@ public class LoginPresenter implements LoginOutputBoundary {
         loginViewModel.firePropertyChanged();
     }
 
+    /**
+     * Switches to the Signup view.
+     */
     public void switchToSignupView() {
         viewManagerModel.setState(signupViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
