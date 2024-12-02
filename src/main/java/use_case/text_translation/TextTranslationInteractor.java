@@ -6,7 +6,7 @@ import entity.Translation;
 import entity.User;
 
 public class TextTranslationInteractor implements TextTranslationInputBoundary {
-    private static final Logger logger = Logger.getLogger(TextTranslationInteractor.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(TextTranslationInteractor.class.getName());
 
     private final TextTranslationDataAccessInterface translationService;
     private final TextTranslationOutputBoundary outputBoundary;
@@ -16,6 +16,7 @@ public class TextTranslationInteractor implements TextTranslationInputBoundary {
             TextTranslationDataAccessInterface translationService,
             TextTranslationOutputBoundary outputBoundary,
             TextTranslationDataAccessInterface userDataAccessObject) {
+
         this.translationService = translationService;
         this.outputBoundary = outputBoundary;
         this.userDataAccessObject = userDataAccessObject;
@@ -30,7 +31,7 @@ public class TextTranslationInteractor implements TextTranslationInputBoundary {
                     inputData.getTargetLang()
             );
 
-            logger.info("Translation successful! Translated text: " + translation.getTranslatedText());
+            LOGGER.info("Translation successful! Translated text: " + translation.getTranslatedText());
 
             final TextTranslationOutputData outputData = new TextTranslationOutputData(
                     translation.getSourceText(),
@@ -39,12 +40,13 @@ public class TextTranslationInteractor implements TextTranslationInputBoundary {
                     translation.getTargetLang()
             );
 
-
-            if(userDataAccessObject != null) {
+            if (
+                    userDataAccessObject != null) {
                 final User user = userDataAccessObject.get(inputData.getUsername());
-                user.getHistory().add("\n——————————————————————————\n" +
-                        inputData.getSourceText() + "\n ---------------------------------------\n"
+                user.getHistory().add("\n——————————————————————————\n"
+                        + inputData.getSourceText() + "\n ---------------------------------------\n"
                         + translation.getTranslatedText() + "\n——————————————————————————\n");
+
                 userDataAccessObject.save(user);
             }
 
@@ -52,7 +54,7 @@ public class TextTranslationInteractor implements TextTranslationInputBoundary {
 
         }
         catch (Exception e) {
-            logger.severe("Error during translation: " + e.getMessage());
+            LOGGER.severe("Error during translation: " + e.getMessage());
             outputBoundary.prepareFailView("Translation failed: " + e.getMessage());
         }
     }
