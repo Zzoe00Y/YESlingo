@@ -96,6 +96,7 @@ Upload `.txt` files and translate their contents seamlessly.
   - **Target Language:** French
   - **Output:** "Ravi de vous rencontrer !"
 - **Screenshot:**
+  
   <img alt="File translation" src="images/file_translation.png" width="200"/>
 
 ### **Voice Translation**
@@ -108,7 +109,7 @@ Translate spoken language in real time.
   - **Target Language:** Japanese
   - **Output:** "おやすみ。"
 - **Screenshot:**
-  <img alt="Voice translation" src="images/voice_translation.png" width="200"/>
+  <img alt="Voice translation" src="images/voice.png" width="200"/>
 
 ### **Chatbox**
 Simulate real-time conversations with translation assistance.
@@ -119,7 +120,7 @@ Simulate real-time conversations with translation assistance.
   - **Input:** "How do you say 'good morning' in German?"
   - **Chatbot Output:** "Guten Morgen" auf Deutsch ist "Guten Morgen."
 - **Screenshot:**
-  <img alt="Chatbox" src="images/Chatbox.png" width="200"/>
+<img alt="Chatbox" src="images/chatbox.png" width="200"/>
 
 ### **Translation History**
 Access and manage previous translations.
