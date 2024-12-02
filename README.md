@@ -3,29 +3,157 @@ Group 177's CSC207 Final Project
 
 ## Team members(github username):
 Yucan Miao(heibaihaiermao)\
-Zhuxin Sun(juliexsun)\
+Zhu Xin Sun(juliexsun)\
 Ying Zhang(Zzoe00Y)\
 Jiner Zhang(jinerfreya)\
 Yuchen Zhao(emily-zhao-zz)
 
+## Table of Contents
+
+1. [Project Description](#project-description)
+2. [User Stories](#user-stories)
+3. [Installation Instructions & Usage](#installation-instructions--usage)
+5. [Entities](#entities)
+6. [Use Cases](#use-cases)
+7. [Views](#views)
+8. [Attributions](#attributions)
+6. [License](#license)
+
+
 ## Project Description
 
-YESlingo is a translator application platform that provides users with translation capabilities across various mediums. It supports:
+YESlingo is a comprehensive translation application platform designed to make language translation accessible and versatile for users. It provides a range of translation features across different mediums, offering convenience and flexibility for diverse use cases.
 * **Text Translation**: Allows users to translate text into a specified language.
-* **Image Translation**: Enables users to upload images, extract text, and translate them (such as reading signs, menus, and documents).
+* **File Translation**: Enables users to upload files, extract text, and translate them.
 * **Speech Translation**: Uses voice input to recognize and translate spoken language.
 
 The application also includes:
 * Translation **History** to track and manage previous translations.
 * A **Chatbot** feature for users to practice and study language interactively.
 
+#### Purpose of the Project
+YESlingo was created to bridge language barriers and enhance communication across cultures. By providing multiple translation modes, it caters to users with varied needs, whether for academic, professional, or personal purposes.
+
+#### Problem Solved
+YESlingo solves the problem of language inaccessibility by offering:
+
+* Convenient and accurate translation of text, files, and speech.
+* A user-friendly platform to practice and improve language skills.
+* A history feature to organize and retrieve past translations easily.
+
+This project is highly useful for individuals, professionals, and learners seeking to communicate or understand content in languages they are unfamiliar with. It combines practicality with innovative features to meet diverse translation needs.
+
+## User Stories
+1. As a user, I want to log into the system with my username and password so that I can access personalized translation settings.
+2. As a user, I want to translate text into a different language so that I can understand content written in a language I don’t speak.
+3. As a user, I want to upload a .txt file and have its content translated into my desired language so that I can easily understand text in languages I am unfamiliar with.
+4. As a user, I want to be able to speak English and have my speech recognized as text, then translated into my desired different language.
+5. As a user, I want my text translations to be automatically saved to history, and the history can be cleared if I want to.
+6. As a user, I want to simulate real time conversation with a chatbot in specified input and output languages.
 
 ## Entities
 
 The primary entities within the application include:
 * User: Base class for all users with basic profile information and preferred language.
-* TranslationHistory: Represents a record of past translations, containing details such as source text and translated text.
+* Translation: Represents a translation, containing source text, translated text, source language, and translated language.
 * ChatMessage: Represents messages exchanged in the chatbot feature.
+
+## Key Features
+
+### **User Management**
+Personalize your YESlingo experience with user management features.
+
+- **Signup:** Register and create a user account.
+- **Login:** Access your account securely to enable personalized features.
+- **Check Profile:** View your username, password (hidden), and preferences.
+- **Change Password:** Update your password securely.
+- **Change Preferred Language:** Set a default language for translation output.
+- **Logout:** Log out securely from your account.
+- **Screenshot:** 
+
+### Text Translation
+Translate any text input from one language to another with ease.
+
+- **Description:** Input text directly into the translation box, select your source and target language, and get instant translations.
+- **Use Case:** Ideal for users who want to translate phrases or paragraphs without uploading files.
+- **Example:** 
+  - Input: "Hello, how are you?"
+  - Target Language: French
+  - Output: "Bonjour, comment ça va ?"
+  - Screenshot: 
+
+### **File Translation**
+Upload `.txt` files and translate their contents seamlessly.
+
+- **Description:** Upload a `.txt` file, select the source and target languages, and receive a translated version of the file.
+- **Use Case:** Best for users with large amounts of text or structured content they wish to translate in bulk.
+- **Example:**
+    - **Uploaded File Content:** "Nice to meet you."
+    - **Target Language:** French
+    - **Output:** "Bienvenido a YESlingo."
+- **Screenshot:** *(Insert Screenshot Here)*
+
+
+### **Voice Translation**
+Translate spoken language in real time.
+
+- **Description:** Speak into your microphone to have your voice detected, transcribed, and translated into the desired language.
+- **Use Case:** Perfect for travelers, meetings, or real-time communication.
+- **Example:**
+    - **Input:** Speech: "Can you help me find a restaurant?"
+    - **Target Language:** Japanese
+    - **Output:** "レストランを見つけるのを手伝ってくれませんか？"
+- **Screenshot:** *(Insert Screenshot Here)*
+
+### **Chatbox**
+Simulate real-time conversations with translation assistance.
+
+- **Description:** Interact with a chatbot to practice language learning or get translations for conversational inputs.
+- **Use Case:** Ideal for users who want an interactive, conversational translation experience.
+- **Example:**
+    - **Input:** "How do you say 'good morning' in German?"
+    - **Chatbot Output:** "Guten Morgen."
+- **Screenshot:** *(Insert Screenshot Here)*
+
+### **Translation History**
+Access and manage previous translations.
+
+- **Description:** Keep track of past translations, view their results, and reuse them if needed.
+- **Use Case:** Great for users who frequently translate similar content and need to refer back to prior work.
+- **Example:**
+    - **Previous Input:** "Welcome to YESlingo."
+    - **Output:** "Bienvenue à YESlingo."
+- **Screenshot:** *(Insert Screenshot Here)*
+
+
+## Installation Instructions
+1. **Install required packages:** Make sure you have the necessary dependencies installed. We recommend downloading one of the version 17 JDKs to get started, but anything 11+ will be sufficient for this project.
+
+2. **Clone the repository:**
+   Clone the project repository from GitHub using the following command:
+   ```bash
+   git clone https://github.com/Zzoe00Y/YESlingo.git
+
+3. **Open your IDE:** Open your preferred IDE and navigate to 'Main' (`src/java/app/Main`).
+4. **Run the application:** Click the green Run button in your IDE to start the application. The YESlingo interface will pop up, ready for you to begin your translation journey.
+5. **Additional setup:**
+- - For file translation, ensure the file is in .txt format. Unsupported file formats will not be accepted.
+- - For voice translation, ensure your system has a working microphone.
+
+### Common Issues & Solutions
+1. Java version mismatch:\
+If you encounter a `java.lang.UnsupportedClassVersionError`, make sure you're using Java 11 or above:
+```bash
+    java -version
+```
+If not, install or update to the correct version.
+2. Dependencies not found:\
+Use gradle dependencies to verify all required dependencies are installed. If not, add them to your build.gradle or pom.xml file.
+
+## Usage
+1. Select your source and target language
+2. Choose your desired translation method
+3. Translate!
 
 ## Use Cases
 
@@ -37,23 +165,22 @@ _Signup:_ Registers new users and creates new Users.\
 _Login:_ Authenticates users.\
 _CheckProfile:_ Allows users to view their profile information, including username, password, and preferred language.\
 _ChangePassword:_ Enables users to update their passwords.\
-_SetPreferredLanguage:_ Lets users set the default output language for translations.\
+_ChangePreferredLanguage:_ Lets users change the default output language for translations.\
 _Logout:_ Logs users out of their account.
 
 ### Translation Use Cases
 
 _ProcessTextTranslation:_ Handles the text translation.\
-_ProcessImageTranslation:_ Manages text extraction from images and translation.\
+_ProcessFileTranslation:_ Manages text extraction from files and translation.\
 _ProcessSpeechTranslation:_ Manages voice recognition and translation.
 
 ### History Use Cases
 
 _ClearTranslationHistory:_ Clears all entries from the translation history.\
-_DeleteSingleHistory_: Deletes individual entries from the translation history.
 
 ### Chatbot Use Case
 
-_sentChat:_ Generates and displays a response to user's input when user click sent button \
+_sentChat:_ Generates and displays a response to the user's input when the user clicks the sent button \
 _pullUser:_ Pull user information from DAO and update the chatBotView's state\
 
 ## Views
@@ -65,7 +192,7 @@ _LogInView:_ Interface for existing users to log into their accounts.\
 _HomepageView:_ Main dashboard for logged-in users, offering various application features.\
 _ProfileView:_ Displays user's profile information.\
 _ChangePasswordView:_ Interface allowing users to change their passwords.\
-_SetPreferredLanguageView:_ Interface allowing users to update their default translation output language.\
+_ChangeLanguageView:_ Interface allowing users to update their default translation output language.\
 _HistoryView:_ Shows translation history.\
 _ChatbotView:_ Provides an interactive interface for engaging with the chatbot.\
 Navigation is handled by _ViewManager_, which manages transitions between views.
@@ -74,6 +201,12 @@ Navigation is handled by _ViewManager_, which manages transitions between views.
 
 API:
 1. Text to Text Translation: [https://libretranslate.com/](https://mymemory.translated.net/)
-2. Image to Text API key: https://app.nanonets.com/#keys 33a63559-9ed3-11ef-9412-8ac686cb80af
+2. File to Text API key: https://libretranslate.com/translate
 3. ChatBot Cohere API: https://docs.cohere.com/v1/reference/chat O40OXvNOKzdUtm6vQlpLiE7erjfv81ZeFUeHbvmg
+4. Speech to Text API - Sphinx4: https://cmusphinx.github.io/doc/sphinx4/javadoc/
 
+
+## License
+TODO
+
+## Feedback?

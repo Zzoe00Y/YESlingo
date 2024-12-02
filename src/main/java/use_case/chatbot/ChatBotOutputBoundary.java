@@ -8,22 +8,10 @@ import interface_adapter.chatbot.ChatBotState;
 public interface ChatBotOutputBoundary {
 
     /**
-     * Prepares the success view for the ChatBot Use Case.
-     * @param outputData the output data
-     */
-//    void prepareSuccessView(ChatBotOutputData outputData);
-
-    /**
      * Display the response message for the ChatBot sendChat Use Case.
      * @param outputData the output data
      */
     void displayResponse(ChatBotOutputData outputData);
-
-    /**
-     * Prepares the failure view for the ChatBot Use Case.
-     * @param errorMessage the explanation of the failure
-     */
-//    void prepareFailView(String errorMessage);
 
     /**
      * Switches to the LoggedIn View.
@@ -32,6 +20,7 @@ public interface ChatBotOutputBoundary {
 
     /**
      * Update the chatBot state through pull user use case.
+     * @param newState the new state
      */
     void pullUser(ChatBotState newState);
 }

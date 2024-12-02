@@ -30,11 +30,18 @@ public class LoggedInPresenter implements LoggedInOutputBoundary {
         this.chatBotViewModel = chatBotViewModel;
     }
 
+    /**
+     * Switches to the Profile View.
+     */
     public void switchToProfileView() {
         viewManagerModel.setState(profileViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 
+    /**
+     * Switches to the Chatbot View.
+     * @param username the username
+     */
     public void switchToChatBotView(String username) {
         final ChatBotState chatBotState = chatBotViewModel.getState();
         chatBotState.setUsername(username);
@@ -45,6 +52,10 @@ public class LoggedInPresenter implements LoggedInOutputBoundary {
         viewManagerModel.firePropertyChanged();
     }
 
+    /**
+     * Switches to the History View.
+     * @param username the username
+     */
     @Override
     public void switchToHistoryView(String username) {
         final HistoryState historyState = historyViewModel.getState();

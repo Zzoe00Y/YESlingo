@@ -22,74 +22,54 @@ public class TextTranslationPresenter implements TextTranslationOutputBoundary {
 
     /**
      * Prepares and displays the success view for a successful translation.
-     * Validates the response and handles any presentation-layer errors.
      *
-     * @param response the response model containing translation results
-     * @return TextTranslationResponseModel either the original response or an error response
+     * @param translation the translation output data
      */
     @Override
-    public TextTranslationOutputData prepareSuccessView(TextTranslationOutputData response) {
-        if (response == null || response.getTranslatedText() == null) {
-            return prepareFailView("Invalid translation response");
+    public void prepareSuccessView(TextTranslationOutputData translation) {
+        if (translation == null || translation.getTranslatedText() == null) {
+            prepareFailView("Invalid translation response");
+            return;
         }
 
         try {
-            String translatedText = response.getTranslatedText().trim();
+            final String translatedText = translation.getTranslatedText().trim();
             if (translatedText.isEmpty()) {
-                return prepareFailView("Empty translation result");
+                prepareFailView("Empty translation result");
+                return;
             }
 
             System.out.println("Preparing success view with translation: " + translatedText);
             view.displayTranslation(translatedText);
-            return response;
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             System.err.println("Error in success view preparation: " + e.getMessage());
             e.printStackTrace();
-            return prepareFailView("Error displaying translation: " + e.getMessage());
+            prepareFailView("Error displaying translation: " + e.getMessage());
         }
     }
 
     /**
      * Prepares and displays the failure view when a translation operation fails.
-     * Handles error presentation and provides fallback error handling.
      *
-     * @param error the error message describing what went wrong
-     * @return TextTranslationResponseModel containing error information
+     * @param error the error message
      */
     @Override
-    public TextTranslationOutputData prepareFailView(String error) {
+    public void prepareFailView(String error) {
         try {
-            String errorMessage = "Translation failed: " + (error != null ? error : "Unknown error");
+            final String errorMessage = "Translation failed: " + (error != null ? error : "Unknown error");
             System.err.println("Preparing fail view: " + errorMessage);
-
-            // Display error in the view
             view.displayError(errorMessage);
-
-            // Create error response model
-            return new TextTranslationOutputData(
-                    "", // source text
-                    "Translation Error: " + error, // translated text
-                    "", // source language
-                    ""  // target language
-            );
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             System.err.println("Error in presenter error handling: " + e.getMessage());
             e.printStackTrace();
-
-            // Try one last time to show error to user
             try {
                 view.displayError("Critical error in translation system. Please try again.");
-            } catch (Exception ignored) {
-                // At this point we can't do much more
+            }
+            catch (Exception ignored) {
                 System.err.println("Failed to display error to user");
             }
-
-            return new TextTranslationOutputData(
-                    "",
-                    "System Error",
-                    "",
-                    ""
-            );
         }
     }
 }

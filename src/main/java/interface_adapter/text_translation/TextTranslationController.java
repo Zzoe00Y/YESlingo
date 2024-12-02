@@ -29,8 +29,8 @@ public class TextTranslationController {
      * @param username the username of the currently logged in user
      */
     public void translate(String text, String sourceLang, String targetLang, String username) {
-        System.out.println("Controller received translation request"); // Debug print
-        TextTranslationInputData requestModel = new TextTranslationInputData(
+        System.out.println("Controller received translation request");
+        final TextTranslationInputData requestModel = new TextTranslationInputData(
                 text,
                 sourceLang,
                 targetLang,

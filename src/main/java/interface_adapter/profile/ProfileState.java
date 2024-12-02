@@ -6,6 +6,16 @@ package interface_adapter.profile;
 public class ProfileState {
     private String username = "";
     private String password = "";
+    private String language = "English";
+
+    public ProfileState(ProfileState copy) {
+        this.username = copy.username;
+        this.password = copy.password;
+    }
+
+    public ProfileState() {
+
+    }
 
     public String getUsername() {
         return username;
@@ -21,5 +31,13 @@ public class ProfileState {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 }

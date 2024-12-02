@@ -17,7 +17,6 @@ public class ChatBotInputData {
         this.outputLan = outputLan1;
     }
 
-
     public String getMessage() {
         return message;
     }

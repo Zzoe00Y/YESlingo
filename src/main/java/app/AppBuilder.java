@@ -1,6 +1,7 @@
 package app;
 
 import java.awt.CardLayout;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,7 +11,12 @@ import data_access.InMemoryUserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.UserFactory;
 import external_services.FileTranslationService;
+import external_services.SpeechToTextService;
+import external_services.TextTranslationService;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.chatbot.ChatBotController;
+import interface_adapter.chatbot.ChatBotPresenter;
+import interface_adapter.chatbot.ChatBotViewModel;
 import interface_adapter.file_translation.FileTranslationController;
 import interface_adapter.file_translation.FileTranslationPresenter;
 import interface_adapter.history.HistoryController;
@@ -19,9 +25,6 @@ import interface_adapter.history.HistoryViewModel;
 import interface_adapter.loggedin_homepage.LoggedInController;
 import interface_adapter.loggedin_homepage.LoggedInPresenter;
 import interface_adapter.loggedin_homepage.LoggedInViewModel;
-import interface_adapter.chatbot.ChatBotController;
-import interface_adapter.chatbot.ChatBotPresenter;
-import interface_adapter.chatbot.ChatBotViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
@@ -37,6 +40,10 @@ import interface_adapter.profile.change_password.ChangePasswordViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
+import interface_adapter.text_translation.TextTranslationController;
+import interface_adapter.text_translation.TextTranslationPresenter;
+import interface_adapter.voice_translation.VoiceTranslationController;
+import interface_adapter.voice_translation.VoiceTranslationPresenter;
 import use_case.chatbot.ChatBotInputBoundary;
 import use_case.chatbot.ChatBotInteractor;
 import use_case.chatbot.ChatBotOutputBoundary;
@@ -62,6 +69,10 @@ import use_case.profile.change_password.ChangePasswordOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
+import use_case.text_translation.TextTranslationDataAccessInterface;
+import use_case.text_translation.TextTranslationInteractor;
+import use_case.text_translation.TextTranslationOutputBoundary;
+import use_case.voice_translation.VoiceTranslationInteractor;
 import view.*;
 
 /**
@@ -219,8 +230,9 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addLoginUseCase() {
-        final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel, signupViewModel);
+        final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loggedInViewModel,
+                loginViewModel, signupViewModel, profileViewModel, changePasswordViewModel, changeLanguageViewModel);
+
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, loginOutputBoundary);
 
@@ -249,8 +261,9 @@ public class AppBuilder {
      */
     public AppBuilder addProfileUseCase() {
         final ProfileOutputBoundary profileOutputBoundary = new ProfilePresenter(viewManagerModel,
-                loggedInViewModel, profileViewModel, changePasswordViewModel, loginViewModel, changeLanguageViewModel);
-        final ProfileInputBoundary profileInteractor = new ProfileInteractor(profileOutputBoundary, userFactory);
+                loggedInViewModel, changePasswordViewModel, loginViewModel, changeLanguageViewModel);
+
+        final ProfileInputBoundary profileInteractor = new ProfileInteractor(profileOutputBoundary);
 
         final ProfileController controller = new ProfileController(profileInteractor);
         profileView.setProfileController(controller);
@@ -262,8 +275,10 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addChangePasswordUseCase() {
-        final ChangePasswordOutputBoundary changePasswordOutputBoundary = new ChangePasswordPresenter(viewManagerModel, changePasswordViewModel, profileViewModel);
-        final ChangePasswordInputBoundary changePasswordInteractor = new ChangePasswordInteractor(changePasswordOutputBoundary, userFactory);
+        final ChangePasswordOutputBoundary changePasswordOutputBoundary = new ChangePasswordPresenter(viewManagerModel,
+                changePasswordViewModel, profileViewModel, loginViewModel);
+        final ChangePasswordInputBoundary changePasswordInteractor =
+                new ChangePasswordInteractor(changePasswordOutputBoundary, userDataAccessObject);
 
         final ChangePasswordController controller = new ChangePasswordController(changePasswordInteractor);
         changePasswordView.setChangePasswordController(controller);
@@ -275,8 +290,10 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addChangeLanguageUseCase() {
-        final ChangeLanguageOutputBoundary changeLanguageOutputBoundary = new ChangeLanguagePresenter(viewManagerModel, changeLanguageViewModel, profileViewModel);
-        final ChangeLanguageInputBoundary changeLanguageInteractor = new ChangeLanguageInteractor(changeLanguageOutputBoundary, userFactory);
+        final ChangeLanguageOutputBoundary changeLanguageOutputBoundary = new ChangeLanguagePresenter(viewManagerModel,
+                changeLanguageViewModel, profileViewModel, loggedInViewModel);
+        final ChangeLanguageInputBoundary changeLanguageInteractor =
+                new ChangeLanguageInteractor(changeLanguageOutputBoundary, userDataAccessObject);
 
         final ChangeLanguageController controller = new ChangeLanguageController(changeLanguageInteractor);
         changeLanguageView.setChangeLanguageController(controller);
@@ -288,8 +305,10 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addHistoryUseCase() {
-        final HistoryOutputBoundary historyOutputBoundary = new HistoryPresenter(viewManagerModel, loggedInViewModel, historyViewModel);
-        final HistoryInputBoundary historyInteractor = new HistoryInteractor(userDataAccessObject, historyOutputBoundary, userFactory);
+        final HistoryOutputBoundary historyOutputBoundary = new HistoryPresenter(viewManagerModel, historyViewModel,
+                loggedInViewModel);
+        final HistoryInputBoundary historyInteractor = new HistoryInteractor(userDataAccessObject,
+                historyOutputBoundary, userFactory);
 
         final HistoryController controller = new HistoryController(historyInteractor);
         historyView.setHistoryController(controller);
@@ -316,8 +335,9 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addFileTranslationUseCase() {
-        FileTranslationInteractor fileTranslationInteractor = createFileTranslationInteractor();
-        FileTranslationController fileTranslationController = new FileTranslationController(fileTranslationInteractor);
+        final FileTranslationInteractor fileTranslationInteractor = createFileTranslationInteractor();
+        final FileTranslationController fileTranslationController =
+                new FileTranslationController(fileTranslationInteractor);
 
         // Inject the controller into the LoggedInView
         loggedInView.setFileTranslationController(fileTranslationController);
@@ -326,21 +346,71 @@ public class AppBuilder {
     }
 
     private FileTranslationInteractor createFileTranslationInteractor() {
+        if (loggedInView == null) {
+            throw new IllegalStateException("LoggedInView is not initialized");
+        }
+
+        final FileTranslationService fileTranslationService = new FileTranslationService();
+        final FileTranslationPresenter fileTranslationPresenter = new FileTranslationPresenter(loggedInView);
+
+        return new FileTranslationInteractor(fileTranslationService, fileTranslationPresenter);
+    }
+
+    /**
+     * Adds the Text Translation Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addTextTranslationUseCase() {
+        final TextTranslationInteractor textTranslationInteractor = createTextTranslationInteractor();
+        final TextTranslationController textTranslationController =
+                new TextTranslationController(textTranslationInteractor);
+
+        loggedInView.setTextTranslationController(textTranslationController);
+
+        return this;
+    }
+
+    private TextTranslationInteractor createTextTranslationInteractor() {
+        if (loggedInView == null) {
+            throw new IllegalStateException("LoggedInView is not initialized");
+        }
+
+        final TextTranslationDataAccessInterface translationService = new TextTranslationService();
+
+        final TextTranslationOutputBoundary textTranslationPresenter =
+                new TextTranslationPresenter(loggedInView);
+
+        return new TextTranslationInteractor(
+                translationService,
+                textTranslationPresenter
+        );
+    }
+
+    /**
+     * Adds the Voice Translation Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addVoiceTranslationUseCase() throws IOException {
+        final VoiceTranslationInteractor voiceTranslationInteractor = createVoiceTranslationInteractor();
+        final VoiceTranslationController voiceTranslationController =
+                new VoiceTranslationController(voiceTranslationInteractor);
+        loggedInView.setVoiceTranslationController(voiceTranslationController);
+        return this;
+    }
+
+    private VoiceTranslationInteractor createVoiceTranslationInteractor() throws IOException {
         // Ensure dependencies are correctly initialized
         if (loggedInView == null) {
             throw new IllegalStateException("LoggedInView is not initialized");
         }
 
-        // Initialize the FileTranslationService
-        FileTranslationService fileTranslationService = new FileTranslationService();
-
+        final SpeechToTextService speechToTextService = new SpeechToTextService();
         // Initialize the presenter for the FileTranslationInteractor
-        FileTranslationPresenter fileTranslationPresenter = new FileTranslationPresenter(loggedInView);
+        final VoiceTranslationPresenter voiceTranslationPresenter = new VoiceTranslationPresenter(loggedInView);
 
         // Create and return the FileTranslationInteractor with required dependencies
-        return new FileTranslationInteractor(fileTranslationService, fileTranslationPresenter);
+        return new VoiceTranslationInteractor(speechToTextService, voiceTranslationPresenter);
     }
-
 
     /**
      * Creates the JFrame for the application and initially sets the SignupView to be displayed.
@@ -357,48 +427,5 @@ public class AppBuilder {
 
         return application;
     }
-
-    public LoggedInView getLoggedInView() {
-        return loggedInView;
-    }
-
-    public LoggedInViewModel getLoggedInViewModel() {
-        return loggedInViewModel;
-    }
-
-    public ProfileViewModel getProfileViewModel() {
-        return profileViewModel;
-    }
-
-    public ViewManagerModel getViewManagerModel() {
-        return viewManagerModel;
-    }
-
-    public UserFactory getUserFactory() {
-        return userFactory;
-    }
-
-    public ProfileView getProfileView() {
-        return profileView;
-    }
-
-    public ChangePasswordViewModel getChangePasswordViewModel() {
-        return changePasswordViewModel;
-    }
-
-    public ChangePasswordView getChangePasswordView() {
-        return changePasswordView;
-    }
-
-    public LoginViewModel getLoginViewModel() {
-        return loginViewModel;
-    }
-
-    public ChangeLanguageViewModel getChangeLanguageViewModel() {return changeLanguageViewModel;}
-
-    public ChangeLanguageView getChangeLanguageView() {return changeLanguageView;}
-
-    public HistoryView getHistoryView() {return historyView;}
-
-    public HistoryViewModel getHistoryViewModel() {return historyViewModel;}
 }
+

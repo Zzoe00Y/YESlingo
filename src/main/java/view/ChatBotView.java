@@ -1,5 +1,11 @@
 package view;
 
+import entity.ChatMessage;
+import interface_adapter.chatbot.ChatBotState;
+import interface_adapter.chatbot.ChatBotController;
+import interface_adapter.chatbot.ChatBotViewModel;
+import space.dynomake.libretranslate.Language;
+
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -42,8 +48,8 @@ public class ChatBotView extends JPanel implements ActionListener, PropertyChang
         this.chatbotViewModel = chatbotViewModel;
         this.chatbotViewModel.addPropertyChangeListener(this);
 
-        Language[] languages = Language.values();
-        int len = languages.length;
+        final Language[] languages = Language.values();
+        final int len = languages.length;
         inputLanguages = new String[len];
         outputLanguages = new String[len];
         for (int i = 0; i < len; i++) {
@@ -60,11 +66,7 @@ public class ChatBotView extends JPanel implements ActionListener, PropertyChang
     private void setViewComponents() {
         this.removeAll();
 
-        // Create the ChannelPanel
-        // Not implemented
-
-        // Create the HeaderPanel
-        JPanel headerPane = createHeaderPane();
+        final JPanel headerPane = createHeaderPane();
 
         // Create the ContentPanel that contains chat history and user input panels
         final JPanel contentPane = createContentPane();
@@ -85,14 +87,14 @@ public class ChatBotView extends JPanel implements ActionListener, PropertyChang
      * @return the Header JPanel
      */
     private JPanel createHeaderPane() {
-        ChatBotState currentState = chatbotViewModel.getState();
+        final ChatBotState currentState = chatbotViewModel.getState();
         final JLabel titleLabel = new JLabel("CHATBOT");
 
         // create the input/output language selection panel
-        JPanel languageSelectPanel = new JPanel();
+        final JPanel languageSelectPanel = new JPanel();
         final JLabel toLabel = new JLabel("to");
-        JComboBox<String> inputLanguageComboBox = new JComboBox<>(inputLanguages);
-        JComboBox<String> outputLanguageComboBox = new JComboBox<>(outputLanguages);
+        final JComboBox<String> inputLanguageComboBox = new JComboBox<>(inputLanguages);
+        final JComboBox<String> outputLanguageComboBox = new JComboBox<>(outputLanguages);
         inputLanguageComboBox.addItemListener(evt -> {
             if (evt.getSource().equals(inputLanguageComboBox)) {
                 currentState.setInputLan(inputLanguageComboBox.getSelectedItem().toString());
@@ -115,7 +117,7 @@ public class ChatBotView extends JPanel implements ActionListener, PropertyChang
         languageSelectPanel.add(outputLanguageComboBox);
 
         // create the exit button
-        JButton exitButton = new JButton("Exit");
+        final JButton exitButton = new JButton("Exit");
         exitButton.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
@@ -127,7 +129,7 @@ public class ChatBotView extends JPanel implements ActionListener, PropertyChang
         );
 
         // add the components to the panels
-        JPanel headerPane = new JPanel(new BorderLayout());
+        final JPanel headerPane = new JPanel(new BorderLayout());
         headerPane.add(titleLabel, BorderLayout.WEST);
         headerPane.add(exitButton, BorderLayout.EAST);
         headerPane.add(languageSelectPanel, BorderLayout.CENTER);
@@ -141,10 +143,10 @@ public class ChatBotView extends JPanel implements ActionListener, PropertyChang
      */
     private JPanel createUserInputPanel() {
         // create the user input text field
-        JTextArea userInputArea = new JTextArea(3, 35);
+        JTextArea userInputArea = new JTextArea(3,35);
         userInputArea.setLineWrap(true);
         userInputArea.setWrapStyleWord(true);
-        JScrollPane inputScrollPanel = new JScrollPane(userInputArea);
+        final JScrollPane inputScrollPanel = new JScrollPane(userInputArea);
 
         userInputArea.getDocument().addDocumentListener(new DocumentListener() {
 
@@ -171,13 +173,13 @@ public class ChatBotView extends JPanel implements ActionListener, PropertyChang
         });
 
         // create the sent button
-        JButton userInputSentButton = new JButton("sent");
+        final JButton userInputSentButton = new JButton("sent");
         userInputSentButton.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(userInputSentButton)) {
                             final ChatBotState currentState = chatbotViewModel.getState();
-                            String message = currentState.getUserInput();
+                            final String message = currentState.getUserInput();
                             // if user input is not blank, initiate sentChat usecase
                             if (!message.isBlank()) {
                                 // clear inputArea, display message in chatHistoryPanel
@@ -197,7 +199,7 @@ public class ChatBotView extends JPanel implements ActionListener, PropertyChang
         );
 
         // add components to the userInputPanel
-        JPanel userInputPanel = new JPanel();
+        final JPanel userInputPanel = new JPanel();
         userInputPanel.add(inputScrollPanel);
         userInputPanel.add(userInputSentButton);
 
@@ -214,13 +216,13 @@ public class ChatBotView extends JPanel implements ActionListener, PropertyChang
 
         // if there's no previous messages in the current state
         if (currentState.getChatHistoryMessages().isEmpty()) {
-            String defaultMessage = "Select an existing Chat Channel, or create a new Chat";
+            final String defaultMessage = "Select an existing Chat Channel, or create a new Chat";
             final JLabel noContentLabel = new JLabel(defaultMessage);
             messagePanel.add(noContentLabel, BorderLayout.CENTER);
         }
         // else, add the messages in the panel
         else {
-            for (ChatMessage message : currentState.getChatHistoryMessages()) {
+            for (ChatMessage message: currentState.getChatHistoryMessages()) {
                 addNewMessage(message);
             }
         }
@@ -228,10 +230,10 @@ public class ChatBotView extends JPanel implements ActionListener, PropertyChang
     }
 
     /**
-     * Return a contentPane which contains the chat history and user input field
+     * Return a contentPane which contains the chat history and user input field.
      */
     private JPanel createContentPane() {
-        JPanel contentPane = new JPanel();
+        final JPanel contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout());
 
         messagePanel = new JPanel();
@@ -239,7 +241,7 @@ public class ChatBotView extends JPanel implements ActionListener, PropertyChang
         chatHistoryPanel = new JScrollPane(messagePanel);
         chatHistoryPanel = createChatHistoryPanel();
         chatHistoryPanel.setPreferredSize(new Dimension(500, 425));
-        JPanel userInputPanel = createUserInputPanel();
+        final JPanel userInputPanel = createUserInputPanel();
 
         contentPane.add(chatHistoryPanel, BorderLayout.PAGE_START);
         contentPane.add(userInputPanel, BorderLayout.PAGE_END);
@@ -248,18 +250,17 @@ public class ChatBotView extends JPanel implements ActionListener, PropertyChang
     }
 
     /**
-     * Add new message in chat history panel
-     * @param message the chat message
+     * Add new message in chat history panel.
      */
     private void addNewMessage(ChatMessage message) {
-        String text = message.getMessage();
-        JTextArea textArea = new JTextArea(text);
+        final String text = message.getMessage();
+        final JTextArea textArea = new JTextArea(text);
         textArea.setColumns(35);
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         textArea.setEditable(false);
 
-        JPanel textPanel = new JPanel(new BorderLayout());
+        final JPanel textPanel = new JPanel(new BorderLayout());
 
         textPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         if (message.getRole().equals("USER")) {

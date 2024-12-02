@@ -5,6 +5,7 @@ import entity.CommonUserFactory;
 import entity.User;
 import entity.UserFactory;
 import org.junit.jupiter.api.Test;
+import use_case.signup.*;
 
 import java.time.LocalDateTime;
 
@@ -78,6 +79,35 @@ class LoginInteractorTest {
         interactor.execute(inputData);
     }
 
+
+    @Test
+    void switchToSignupViewTest() {
+        LoginUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
+
+        final boolean[] isSwitchToSignupViewCalled = {false};
+
+        LoginOutputBoundary testPresenter = new LoginOutputBoundary() {
+            @Override
+            public void prepareSuccessView(LoginOutputData user) {
+                fail("prepareSuccessView should not be called in this test.");
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                fail("prepareFailView should not be called in this test.");
+            }
+
+            @Override
+            public void switchToSignupView() {
+                isSwitchToSignupViewCalled[0] = true;
+            }
+        };
+
+        LoginInputBoundary interactor = new LoginInteractor(userRepository, testPresenter);
+        interactor.switchToSignupView();
+        assertTrue(isSwitchToSignupViewCalled[0], "switchToSignupView was not called as expected.");
+    }
+
     @Test
     void failurePasswordMismatchTest() {
         LoginInputData inputData = new LoginInputData("Paul", "wrong");
@@ -129,7 +159,7 @@ class LoginInteractorTest {
 
             @Override
             public void prepareFailView(String error) {
-                assertEquals("Paul: Account does not exist.", error);
+                assertEquals("Account does not exist. Please try again or go to sign up.", error);
             }
 
             @Override

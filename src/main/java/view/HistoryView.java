@@ -1,18 +1,15 @@
 package view;
 
-import entity.ChatMessage;
-import interface_adapter.chatbot.ChatBotState;
-import interface_adapter.history.HistoryController;
-import interface_adapter.history.HistoryState;
-import interface_adapter.history.HistoryViewModel;
-import interface_adapter.profile.ProfileState;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
+import interface_adapter.history.HistoryController;
+import interface_adapter.history.HistoryState;
+import interface_adapter.history.HistoryViewModel;
 
 /**
  * The View for when the user want to check history.
@@ -37,24 +34,24 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
     private JScrollPane returnScrollPanel() {
         final HistoryState currentState = historyViewModel.getState();
 
-        JPanel textsPanel = new JPanel();
+        final JPanel textsPanel = new JPanel();
         textsPanel.setLayout(new BoxLayout(textsPanel, BoxLayout.Y_AXIS));
 
         if (currentState.getHistoryMessages().isEmpty()) {
-            String defaultMessage = "Translation history is empty";
+            final String defaultMessage = "Translation history is empty";
             final JLabel noContentLabel = new JLabel(defaultMessage);
             textsPanel.add(noContentLabel, BorderLayout.CENTER);
         }
         else {
-            for(String message: currentState.getHistoryMessages()){
-                String text = message;
-                JTextArea textArea = new JTextArea(text);
+            for (String message: currentState.getHistoryMessages()) {
+                final String text = message;
+                final JTextArea textArea = new JTextArea(text);
                 textArea.setColumns(50);
                 textArea.setLineWrap(true);
                 textArea.setWrapStyleWord(true);
                 textArea.setEditable(false);
 
-                JPanel textPanel = new JPanel(new BorderLayout());
+                final JPanel textPanel = new JPanel(new BorderLayout());
 
                 textPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
                 textPanel.add(textArea, BorderLayout.CENTER);
@@ -65,13 +62,13 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
         return new JScrollPane(textsPanel);
     }
 
-    private void buildView(){
+    private void buildView() {
         this.removeAll();
 
-        JPanel headerPanel = returnHeaderPanel();
+        final JPanel headerPanel = returnHeaderPanel();
         this.add(headerPanel, BorderLayout.NORTH);
 
-        JScrollPane scrollPane = returnScrollPanel();
+        final JScrollPane scrollPane = returnScrollPanel();
         this.add(scrollPane);
 
         this.revalidate();
@@ -86,7 +83,7 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
         final JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new GridBagLayout());
 
-        GridBagConstraints gbc = new GridBagConstraints();
+        final GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
@@ -100,7 +97,6 @@ public class HistoryView extends JPanel implements ActionListener, PropertyChang
         gbc.gridx = 2;
         gbc.anchor = GridBagConstraints.EAST;
         headerPanel.add(exit, gbc);
-
 
         exit.addActionListener(
                 new ActionListener() {

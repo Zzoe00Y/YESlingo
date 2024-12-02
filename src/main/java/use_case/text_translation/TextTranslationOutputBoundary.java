@@ -5,19 +5,16 @@ package use_case.text_translation;
  * Defines methods for preparing success and failure responses.
  */
 public interface TextTranslationOutputBoundary {
-    /**
-     * Prepares the success response for a successful translation operation.
-     *
-     * @param translation the response model containing the successful translation results
-     * @return TextTranslationResponseModel formatted for presentation
-     */
-    TextTranslationOutputData prepareSuccessView(TextTranslationOutputData translation);
 
     /**
-     * Prepares the failure response when a translation operation fails.
-     *
-     * @param error the error message describing what went wrong
-     * @return TextTranslationResponseModel containing the error information
+     * Prepares success view.
+     * @param outputData the outputData
      */
-    TextTranslationOutputData prepareFailView(String error);
+    void prepareSuccessView(TextTranslationOutputData outputData);
+
+    /**
+     * Prepares fail view.
+     * @param error the outputData
+     */
+    void prepareFailView(String error);
 }
