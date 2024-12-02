@@ -130,7 +130,7 @@ Access and manage previous translations.
   - **Previous Input:** "Welcome to YESlingo."
   - **Output:** "Bienvenue à YESlingo."
 - **Screenshot:**
--   <img alt="History" src="images/history.png" width="200"/>
+  <img alt="History" src="images/history.png" width="200"/>
 
 ## Installation Instructions
 1. **Install required packages:** Make sure you have the necessary dependencies installed. We recommend downloading one of the version 17 JDKs to get started, but anything 11+ will be sufficient for this project.
