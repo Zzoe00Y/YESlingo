@@ -1,9 +1,9 @@
 package use_case.history;
 
+import java.util.ArrayList;
+
 import entity.User;
 import entity.UserFactory;
-
-import java.util.ArrayList;
 
 /**
  * The interactor class for the History use case.
@@ -30,17 +30,17 @@ public class HistoryInteractor implements HistoryInputBoundary {
 
     @Override
     public void pullUser(HistoryInputData inputData) {
-        User user = userDataAccessObject.get(inputData.getUsername());
-        HistoryOutputData outputData = new HistoryOutputData(inputData.getUsername(), user.getHistory());
+        final User user = userDataAccessObject.get(inputData.getUsername());
+        final HistoryOutputData outputData = new HistoryOutputData(inputData.getUsername(), user.getHistory());
         historyPresenter.pullUser(outputData);
     }
 
     @Override
     public void clearAll(HistoryInputData inputData) {
-        User user = userDataAccessObject.get(inputData.getUsername());
+        final User user = userDataAccessObject.get(inputData.getUsername());
         user.setHistory(new ArrayList<>());
         userDataAccessObject.save(user);
-        HistoryOutputData outputData = new HistoryOutputData(inputData.getUsername(), user.getHistory());
+        final HistoryOutputData outputData = new HistoryOutputData(inputData.getUsername(), user.getHistory());
         historyPresenter.clearAll(outputData);
     }
 }
