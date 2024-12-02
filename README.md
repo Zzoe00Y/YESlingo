@@ -147,55 +147,14 @@ If you encounter a `java.lang.UnsupportedClassVersionError`, make sure you're us
     java -version
 ```
 If not, install or update to the correct version.
+
 2. Dependencies not found:\
-Use gradle dependencies to verify all required dependencies are installed. If not, add them to your build.gradle or pom.xml file.
+Use `gradle dependencies` to verify all required dependencies are installed. If not, add them to your `build.gradle` or `pom.xml` file.
 
 ## Usage
 1. Select your source and target language
 2. Choose your desired translation method
 3. Translate!
-
-## Use Cases
-
-The project has been organized into distinct use cases that cover all core functionalities:
-
-### User Management Use Cases
-
-_Signup:_ Registers new users and creates new Users.\
-_Login:_ Authenticates users.\
-_CheckProfile:_ Allows users to view their profile information, including username, password, and preferred language.\
-_ChangePassword:_ Enables users to update their passwords.\
-_ChangePreferredLanguage:_ Lets users change the default output language for translations.\
-_Logout:_ Logs users out of their account.
-
-### Translation Use Cases
-
-_ProcessTextTranslation:_ Handles the text translation.\
-_ProcessFileTranslation:_ Manages text extraction from files and translation.\
-_ProcessSpeechTranslation:_ Manages voice recognition and translation.
-
-### History Use Cases
-
-_ClearTranslationHistory:_ Clears all entries from the translation history.\
-
-### Chatbot Use Case
-
-_sentChat:_ Generates and displays a response to the user's input when the user clicks the sent button \
-_pullUser:_ Pull user information from DAO and update the chatBotView's state\
-
-## Views
-
-The application has a well-defined set of views that guide the user through various features:
-
-_SignUpView:_ Interface for new users to create an account.\
-_LogInView:_ Interface for existing users to log into their accounts.\
-_HomepageView:_ Main dashboard for logged-in users, offering various application features.\
-_ProfileView:_ Displays user's profile information.\
-_ChangePasswordView:_ Interface allowing users to change their passwords.\
-_ChangeLanguageView:_ Interface allowing users to update their default translation output language.\
-_HistoryView:_ Shows translation history.\
-_ChatbotView:_ Provides an interactive interface for engaging with the chatbot.\
-Navigation is handled by _ViewManager_, which manages transitions between views.
 
 ## Attributions
 
@@ -209,4 +168,19 @@ API:
 ## License
 TODO
 
-## Feedback?
+## Feedback
+We value your feedback and want to hear from you! Your insights help us improve YESlingo and ensure it meets your needs.
+#### How to Provide Feedback
+Use our [Google Form](https://docs.google.com/forms/d/e/1FAIpQLSfZfxysArQexR1tMk6vHj7b4M8mF94QgHa5jpRuGNFG7fSVsg/viewform?usp=sf_link) to submit your feedback.\
+Feel free to share your thoughts on features, usability, or suggest improvements for the platform.
+#### To Provide a Valid Feedback
+Be specific: Clearly describe the issue, suggestion, or idea.
+Be respectful: Avoid offensive language or inappropriate content.
+Provide examples where possible: If reporting a bug, detail the steps to reproduce it.
+Stay relevant: Focus on feedback related to YESlingo.
+#### What to Expect
+All feedback will be reviewed by our team within 5 business days.
+Constructive suggestions may lead to updates or new features in future releases.
+If you provide your email in the form, we may reach out for clarification or updates regarding your feedback.
+
+Thank you for helping us make YESlingo even better!
