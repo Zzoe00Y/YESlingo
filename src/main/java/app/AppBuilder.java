@@ -295,7 +295,8 @@ public class AppBuilder {
         final ChangeLanguageOutputBoundary changeLanguageOutputBoundary = new ChangeLanguagePresenter(
                 viewManagerModel,
                 changeLanguageViewModel,
-                profileViewModel
+                profileViewModel,
+                loggedInViewModel
         );
 
         final ChangeLanguageInputBoundary changeLanguageInteractor =
