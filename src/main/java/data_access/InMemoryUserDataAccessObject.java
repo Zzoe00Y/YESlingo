@@ -1,5 +1,8 @@
 package data_access;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import entity.Translation;
 import entity.User;
 import use_case.profile.change_language.ChangeLanguageUserDataAccessInterface;
@@ -12,9 +15,6 @@ import use_case.login.LoginUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 import view.ChangeLanguageView;
 import use_case.text_translation.TextTranslationDataAccessInterface;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * In-memory implementation of the DAO for storing user data. This implementation does
@@ -116,10 +116,8 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
 
     @Override
     public void changePassword(User user, String password) {
-        // Replace the old entry with the new password
         this.currentPassword = password;
         get(user.getName()).setPassword(password);
-
     }
 
     @Override

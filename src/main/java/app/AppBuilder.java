@@ -249,9 +249,9 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addLoggedinUseCase() {
-        final LoggedInOutputBoundary loggedInOutputBoundary = new LoggedInPresenter(viewManagerModel,
-                loggedInViewModel, profileViewModel, historyViewModel, chatBotViewModel);
-        final LoggedInInputBoundary loggedInInteractor = new LoggedInInteractor(loggedInOutputBoundary, userFactory);
+        final LoggedInOutputBoundary loggedInOutputBoundary = new LoggedInPresenter(viewManagerModel, profileViewModel,
+                historyViewModel, chatBotViewModel);
+        final LoggedInInputBoundary loggedInInteractor = new LoggedInInteractor(loggedInOutputBoundary);
 
         final LoggedInController loggedInController = new LoggedInController(loggedInInteractor);
         loggedInView.setLoggedInController(loggedInController);
@@ -325,8 +325,8 @@ public class AppBuilder {
     public AppBuilder addChatBotUseCase() {
         final ChatBotOutputBoundary chatBotOutputBoundary = new ChatBotPresenter(viewManagerModel,
                 chatBotViewModel, loggedInViewModel);
-        final ChatBotInputBoundary userChatBotInteractor = new ChatBotInteractor(
-                userDataAccessObject, chatBotOutputBoundary, userFactory);
+        final ChatBotInputBoundary userChatBotInteractor = new ChatBotInteractor(userDataAccessObject,
+                chatBotOutputBoundary, userFactory);
 
         final ChatBotController controller = new ChatBotController(userChatBotInteractor);
         chatBotView.setChatBotController(controller);
@@ -385,7 +385,8 @@ public class AppBuilder {
 
         return new TextTranslationInteractor(
                 translationService,
-                textTranslationPresenter
+                textTranslationPresenter,
+                userDataAccessObject
         );
     }
 
@@ -431,4 +432,3 @@ public class AppBuilder {
         return application;
     }
 }
-

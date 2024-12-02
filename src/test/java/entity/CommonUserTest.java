@@ -63,6 +63,21 @@ class CommonUserTest {
     }
 
     /**
+     * Tests updating the password using setPassword.
+     * Verifies that the password is updated correctly.
+     */
+    @Test
+    void testSetPassword() {
+        // Test setting the password
+        CommonUser user = new CommonUser("testUser", "testPass");
+
+        String newPassword = "newTestPass";
+        user.setPassword(newPassword);
+
+        assertEquals(newPassword, user.getPassword(), "The password should be updated to the new value.");
+    }
+
+    /**
      * Tests the chat history messages in English list.
      * Ensures that messages can be added and retrieved correctly.
      */
