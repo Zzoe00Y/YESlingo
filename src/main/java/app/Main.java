@@ -1,5 +1,9 @@
 package app;
 
+import data_access.InMemoryUserDataAccessObject;
+import entity.CommonUserFactory;
+import entity.UserFactory;
+
 import javax.swing.JFrame;
 
 import java.io.IOException;
@@ -13,7 +17,9 @@ public class Main {
      * @param args unused arguments
      */
     public static void main(String[] args) throws IOException {
-        final AppBuilder appBuilder = new AppBuilder();
+        final UserFactory userFactory = new CommonUserFactory();
+        final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
+        final AppBuilder appBuilder = new AppBuilder(userFactory, userDataAccessObject);
         final JFrame application = appBuilder
                 .addLoginView()
                 .addSignupView()
