@@ -32,7 +32,7 @@ public class VoiceTranslationController {
         }
         catch (Exception exception) {
             System.err.println("Error in VoiceTranslationController: " + exception.getMessage());
-            throw new RuntimeException("Failed to initiate voice translation: " + exception.getMessage(), e);
+            throw new RuntimeException("Failed to initiate voice translation: " + exception.getMessage(), exception);
         }
     }
 }
