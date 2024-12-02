@@ -133,6 +133,7 @@ Access and manage previous translations.
   - **Previous Input:** "Welcome to YESlingo."
   - **Output:** "Bienvenue à YESlingo."
 - **Screenshot:**
+  
   <img alt="History" src="images/history.png" width="200"/>
 
 ## Installation Instructions
