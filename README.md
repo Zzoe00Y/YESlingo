@@ -109,9 +109,10 @@ Translate spoken language in real time.
   - **Target Language:** Japanese
   - **Output:** "おやすみ。"
 - **Screenshot:**
+  
   <img alt="Voice translation" src="images/voice.png" width="200"/>
 
-### **Chatbox**
+### **Chatbot**
 Simulate real-time conversations with translation assistance.
 
 - **Description:** Interact with a chatbot to practice language learning or get translations for conversational inputs.
@@ -120,7 +121,8 @@ Simulate real-time conversations with translation assistance.
   - **Input:** "How do you say 'good morning' in German?"
   - **Chatbot Output:** "Guten Morgen" auf Deutsch ist "Guten Morgen."
 - **Screenshot:**
-<img alt="Chatbox" src="images/chatbox.png" width="200"/>
+  
+<img alt="chatbot" src="images/chatbot" width="200"/>
 
 ### **Translation History**
 Access and manage previous translations.
