@@ -1,7 +1,6 @@
 package interface_adapter.voice_translation;
 
 import use_case.voice_translation.VoiceTranslationInputBoundary;
-// import use_case.voice_translation.VoiceTranslationInputData;
 
 /**
  * Controller for handling voice translation requests.
