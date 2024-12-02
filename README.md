@@ -114,8 +114,8 @@ Simulate real-time conversations with translation assistance.
 - **Use Case:** Ideal for users who want an interactive, conversational translation experience.
 - **Example:**
     - **Input:** "How do you say 'good morning' in German?"
-    - **Chatbot Output:** "Guten Morgen."
-- **Screenshot:** *(Insert Screenshot Here)*
+    - **Chatbot Output:** "Guten Morgen" auf Deutsch ist "Guten Morgen."
+- **Screenshot:** ! ![Chatbot.png](images/Chatbot.png)
 
 ### **Translation History**
 Access and manage previous translations.
