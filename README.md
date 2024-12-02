@@ -157,7 +157,6 @@ Use `gradle dependencies` to verify all required dependencies are installed. If 
 3. Translate!
 
 ## Attributions
-
 API:
 1. Text to Text Translation: [https://libretranslate.com/](https://mymemory.translated.net/)
 2. File to Text API key: https://libretranslate.com/translate

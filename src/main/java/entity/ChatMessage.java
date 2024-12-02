@@ -1,8 +1,8 @@
 package entity;
 
 public class ChatMessage {
-    final private String role;
-    final private String message;
+    private final String role;
+    private final String message;
 
     public ChatMessage(String role, String message) {
         this.role = role;

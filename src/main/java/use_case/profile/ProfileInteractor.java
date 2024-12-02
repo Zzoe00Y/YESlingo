@@ -20,10 +20,16 @@ public class ProfileInteractor implements ProfileInputBoundary {
         profilePresenter.switchToChangePasswordView();
     }
 
+    /**
+     * Executes the switch to login view Use Case.
+     */
     public void switchToLogInView() {
         profilePresenter.switchToLogInView();
     }
 
+    /**
+     * Executes the switch to change language view Use Case.
+     */
     public void switchToChangeLanguageView() {
         profilePresenter.switchToChangeLanguageView();
     }

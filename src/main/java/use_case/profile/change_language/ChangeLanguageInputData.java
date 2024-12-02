@@ -11,6 +11,7 @@ public class ChangeLanguageInputData {
         this.username = username;
         this.language = language;
     }
+
     public ChangeLanguageView.LanguageItem getLanguage() {
         return language;
     }

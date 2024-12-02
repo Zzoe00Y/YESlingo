@@ -13,28 +13,33 @@ import use_case.loggedin.LoggedInOutputBoundary;
  */
 public class LoggedInPresenter implements LoggedInOutputBoundary {
 
-    private final LoggedInViewModel loggedInViewModel;
     private final ProfileViewModel profileViewModel;
     private final HistoryViewModel historyViewModel;
     private final ChatBotViewModel chatBotViewModel;
     private final ViewManagerModel viewManagerModel;
 
     public LoggedInPresenter(ViewManagerModel viewManagerModel,
-                             LoggedInViewModel loggedInViewModel,
-                             ProfileViewModel profileViewModel, HistoryViewModel historyViewModel,
+                             ProfileViewModel profileViewModel,
+                             HistoryViewModel historyViewModel,
                              ChatBotViewModel chatBotViewModel) {
         this.viewManagerModel = viewManagerModel;
-        this.loggedInViewModel = loggedInViewModel;
         this.profileViewModel = profileViewModel;
         this.historyViewModel = historyViewModel;
         this.chatBotViewModel = chatBotViewModel;
     }
 
+    /**
+     * Switches to the Profile View.
+     */
     public void switchToProfileView() {
         viewManagerModel.setState(profileViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 
+    /**
+     * Switches to the Chatbot View.
+     * @param username the username
+     */
     public void switchToChatBotView(String username) {
         final ChatBotState chatBotState = chatBotViewModel.getState();
         chatBotState.setUsername(username);
@@ -45,6 +50,10 @@ public class LoggedInPresenter implements LoggedInOutputBoundary {
         viewManagerModel.firePropertyChanged();
     }
 
+    /**
+     * Switches to the History View.
+     * @param username the username
+     */
     @Override
     public void switchToHistoryView(String username) {
         final HistoryState historyState = historyViewModel.getState();
@@ -54,9 +63,5 @@ public class LoggedInPresenter implements LoggedInOutputBoundary {
 
         viewManagerModel.setState(historyViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
-
-        viewManagerModel.setState(historyViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
     }
-
 }

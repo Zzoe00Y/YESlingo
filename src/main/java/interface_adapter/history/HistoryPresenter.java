@@ -1,7 +1,6 @@
 package interface_adapter.history;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.chatbot.ChatBotState;
 import interface_adapter.loggedin_homepage.LoggedInViewModel;
 import use_case.history.HistoryOutputBoundary;
 

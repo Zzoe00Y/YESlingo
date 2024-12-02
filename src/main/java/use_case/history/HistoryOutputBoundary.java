@@ -1,6 +1,5 @@
 package use_case.history;
 
-import interface_adapter.chatbot.ChatBotState;
 import interface_adapter.history.HistoryState;
 
 public interface HistoryOutputBoundary {
@@ -10,7 +9,15 @@ public interface HistoryOutputBoundary {
      */
     void switchToLoggedInView();
 
+    /**
+     * Pulls the user.
+     * @param newState the new state
+     */
     void pullUser(HistoryState newState);
 
+    /**
+     * Clears all the history.
+     * @param newState the new state
+     */
     void clearAll(HistoryState newState);
 }

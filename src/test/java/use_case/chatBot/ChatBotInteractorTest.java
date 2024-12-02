@@ -21,8 +21,7 @@ class ChatBotInteractorTest {
     private static final String FRENCH = "FRENCH";
 
     @Test
-    void successSentChatTest() {
-
+    void sendChat() {
         // For the success test, we need to add Paul to the data access repository before we log in.
         UserFactory factory = new CommonUserFactory();
         User user = factory.create("miao", "password");
@@ -56,7 +55,11 @@ class ChatBotInteractorTest {
     }
 
     @Test
-    void successPullUserTest() {
+    void switchToLoggedInView() {
+    }
+
+    @Test
+    void pullUser() {
         String username = "miao";
         String inputLan = FRENCH;
         String outputLan = FRENCH;

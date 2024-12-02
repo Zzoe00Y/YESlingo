@@ -1,6 +1,5 @@
 package view;
 
-import interface_adapter.loggedin_homepage.LoggedInController;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;

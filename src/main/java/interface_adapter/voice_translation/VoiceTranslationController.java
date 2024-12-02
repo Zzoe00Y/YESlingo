@@ -1,7 +1,6 @@
 package interface_adapter.voice_translation;
 
 import use_case.voice_translation.VoiceTranslationInputBoundary;
-// import use_case.voice_translation.VoiceTranslationInputData;
 
 /**
  * Controller for handling voice translation requests.
@@ -30,7 +29,8 @@ public class VoiceTranslationController {
 
             voiceTranslationInteractor.translate();
 
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             System.err.println("Error in VoiceTranslationController: " + e.getMessage());
             throw new RuntimeException("Failed to initiate voice translation: " + e.getMessage(), e);
         }
