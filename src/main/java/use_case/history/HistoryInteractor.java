@@ -5,6 +5,11 @@ import entity.UserFactory;
 
 import java.util.ArrayList;
 
+/**
+ * The interactor class for the History use case.
+ * Responsible for handling user history actions, such as retrieving history,
+ * clearing history, and managing the transition between different views.
+ */
 public class HistoryInteractor implements HistoryInputBoundary {
     private final HistoryUserDataAccessInterface userDataAccessObject;
     private final HistoryOutputBoundary historyPresenter;
