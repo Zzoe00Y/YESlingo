@@ -122,7 +122,7 @@ Simulate real-time conversations with translation assistance.
   - **Chatbot Output:** "Guten Morgen" auf Deutsch ist "Guten Morgen."
 - **Screenshot:**
   
-<img alt="chatbot" src="images/chatbot" width="200"/>
+<img alt="chatbot" src="images/chatbot.png" width="200"/>
 
 ### **Translation History**
 Access and manage previous translations.
