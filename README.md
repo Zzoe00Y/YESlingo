@@ -69,9 +69,10 @@ Personalize your YESlingo experience with user management features.
 - **Change Password:** Update your password securely.
 - **Change Preferred Language:** Set a default language for translation output.
 - **Logout:** Log out securely from your account.
-- **Screenshot:** ![signup_page.png](images/signup_page.png)
-![login_page.png](images/login_page.png)
-- ![profile.png](images/profile.png)
+- **Screenshot:** 
+- <img alt="Signup Page" src="images/signup_page.png" width="170"/>
+  <img alt="Login Page" src="images/login_page.png" width="170"/>
+  <img alt="Profile Page" src="images/profile.png" width="170"/>
 
 ### Text Translation
 Translate any text input from one language to another with ease.
