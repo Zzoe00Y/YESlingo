@@ -159,7 +159,7 @@ Access and manage previous translations.
 If not, install or update to the correct version.
 
 2. Dependencies not found:\
-   Use `gradle dependencies` to verify all required dependencies are installed. If not, add them to your `build.gradle` or `pom.xml` file.
+   Use `mvn dependency::tree` in your bash to verify all required dependencies are installed. If not, make sure your `pom.xml` file matches the one in this repository. Right-click the `pom.xml` file, go to maven, and select reload project if any dependencies appear red.
 
 ## Usage
 1. Select your source and target language
@@ -175,8 +175,7 @@ API:
 
 
 ## License
-
-This project is licensed under the MIT License.
+This project is licensed under the **MIT License**. For more information, refer to the [LICENSE](./LICENSE) file.
 
 ### Third-Party Licenses and Attributions
 
