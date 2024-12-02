@@ -167,7 +167,41 @@ API:
 
 
 ## License
-TODO
+
+This project is licensed under the MIT License:
+
+MIT License
+
+Copyright (c) 2024 YESlingo Team
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+### Third-Party Licenses and Attributions
+
+This project uses several third-party APIs and libraries, each with their own licenses:
+
+1. MyMemory Translation API - Used under their terms of service
+2. LibreTranslate - Open source under AGPL-3.0 license
+3. Cohere API - Used under commercial license
+4. CMU Sphinx4 - Licensed under CMU License
+
+Please refer to each project's respective documentation for detailed licensing information.
 
 ## Feedback
 We value your feedback and want to hear from you! Your insights help us improve YESlingo and ensure it meets your needs.
