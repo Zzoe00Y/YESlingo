@@ -9,7 +9,11 @@ import space.dynomake.libretranslate.Language;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import java.awt.*;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -17,10 +21,16 @@ import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import entity.ChatMessage;
+import interface_adapter.chatbot.ChatBotController;
+import interface_adapter.chatbot.ChatBotState;
+import interface_adapter.chatbot.ChatBotViewModel;
+import space.dynomake.libretranslate.Language;
+
 /**
  * The View for when the user is logging into the program.
  */
-public class ChatBotDefaultView extends JPanel implements ActionListener, PropertyChangeListener {
+public class ChatBotView extends JPanel implements ActionListener, PropertyChangeListener {
 
     private final String viewName = "chatbot default";
     private final ChatBotViewModel chatbotViewModel;
@@ -33,7 +43,7 @@ public class ChatBotDefaultView extends JPanel implements ActionListener, Proper
     private String[] inputLanguages;
     private String[] outputLanguages;
 
-    public ChatBotDefaultView(ChatBotViewModel chatbotViewModel) {
+    public ChatBotView(ChatBotViewModel chatbotViewModel) {
 
         this.chatbotViewModel = chatbotViewModel;
         this.chatbotViewModel.addPropertyChangeListener(this);
@@ -72,8 +82,9 @@ public class ChatBotDefaultView extends JPanel implements ActionListener, Proper
     }
 
     /**
-     * Return a Header Panel which contains exit button and input/output language selection
-     * in accordance to the currentState.
+     * Return a Header Panel which contains exit button and input/output language selection.
+     * in accordance to the currentState
+     * @return the Header JPanel
      */
     private JPanel createHeaderPane() {
         final ChatBotState currentState = chatbotViewModel.getState();
@@ -132,7 +143,7 @@ public class ChatBotDefaultView extends JPanel implements ActionListener, Proper
      */
     private JPanel createUserInputPanel() {
         // create the user input text field
-        final JTextArea userInputArea = new JTextArea(3, 35);
+        JTextArea userInputArea = new JTextArea(3,35);
         userInputArea.setLineWrap(true);
         userInputArea.setWrapStyleWord(true);
         final JScrollPane inputScrollPanel = new JScrollPane(userInputArea);
@@ -197,6 +208,7 @@ public class ChatBotDefaultView extends JPanel implements ActionListener, Proper
 
     /**
      * Return a chat history panel that displays existing messages (if any).
+     * @return the JScrollPane that displays previous chat history
      */
     private JScrollPane createChatHistoryPanel() {
 

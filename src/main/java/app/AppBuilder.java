@@ -104,7 +104,7 @@ public class AppBuilder {
     private LoggedInView loggedInView;
     private LoginView loginView;
     private ChatBotViewModel chatBotViewModel;
-    private ChatBotDefaultView chatBotView;
+    private ChatBotView chatBotView;
     private ProfileViewModel profileViewModel;
     private ProfileView profileView;
     private ChangePasswordViewModel changePasswordViewModel;
@@ -205,7 +205,7 @@ public class AppBuilder {
      */
     public AppBuilder addChatBotView() {
         chatBotViewModel = new ChatBotViewModel();
-        chatBotView = new ChatBotDefaultView(chatBotViewModel);
+        chatBotView = new ChatBotView(chatBotViewModel);
         cardPanel.add(chatBotView, chatBotView.getViewName());
         return this;
     }
@@ -232,7 +232,7 @@ public class AppBuilder {
     public AppBuilder addLoginUseCase() {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loggedInViewModel,
                 loginViewModel, signupViewModel, profileViewModel, changePasswordViewModel, changeLanguageViewModel);
-      
+
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, loginOutputBoundary);
 
@@ -339,6 +339,7 @@ public class AppBuilder {
         final FileTranslationController fileTranslationController =
                 new FileTranslationController(fileTranslationInteractor);
 
+        // Inject the controller into the LoggedInView
         loggedInView.setFileTranslationController(fileTranslationController);
 
         return this;

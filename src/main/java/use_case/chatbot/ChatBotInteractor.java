@@ -64,6 +64,9 @@ public class ChatBotInteractor implements ChatBotInputBoundary {
 
     /**
      * Return a ChatMessage with role CHATBOT and response generated with API Cohere.
+     * @param message input message.
+     * @param chatHistoryMessages previous messages.
+     * @return the response as ChatMessage
      */
     private ChatMessage generateResponse(String message, ArrayList<ChatMessage> chatHistoryMessages) {
         final Cohere cohere = Cohere.builder().token("O40OXvNOKzdUtm6vQlpLiE7erjfv81ZeFUeHbvmg").build();
