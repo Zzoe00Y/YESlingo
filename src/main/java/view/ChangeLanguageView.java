@@ -1,11 +1,12 @@
 package view;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
+import javax.swing.*;
 
 import interface_adapter.profile.change_language.ChangeLanguageController;
 import interface_adapter.profile.change_language.ChangeLanguageState;
@@ -96,7 +97,7 @@ public class ChangeLanguageView extends JPanel implements ActionListener, Proper
                 {"Chinese", "zh-CN"}, {"Japanese", "ja"}, {"Korean", "ko"},
                 {"Russian", "ru"}, {"Arabic", "ar"}, {"Dutch", "nl"},
                 {"Greek", "el"}, {"Hebrew", "he"}, {"Hindi", "hi"},
-                {"Polish", "pl"}, {"Turkish", "tr"}, {"Vietnamese", "vi"}
+                {"Polish", "pl"}, {"Turkish", "tr"}, {"Vietnamese", "vi"},
         };
         for (String[] lang : languages) {
             model.addElement(new ChangeLanguageView.LanguageItem(lang[0], lang[1]));
