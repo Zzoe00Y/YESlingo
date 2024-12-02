@@ -1,3 +1,4 @@
+# Accessibility Report
 ### Principle 1: Equitable Use
 - **Numerous Available Input and Output Languages**  
   By allowing users change their preferred language, the program accommodates speakers of diverse languages, ensuring accessibility for non-English users.
