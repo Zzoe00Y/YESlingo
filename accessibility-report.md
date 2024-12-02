@@ -13,6 +13,7 @@
 - **Customizable User Profiles:**  
   Allowing users to adjust their preferred language and other settings provides a personalized experience that adapts to individual needs and preferences.
 - **Future Implementations**
+
   Enable adjustable font sizes, themes, and color schemes to cater to users with varying visual needs
 
 ### Principle 3: Simple and Intuitive Use
