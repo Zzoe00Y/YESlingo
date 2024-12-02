@@ -40,5 +40,4 @@ public class ChatBotController {
     public void pullUser(String username) {
         chatBotUseCaseInteractor.pullUser(username);
     }
-
 }

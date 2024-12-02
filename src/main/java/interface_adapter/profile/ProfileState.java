@@ -14,7 +14,6 @@ public class ProfileState {
     }
 
     public ProfileState() {
-
     }
 
     public String getUsername() {

@@ -13,18 +13,16 @@ import use_case.loggedin.LoggedInOutputBoundary;
  */
 public class LoggedInPresenter implements LoggedInOutputBoundary {
 
-    private final LoggedInViewModel loggedInViewModel;
     private final ProfileViewModel profileViewModel;
     private final HistoryViewModel historyViewModel;
     private final ChatBotViewModel chatBotViewModel;
     private final ViewManagerModel viewManagerModel;
 
     public LoggedInPresenter(ViewManagerModel viewManagerModel,
-                             LoggedInViewModel loggedInViewModel,
-                             ProfileViewModel profileViewModel, HistoryViewModel historyViewModel,
+                             ProfileViewModel profileViewModel,
+                             HistoryViewModel historyViewModel,
                              ChatBotViewModel chatBotViewModel) {
         this.viewManagerModel = viewManagerModel;
-        this.loggedInViewModel = loggedInViewModel;
         this.profileViewModel = profileViewModel;
         this.historyViewModel = historyViewModel;
         this.chatBotViewModel = chatBotViewModel;
@@ -65,9 +63,5 @@ public class LoggedInPresenter implements LoggedInOutputBoundary {
 
         viewManagerModel.setState(historyViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
-
-        viewManagerModel.setState(historyViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
     }
-
 }

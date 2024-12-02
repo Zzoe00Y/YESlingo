@@ -32,5 +32,4 @@ public class ChatBotInputData {
     public String getUsername() {
         return username;
     }
-
 }

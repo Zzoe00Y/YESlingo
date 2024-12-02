@@ -30,7 +30,6 @@ public class Main {
                 .addChangePasswordUseCase()
                 .addChangeLanguageUseCase()
                 .addHistoryUseCase()
-                .addHistoryUseCase()
                 .addChatBotUseCase()
                 .addTextTranslationUseCase()
                 .addVoiceTranslationUseCase()
