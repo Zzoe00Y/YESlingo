@@ -382,7 +382,8 @@ public class AppBuilder {
 
         return new TextTranslationInteractor(
                 translationService,
-                textTranslationPresenter
+                textTranslationPresenter,
+                userDataAccessObject
         );
     }
 

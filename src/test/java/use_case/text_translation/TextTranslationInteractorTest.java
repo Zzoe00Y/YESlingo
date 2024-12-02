@@ -51,7 +51,7 @@ public class TextTranslationInteractorTest {
         );
 
         TextTranslationInteractor interactor = new TextTranslationInteractor(
-                mockDataAccess, mockOutputBoundary
+                mockDataAccess, mockOutputBoundary, null
         );
         interactor.translate(inputData);
 
@@ -97,7 +97,7 @@ public class TextTranslationInteractorTest {
         );
 
         TextTranslationInteractor interactor = new TextTranslationInteractor(
-                mockDataAccess, mockOutputBoundary
+                mockDataAccess, mockOutputBoundary, null
         );
         interactor.translate(inputData);
 
@@ -143,7 +143,7 @@ public class TextTranslationInteractorTest {
         );
 
         TextTranslationInteractor interactor = new TextTranslationInteractor(
-                mockDataAccess, mockOutputBoundary
+                mockDataAccess, mockOutputBoundary, null
         );
         interactor.translate(inputData);
 

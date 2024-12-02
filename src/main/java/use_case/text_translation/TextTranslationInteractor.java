@@ -3,18 +3,22 @@ package use_case.text_translation;
 import java.util.logging.Logger;
 
 import entity.Translation;
+import entity.User;
 
 public class TextTranslationInteractor implements TextTranslationInputBoundary {
     private static final Logger logger = Logger.getLogger(TextTranslationInteractor.class.getName());
 
     private final TextTranslationDataAccessInterface translationService;
     private final TextTranslationOutputBoundary outputBoundary;
+    private final TextTranslationDataAccessInterface userDataAccessObject;
 
     public TextTranslationInteractor(
             TextTranslationDataAccessInterface translationService,
-            TextTranslationOutputBoundary outputBoundary) {
+            TextTranslationOutputBoundary outputBoundary,
+            TextTranslationDataAccessInterface userDataAccessObject) {
         this.translationService = translationService;
         this.outputBoundary = outputBoundary;
+        this.userDataAccessObject = userDataAccessObject;
     }
 
     @Override
@@ -34,6 +38,15 @@ public class TextTranslationInteractor implements TextTranslationInputBoundary {
                     translation.getSourceLang(),
                     translation.getTargetLang()
             );
+
+
+            if(userDataAccessObject != null) {
+                final User user = userDataAccessObject.get(inputData.getUsername());
+                user.getHistory().add("\n——————————————————————————\n" +
+                        inputData.getSourceText() + "\n ---------------------------------------\n"
+                        + translation.getTranslatedText() + "\n——————————————————————————\n");
+                userDataAccessObject.save(user);
+            }
 
             outputBoundary.prepareSuccessView(outputData);
 
