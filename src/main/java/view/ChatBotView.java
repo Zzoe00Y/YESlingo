@@ -1,15 +1,13 @@
 package view;
 
-import entity.ChatMessage;
-import interface_adapter.chatbot.ChatBotState;
-import interface_adapter.chatbot.ChatBotController;
-import interface_adapter.chatbot.ChatBotViewModel;
-import space.dynomake.libretranslate.Language;
-
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import java.awt.*;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -17,10 +15,16 @@ import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import entity.ChatMessage;
+import interface_adapter.chatbot.ChatBotController;
+import interface_adapter.chatbot.ChatBotState;
+import interface_adapter.chatbot.ChatBotViewModel;
+import space.dynomake.libretranslate.Language;
+
 /**
  * The View for when the user is logging into the program.
  */
-public class ChatBotDefaultView extends JPanel implements ActionListener, PropertyChangeListener {
+public class ChatBotView extends JPanel implements ActionListener, PropertyChangeListener {
 
     private final String viewName = "chatbot default";
     private final ChatBotViewModel chatbotViewModel;
@@ -33,7 +37,7 @@ public class ChatBotDefaultView extends JPanel implements ActionListener, Proper
     private String[] inputLanguages;
     private String[] outputLanguages;
 
-    public ChatBotDefaultView(ChatBotViewModel chatbotViewModel) {
+    public ChatBotView(ChatBotViewModel chatbotViewModel) {
 
         this.chatbotViewModel = chatbotViewModel;
         this.chatbotViewModel.addPropertyChangeListener(this);
@@ -42,7 +46,7 @@ public class ChatBotDefaultView extends JPanel implements ActionListener, Proper
         int len = languages.length;
         inputLanguages = new String[len];
         outputLanguages = new String[len];
-        for (int i = 0; i < len; i++){
+        for (int i = 0; i < len; i++) {
             inputLanguages[i] = languages[i].toString();
             outputLanguages[i] = languages[i].toString();
         }
@@ -51,7 +55,7 @@ public class ChatBotDefaultView extends JPanel implements ActionListener, Proper
     }
 
     /**
-     * Set the components in the view: Remove all existing, then replace with new generated panels
+     * Set the components in the view: Remove all existing, then replace with new generated panels.
      */
     private void setViewComponents() {
         this.removeAll();
@@ -64,7 +68,7 @@ public class ChatBotDefaultView extends JPanel implements ActionListener, Proper
 
         // Create the ContentPanel that contains chat history and user input panels
         final JPanel contentPane = createContentPane();
-        contentPane.setPreferredSize(new Dimension(500,500));
+        contentPane.setPreferredSize(new Dimension(500, 500));
         contentPane.setBorder(BorderFactory.createLineBorder(Color.black));
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -76,8 +80,9 @@ public class ChatBotDefaultView extends JPanel implements ActionListener, Proper
     }
 
     /**
-     * Return a Header Panel which contains exit button and input/output language selection
+     * Return a Header Panel which contains exit button and input/output language selection.
      * in accordance to the currentState
+     * @return the Header JPanel
      */
     private JPanel createHeaderPane() {
         ChatBotState currentState = chatbotViewModel.getState();
@@ -89,13 +94,13 @@ public class ChatBotDefaultView extends JPanel implements ActionListener, Proper
         JComboBox<String> inputLanguageComboBox = new JComboBox<>(inputLanguages);
         JComboBox<String> outputLanguageComboBox = new JComboBox<>(outputLanguages);
         inputLanguageComboBox.addItemListener(evt -> {
-            if (evt.getSource().equals(inputLanguageComboBox)){
+            if (evt.getSource().equals(inputLanguageComboBox)) {
                 currentState.setInputLan(inputLanguageComboBox.getSelectedItem().toString());
             }
         });
         outputLanguageComboBox.addItemListener(new ItemListener() {
             public void itemStateChanged(ItemEvent evt) {
-                if (evt.getSource().equals(outputLanguageComboBox)){
+                if (evt.getSource().equals(outputLanguageComboBox)) {
                     currentState.setOutputLan(outputLanguageComboBox.getSelectedItem().toString());
                 }
             }
@@ -132,11 +137,11 @@ public class ChatBotDefaultView extends JPanel implements ActionListener, Proper
     }
 
     /**
-     * Return a UserInput Panel which contains the input text area and sent button
+     * Return a UserInput Panel which contains the input text area and sent button.
      */
     private JPanel createUserInputPanel() {
         // create the user input text field
-        JTextArea userInputArea = new JTextArea(3,35);
+        JTextArea userInputArea = new JTextArea(3, 35);
         userInputArea.setLineWrap(true);
         userInputArea.setWrapStyleWord(true);
         JScrollPane inputScrollPanel = new JScrollPane(userInputArea);
@@ -174,7 +179,7 @@ public class ChatBotDefaultView extends JPanel implements ActionListener, Proper
                             final ChatBotState currentState = chatbotViewModel.getState();
                             String message = currentState.getUserInput();
                             // if user input is not blank, initiate sentChat usecase
-                            if (!message.isBlank()){
+                            if (!message.isBlank()) {
                                 // clear inputArea, display message in chatHistoryPanel
                                 userInputArea.setText("");
                                 currentState.setUserInput("");
@@ -200,7 +205,8 @@ public class ChatBotDefaultView extends JPanel implements ActionListener, Proper
     }
 
     /**
-     * Return a chat history panel that displays existing messages (if any)
+     * Return a chat history panel that displays existing messages (if any).
+     * @return the JScrollPane that displays previous chat history
      */
     private JScrollPane createChatHistoryPanel() {
 
@@ -214,7 +220,7 @@ public class ChatBotDefaultView extends JPanel implements ActionListener, Proper
         }
         // else, add the messages in the panel
         else {
-            for(ChatMessage message: currentState.getChatHistoryMessages()){
+            for (ChatMessage message : currentState.getChatHistoryMessages()) {
                 addNewMessage(message);
             }
         }
@@ -232,7 +238,7 @@ public class ChatBotDefaultView extends JPanel implements ActionListener, Proper
         messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.Y_AXIS));
         chatHistoryPanel = new JScrollPane(messagePanel);
         chatHistoryPanel = createChatHistoryPanel();
-        chatHistoryPanel.setPreferredSize(new Dimension(500,425));
+        chatHistoryPanel.setPreferredSize(new Dimension(500, 425));
         JPanel userInputPanel = createUserInputPanel();
 
         contentPane.add(chatHistoryPanel, BorderLayout.PAGE_START);
@@ -243,6 +249,7 @@ public class ChatBotDefaultView extends JPanel implements ActionListener, Proper
 
     /**
      * Add new message in chat history panel
+     * @param message the chat message
      */
     private void addNewMessage(ChatMessage message) {
         String text = message.getMessage();
@@ -255,9 +262,10 @@ public class ChatBotDefaultView extends JPanel implements ActionListener, Proper
         JPanel textPanel = new JPanel(new BorderLayout());
 
         textPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        if (message.getRole().equals("USER")){
+        if (message.getRole().equals("USER")) {
             textPanel.add(textArea, BorderLayout.WEST);
-        } else if (message.getRole().equals("CHATBOT")) {
+        }
+        else if (message.getRole().equals("CHATBOT")) {
             textPanel.add(textArea, BorderLayout.EAST);
         }
         else {
@@ -284,12 +292,9 @@ public class ChatBotDefaultView extends JPanel implements ActionListener, Proper
     public void propertyChange(PropertyChangeEvent evt) {
         final ChatBotState state = (ChatBotState) evt.getNewValue();
 
-        if ("state".equals(evt.getPropertyName())) {
-        }
-
         // if get called by the sentChat use case
         if ("sentChat".equals(evt.getPropertyName())) {
-            if(state.getNewResponse() != null){
+            if (state.getNewResponse() != null) {
                 addNewMessage(state.getNewResponse());
                 state.setNewResponse(null);
             }

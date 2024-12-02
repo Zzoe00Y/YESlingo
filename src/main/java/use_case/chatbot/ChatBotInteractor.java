@@ -22,8 +22,8 @@ public class ChatBotInteractor implements ChatBotInputBoundary {
     private final UserFactory userFactory;
 
     public ChatBotInteractor(ChatBotUserDataAccessInterface chatbotDataAccessInterface,
-                            ChatBotOutputBoundary chatbotOutputBoundary,
-                            UserFactory userFactory) {
+                             ChatBotOutputBoundary chatbotOutputBoundary,
+                             UserFactory userFactory) {
         this.userDataAccessObject = chatbotDataAccessInterface;
         this.userPresenter = chatbotOutputBoundary;
         this.userFactory = userFactory;
@@ -40,7 +40,7 @@ public class ChatBotInteractor implements ChatBotInputBoundary {
 
         ChatMessage responseEng = generateResponse(inputMessageEng, user.getChatHistoryMessagesEng());
         String outputMessage = translate(responseEng.getMessage(), "ENGLISH", outputLan);
-        ChatMessage output = new ChatMessage("CHATBOT",outputMessage);
+        ChatMessage output = new ChatMessage("CHATBOT", outputMessage);
 
         updateUserChatHistory(user, output, responseEng, new ChatMessage("USER", inputMessage), new ChatMessage("USER", inputMessageEng));
 
@@ -52,7 +52,8 @@ public class ChatBotInteractor implements ChatBotInputBoundary {
         return Translator.translate(Language.valueOf(inputLan), Language.valueOf(outputLan), inputMessage);
     }
 
-    private void updateUserChatHistory(User user, ChatMessage messageDisplayOut, ChatMessage messageEngOut, ChatMessage messageDisplayIn, ChatMessage messageEngIn) {
+    private void updateUserChatHistory(User user, ChatMessage messageDisplayOut, ChatMessage messageEngOut,
+                                       ChatMessage messageDisplayIn, ChatMessage messageEngIn) {
         user.addChatHistoryMessagesDisplay(messageDisplayIn);
         user.addChatHistoryMessagesDisplay(messageDisplayOut);
         user.addChatHistoryMessagesEng(messageEngIn);
@@ -61,7 +62,10 @@ public class ChatBotInteractor implements ChatBotInputBoundary {
     }
 
     /**
-     * return a ChatMessage with role CHATBOT and response generated with API Cohere.
+     * Return a ChatMessage with role CHATBOT and response generated with API Cohere.
+     * @param message input message.
+     * @param chatHistoryMessages previous messages.
+     * @return the response as ChatMessage
      */
     private ChatMessage generateResponse(String message, ArrayList<ChatMessage> chatHistoryMessages) {
         Cohere cohere = Cohere.builder().token("O40OXvNOKzdUtm6vQlpLiE7erjfv81ZeFUeHbvmg").build();
@@ -71,9 +75,10 @@ public class ChatBotInteractor implements ChatBotInputBoundary {
             String role = chatMessage.getRole();
             String value = chatMessage.getMessage();
             com.cohere.api.types.ChatMessage m = com.cohere.api.types.ChatMessage.builder()
-                                                                                .message(value)
-                                                                                .build();
-            switch (role){
+                    .message(value)
+                    .build();
+
+            switch (role) {
                 case "USER":
                     chatHistoryMessagesList.add(Message.user(m));
                     break;
@@ -106,7 +111,8 @@ public class ChatBotInteractor implements ChatBotInputBoundary {
     @Override
     public void pullUser(String userName) {
         User user = userDataAccessObject.get(userName);
-        ChatBotState newState = new ChatBotState(userName, user.getInputLan(), user.getOutputLan(), user.getChatHistoryMessagesDisplay());
+        ChatBotState newState = new ChatBotState(userName, user.getInputLan(), user.getOutputLan(),
+                user.getChatHistoryMessagesDisplay());
         userPresenter.pullUser(newState);
     }
 }
