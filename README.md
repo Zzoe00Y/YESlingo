@@ -174,11 +174,11 @@ We value your feedback and want to hear from you! Your insights help us improve 
 Use our [Google Form](https://docs.google.com/forms/d/e/1FAIpQLSfZfxysArQexR1tMk6vHj7b4M8mF94QgHa5jpRuGNFG7fSVsg/viewform?usp=sf_link) to submit your feedback.\
 Feel free to share your thoughts on features, usability, or suggest improvements for the platform.
 #### To Provide a Valid Feedback
-Be specific: Clearly describe the issue, suggestion, or idea.
-Be respectful: Avoid offensive language or inappropriate content.
+Be specific: Clearly describe the issue, suggestion, or idea.\
+Be respectful: Avoid offensive language or inappropriate content.\
 Provide examples where possible: If reporting a bug, detail the steps to reproduce it.
-Stay relevant: Focus on feedback related to YESlingo.
-#### What to Expect
+
+
 All feedback will be reviewed by our team within 5 business days.
 Constructive suggestions may lead to updates or new features in future releases.
 If you provide your email in the form, we may reach out for clarification or updates regarding your feedback.
