@@ -69,7 +69,9 @@ Personalize your YESlingo experience with user management features.
 - **Change Password:** Update your password securely.
 - **Change Preferred Language:** Set a default language for translation output.
 - **Logout:** Log out securely from your account.
-- **Screenshot:** 
+- **Screenshot:** ![signup_page.png](images/signup_page.png)
+![login_page.png](images/login_page.png)
+- ![profile.png](images/profile.png)
 
 ### Text Translation
 Translate any text input from one language to another with ease.
@@ -77,10 +79,10 @@ Translate any text input from one language to another with ease.
 - **Description:** Input text directly into the translation box, select your source and target language, and get instant translations.
 - **Use Case:** Ideal for users who want to translate phrases or paragraphs without uploading files.
 - **Example:** 
-  - Input: "Hello, how are you?"
-  - Target Language: French
-  - Output: "Bonjour, comment ça va ?"
-  - Screenshot: 
+  - Input: "hello"
+  - Target Language: Italian
+  - Output: "ciao"
+  - Screenshot: ![text_translation.png](images/text_translation.png)
 
 ### **File Translation**
 Upload `.txt` files and translate their contents seamlessly.
@@ -90,9 +92,9 @@ Upload `.txt` files and translate their contents seamlessly.
 - **Example:**
     - **Uploaded File Content:** "Nice to meet you."
     - **Target Language:** French
-    - **Output:** "Bienvenido a YESlingo."
-- **Screenshot:** *(Insert Screenshot Here)*
-
+    - **Output:** "Ravi de vous rencontrer !"
+- **Screenshot:** 
+![file_translation.png](images/file_translation.png)
 
 ### **Voice Translation**
 Translate spoken language in real time.
@@ -100,10 +102,10 @@ Translate spoken language in real time.
 - **Description:** Speak into your microphone to have your voice detected, transcribed, and translated into the desired language.
 - **Use Case:** Perfect for travelers, meetings, or real-time communication.
 - **Example:**
-    - **Input:** Speech: "Can you help me find a restaurant?"
+    - **Input:** Speech: "have a good night"
     - **Target Language:** Japanese
-    - **Output:** "レストランを見つけるのを手伝ってくれませんか？"
-- **Screenshot:** *(Insert Screenshot Here)*
+    - **Output:** "おやすみ。"
+- **Screenshot:** ![voice.png](images/voice.png)
 
 ### **Chatbox**
 Simulate real-time conversations with translation assistance.
@@ -123,8 +125,8 @@ Access and manage previous translations.
 - **Example:**
     - **Previous Input:** "Welcome to YESlingo."
     - **Output:** "Bienvenue à YESlingo."
-- **Screenshot:** *(Insert Screenshot Here)*
-
+- **Screenshot:** 
+![history.png](images/history.png)
 
 ## Installation Instructions
 1. **Install required packages:** Make sure you have the necessary dependencies installed. We recommend downloading one of the version 17 JDKs to get started, but anything 11+ will be sufficient for this project.
