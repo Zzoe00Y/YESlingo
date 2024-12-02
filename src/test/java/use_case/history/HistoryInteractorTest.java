@@ -33,18 +33,18 @@ class HistoryInteractorTest {
             }
 
             @Override
-            public void pullUser(HistoryState newState) {
-                assertEquals("username", newState.getUsername());
+            public void pullUser(HistoryOutputData outputData) {
+                assertEquals("username", outputData.getUsername());
             }
 
             @Override
-            public void clearAll(HistoryState newState) {
+            public void clearAll(HistoryOutputData outputData) {
                 fail("Use case success is expected.");
             }
         };
 
         HistoryInputBoundary interactor = new HistoryInteractor(userRepository, successPresenter, factory);
-        interactor.pullUser("username");
+        interactor.pullUser(new HistoryInputData("username"));
     }
 
     @Test
@@ -66,19 +66,19 @@ class HistoryInteractorTest {
             }
 
             @Override
-            public void pullUser(HistoryState newState) {
+            public void pullUser(HistoryOutputData outputData) {
                 fail("Use case success is expected.");
             }
 
             @Override
-            public void clearAll(HistoryState newState) {
-                assertTrue(newState.getHistoryMessages().isEmpty());
+            public void clearAll(HistoryOutputData outputData) {
+                assertTrue(outputData.getHistoryMessages().isEmpty());
                 assertTrue(user.getHistory().isEmpty());
             }
         };
 
         HistoryInputBoundary interactor = new HistoryInteractor(userRepository, successPresenter, factory);
-        interactor.clearAll("username");
+        interactor.clearAll(new HistoryInputData("username"));
     }
 
     @Test
@@ -94,12 +94,12 @@ class HistoryInteractorTest {
             }
 
             @Override
-            public void pullUser(HistoryState newState) {
+            public void pullUser(HistoryOutputData outputData) {
                 fail("pullUser should not be called in this test.");
             }
 
             @Override
-            public void clearAll(HistoryState newState) {
+            public void clearAll(HistoryOutputData outputData) {
                 fail("clearAll should not be called in this test.");
             }
         };

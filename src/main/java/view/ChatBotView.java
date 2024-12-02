@@ -21,12 +21,6 @@ import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import entity.ChatMessage;
-import interface_adapter.chatbot.ChatBotController;
-import interface_adapter.chatbot.ChatBotState;
-import interface_adapter.chatbot.ChatBotViewModel;
-import space.dynomake.libretranslate.Language;
-
 /**
  * The View for when the user is logging into the program.
  */
@@ -293,9 +287,12 @@ public class ChatBotView extends JPanel implements ActionListener, PropertyChang
     public void propertyChange(PropertyChangeEvent evt) {
         final ChatBotState state = (ChatBotState) evt.getNewValue();
 
+        if ("state".equals(evt.getPropertyName())) {
+        }
+
         // if get called by the sentChat use case
         if ("sentChat".equals(evt.getPropertyName())) {
-            if (state.getNewResponse() != null) {
+            if(state.getNewResponse() != null){
                 addNewMessage(state.getNewResponse());
                 state.setNewResponse(null);
             }

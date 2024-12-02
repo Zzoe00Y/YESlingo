@@ -69,7 +69,9 @@ Personalize your YESlingo experience with user management features.
 - **Change Password:** Update your password securely.
 - **Change Preferred Language:** Set a default language for translation output.
 - **Logout:** Log out securely from your account.
-- **Screenshot:** 
+- **Screenshot:** ![signup_page.png](images/signup_page.png)
+![login_page.png](images/login_page.png)
+- ![profile.png](images/profile.png)
 
 ### Text Translation
 Translate any text input from one language to another with ease.
@@ -77,10 +79,10 @@ Translate any text input from one language to another with ease.
 - **Description:** Input text directly into the translation box, select your source and target language, and get instant translations.
 - **Use Case:** Ideal for users who want to translate phrases or paragraphs without uploading files.
 - **Example:** 
-  - Input: "Hello, how are you?"
-  - Target Language: French
-  - Output: "Bonjour, comment ça va ?"
-  - Screenshot: 
+  - Input: "hello"
+  - Target Language: Italian
+  - Output: "ciao"
+  - Screenshot: ![text_translation.png](images/text_translation.png)
 
 ### **File Translation**
 Upload `.txt` files and translate their contents seamlessly.
@@ -90,9 +92,9 @@ Upload `.txt` files and translate their contents seamlessly.
 - **Example:**
     - **Uploaded File Content:** "Nice to meet you."
     - **Target Language:** French
-    - **Output:** "Bienvenido a YESlingo."
-- **Screenshot:** *(Insert Screenshot Here)*
-
+    - **Output:** "Ravi de vous rencontrer !"
+- **Screenshot:** 
+![file_translation.png](images/file_translation.png)
 
 ### **Voice Translation**
 Translate spoken language in real time.
@@ -100,10 +102,10 @@ Translate spoken language in real time.
 - **Description:** Speak into your microphone to have your voice detected, transcribed, and translated into the desired language.
 - **Use Case:** Perfect for travelers, meetings, or real-time communication.
 - **Example:**
-    - **Input:** Speech: "Can you help me find a restaurant?"
+    - **Input:** Speech: "have a good night"
     - **Target Language:** Japanese
-    - **Output:** "レストランを見つけるのを手伝ってくれませんか？"
-- **Screenshot:** *(Insert Screenshot Here)*
+    - **Output:** "おやすみ。"
+- **Screenshot:** ![voice.png](images/voice.png)
 
 ### **Chatbox**
 Simulate real-time conversations with translation assistance.
@@ -123,8 +125,8 @@ Access and manage previous translations.
 - **Example:**
     - **Previous Input:** "Welcome to YESlingo."
     - **Output:** "Bienvenue à YESlingo."
-- **Screenshot:** *(Insert Screenshot Here)*
-
+- **Screenshot:** 
+![history.png](images/history.png)
 
 ## Installation Instructions
 1. **Install required packages:** Make sure you have the necessary dependencies installed. We recommend downloading one of the version 17 JDKs to get started, but anything 11+ will be sufficient for this project.
@@ -157,7 +159,6 @@ Use `gradle dependencies` to verify all required dependencies are installed. If 
 3. Translate!
 
 ## Attributions
-
 API:
 1. Text to Text Translation: [https://libretranslate.com/](https://mymemory.translated.net/)
 2. File to Text API key: https://libretranslate.com/translate
@@ -174,11 +175,11 @@ We value your feedback and want to hear from you! Your insights help us improve 
 Use our [Google Form](https://docs.google.com/forms/d/e/1FAIpQLSfZfxysArQexR1tMk6vHj7b4M8mF94QgHa5jpRuGNFG7fSVsg/viewform?usp=sf_link) to submit your feedback.\
 Feel free to share your thoughts on features, usability, or suggest improvements for the platform.
 #### To Provide a Valid Feedback
-Be specific: Clearly describe the issue, suggestion, or idea.\
-Be respectful: Avoid offensive language or inappropriate content.\
+Be specific: Clearly describe the issue, suggestion, or idea.
+Be respectful: Avoid offensive language or inappropriate content.
 Provide examples where possible: If reporting a bug, detail the steps to reproduce it.
-
-
+Stay relevant: Focus on feedback related to YESlingo.
+#### What to Expect
 All feedback will be reviewed by our team within 5 business days.
 Constructive suggestions may lead to updates or new features in future releases.
 If you provide your email in the form, we may reach out for clarification or updates regarding your feedback.

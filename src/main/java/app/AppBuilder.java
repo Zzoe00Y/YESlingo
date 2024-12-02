@@ -90,12 +90,13 @@ public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
     // thought question: is the hard dependency below a problem?
-    private final UserFactory userFactory = new CommonUserFactory();
+    private final UserFactory userFactory;
+    // thought question: is the hard dependency below a problem?
+    private final InMemoryUserDataAccessObject userDataAccessObject;
+
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
-    // thought question: is the hard dependency below a problem?
-    private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
 
     private SignupView signupView;
     private SignupViewModel signupViewModel;
@@ -114,7 +115,9 @@ public class AppBuilder {
     private HistoryViewModel historyViewModel;
     private HistoryView historyView;
 
-    public AppBuilder() {
+    public AppBuilder(UserFactory userFactory, InMemoryUserDataAccessObject userDataAccessObject) {
+        this.userFactory = userFactory;
+        this.userDataAccessObject = userDataAccessObject;
         cardPanel.setLayout(cardLayout);
     }
 
