@@ -14,7 +14,7 @@ public interface ChatBotUserDataAccessInterface {
     void save(User user);
 
     /**
-     * return the user
+     * Return the user.
      * @param username the username of the user
      * @return the User object
      */

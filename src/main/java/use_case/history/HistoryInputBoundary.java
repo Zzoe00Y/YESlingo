@@ -7,7 +7,7 @@ public interface HistoryInputBoundary {
      */
     void switchToLoggedInView();
 
-    void pullUser(String username);
+    void pullUser(HistoryInputData inputData);
 
-    void clearAll(String username);
+    void clearAll(HistoryInputData inputData);
 }

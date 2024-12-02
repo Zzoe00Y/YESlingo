@@ -39,7 +39,6 @@ public class TextTranslationOutputData {
         this.targetLang = targetLang;
     }
 
-    // Getters
     public String getSourceText() {
         return sourceText;
     }

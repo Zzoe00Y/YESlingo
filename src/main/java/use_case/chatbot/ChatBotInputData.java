@@ -17,7 +17,6 @@ public class ChatBotInputData {
         this.outputLan = outputLan1;
     }
 
-
     public String getMessage() {
         return message;
     }
@@ -33,5 +32,4 @@ public class ChatBotInputData {
     public String getUsername() {
         return username;
     }
-
 }

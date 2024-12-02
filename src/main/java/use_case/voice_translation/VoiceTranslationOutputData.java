@@ -2,7 +2,6 @@ package use_case.voice_translation;
 
 /**
  * The output data class for the Voice Translation use case.
- *
  * This class contains the recognized speech text and the translated text, which are prepared for the UI.
  */
 public class VoiceTranslationOutputData {
@@ -11,7 +10,6 @@ public class VoiceTranslationOutputData {
 
     /**
      * Constructor for VoiceTranslationOutputData.
-     *
      * @param recognizedText The recognized speech text.
      */
     public VoiceTranslationOutputData(String recognizedText) {

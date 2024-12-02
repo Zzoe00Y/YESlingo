@@ -11,5 +11,4 @@ public class ChatBotViewModel extends ViewModel<ChatBotState> {
         super("chatbot default");
         setState(new ChatBotState());
     }
-
 }

@@ -12,8 +12,13 @@ public interface LoggedInInputBoundary {
 
     /**
      * Executes the switch to chatBot view use case.
+     * @param username the username
      */
     void switchToChatBotView(String username);
 
+    /**
+     * Executes the switch to history view use case.
+     * @param username the username
+     */
     void switchToHistoryView(String username);
 }

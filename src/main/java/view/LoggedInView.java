@@ -1,5 +1,11 @@
 package view;
 
+import javax.swing.*;
+import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.File;
+
 import interface_adapter.file_translation.FileTranslationController;
 import interface_adapter.loggedin_homepage.LoggedInState;
 import interface_adapter.loggedin_homepage.LoggedInViewModel;
@@ -7,13 +13,6 @@ import interface_adapter.loggedin_homepage.LoggedInController;
 import interface_adapter.text_translation.TextTranslationController;
 import interface_adapter.translation.TranslationViewInterface;
 import interface_adapter.voice_translation.VoiceTranslationController;
-
-import javax.swing.*;
-import java.awt.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.io.File;
-import java.util.Arrays;
 
 public class LoggedInView extends JPanel implements PropertyChangeListener, TranslationViewInterface {
     private final String viewName = "logged in";
@@ -27,19 +26,19 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
     private JComboBox<LanguageItem> inputLanguageComboBox;
     private JComboBox<LanguageItem> outputLanguageComboBox;
     private final JTextArea textArea;
-    private final JTextArea translationTextArea; // Updated to replace `translationLabel`
+    private final JTextArea translationTextArea;
     private final JButton fileUploadButton;
     private final JButton voiceInputButton;
     private final JButton translateButton;
     private final JButton profileButton;
     private final JButton historyButton;
     private final JButton chatBotButton;
-    private JPanel languagePanel
-            ;
+    private JPanel languagePanel;
+
     // Inner class to hold language information
     private static class LanguageItem {
-        final String displayName;
-        final String code;
+        private final String displayName;
+        private final String code;
 
         LanguageItem(String displayName, String code) {
             this.displayName = displayName;
@@ -59,12 +58,12 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
         this.setLayout(new BorderLayout());
 
         // Top Panel with Welcome and Buttons
-        JPanel topPanel = new JPanel(new BorderLayout());
-        JPanel welcomePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        final JPanel topPanel = new JPanel(new BorderLayout());
+        final JPanel welcomePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         usernameLabel = new JLabel("Hi, ");
         welcomePanel.add(usernameLabel);
 
-        JPanel topButtonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        final JPanel topButtonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         profileButton = new JButton("Profile");
         historyButton = new JButton("History");
         topButtonsPanel.add(profileButton);
@@ -76,7 +75,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
         this.add(topPanel, BorderLayout.NORTH);
 
         // Main Content Panel
-        JPanel mainContentPanel = new JPanel();
+        final JPanel mainContentPanel = new JPanel();
         mainContentPanel.setLayout(new BoxLayout(mainContentPanel, BoxLayout.Y_AXIS));
 
         // Language Selection Panel
@@ -91,25 +90,25 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
         mainContentPanel.add(languagePanel);
 
         // Text Input Panel
-        JPanel textPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        final JPanel textPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         textArea = new JTextArea(5, 30);
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
-        JScrollPane textScrollPane = new JScrollPane(textArea);
+        final JScrollPane textScrollPane = new JScrollPane(textArea);
         textPanel.add(new JLabel("Text:"));
         textPanel.add(textScrollPane);
 
         mainContentPanel.add(textPanel);
 
         // Translate Button Panel
-        JPanel translatePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        final JPanel translatePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         translateButton = new JButton("Translate");
         translatePanel.add(translateButton);
 
         mainContentPanel.add(translatePanel);
 
         // Input Options Panel
-        JPanel inputOptionsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        final JPanel inputOptionsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         fileUploadButton = new JButton("Upload File");
         voiceInputButton = new JButton("Input Voice");
         chatBotButton = new JButton("ChatBot");
@@ -120,13 +119,13 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
         mainContentPanel.add(inputOptionsPanel);
 
         // Translation Result Panel
-        JPanel translationPanel = new JPanel(new BorderLayout());
+        final JPanel translationPanel = new JPanel(new BorderLayout());
         translationPanel.setBorder(BorderFactory.createTitledBorder("Translation Result"));
         translationTextArea = new JTextArea(5, 30);
         translationTextArea.setEditable(false);
         translationTextArea.setLineWrap(true);
         translationTextArea.setWrapStyleWord(true);
-        JScrollPane translationScrollPane = new JScrollPane(translationTextArea);
+        final JScrollPane translationScrollPane = new JScrollPane(translationTextArea);
         translationPanel.add(translationScrollPane, BorderLayout.CENTER);
 
         mainContentPanel.add(translationPanel);
@@ -137,8 +136,8 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
     }
 
     private JComboBox<LanguageItem> createInputLanguageComboBox() {
-        DefaultComboBoxModel<LanguageItem> model = new DefaultComboBoxModel<>();
-        String[][] languages = {
+        final DefaultComboBoxModel<LanguageItem> model = new DefaultComboBoxModel<>();
+        final String[][] languages = {
                 {"English", "en"}, {"Spanish", "es"}, {"French", "fr"},
                 {"German", "de"}, {"Italian", "it"}, {"Portuguese", "pt"},
                 {"Chinese", "zh-CN"}, {"Japanese", "ja"}, {"Korean", "ko"},
@@ -154,8 +153,8 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
     }
 
     private JComboBox<LanguageItem> createOutputLanguageComboBox() {
-        DefaultComboBoxModel<LanguageItem> model = new DefaultComboBoxModel<>();
-        String[][] languages = {
+        final DefaultComboBoxModel<LanguageItem> model = new DefaultComboBoxModel<>();
+        final String[][] languages = {
                 {"English", "en"}, {"Spanish", "es"}, {"French", "fr"},
                 {"German", "de"}, {"Italian", "it"}, {"Portuguese", "pt"},
                 {"Chinese", "zh-CN"}, {"Japanese", "ja"}, {"Korean", "ko"},
@@ -164,7 +163,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
                 {"Polish", "pl"}, {"Turkish", "tr"}, {"Vietnamese", "vi"}
         };
 
-        String defaultLanguage = loggedInViewModel.getState().getLanguage();
+        final String defaultLanguage = loggedInViewModel.getState().getLanguage();
         LanguageItem defaultLanguageItem;
         for (String[] lang : languages) {
             if (lang[0].equals(defaultLanguage)) {
@@ -180,6 +179,10 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
         return new JComboBox<>(model);
     }
 
+    /**
+     * Set default language.
+     * @param defaultLanguage the language
+     */
     public void setDefaultLanguage(String defaultLanguage) {
         languagePanel.removeAll();
 
@@ -198,32 +201,38 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
 
     private void setupListeners() {
         translateButton.addActionListener(e -> {
-            String textToTranslate = textArea.getText().trim();
+            final String textToTranslate = textArea.getText().trim();
             if (!textToTranslate.isEmpty() && textTranslationController != null) {
-                LanguageItem sourceItem = (LanguageItem) inputLanguageComboBox.getSelectedItem();
-                LanguageItem targetItem = (LanguageItem) outputLanguageComboBox.getSelectedItem();
+                final LanguageItem sourceItem = (LanguageItem) inputLanguageComboBox.getSelectedItem();
+                final LanguageItem targetItem = (LanguageItem) outputLanguageComboBox.getSelectedItem();
                 if (sourceItem != null && targetItem != null && !sourceItem.code.equals(targetItem.code)) {
-                    textTranslationController.translate(textToTranslate, sourceItem.code, targetItem.code, loggedInViewModel.getState().getUsername());
-                } else {
-                    JOptionPane.showMessageDialog(this, "Select valid and different source/target languages.");
+                    textTranslationController.translate(textToTranslate, sourceItem.code, targetItem.code,
+                            loggedInViewModel.getState().getUsername());
+                }
+                else {
+                    JOptionPane.showMessageDialog(this,
+                            "Select valid and different source/target languages.");
                 }
             }
         });
 
         fileUploadButton.addActionListener(e -> {
-            JFileChooser fileChooser = new JFileChooser();
+            final JFileChooser fileChooser = new JFileChooser();
             fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Text Files", "txt"));
             if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-                File file = fileChooser.getSelectedFile();
+                final File file = fileChooser.getSelectedFile();
                 try {
-                    LanguageItem sourceItem = (LanguageItem) inputLanguageComboBox.getSelectedItem();
-                    LanguageItem targetItem = (LanguageItem) outputLanguageComboBox.getSelectedItem();
+                    final LanguageItem sourceItem = (LanguageItem) inputLanguageComboBox.getSelectedItem();
+                    final LanguageItem targetItem = (LanguageItem) outputLanguageComboBox.getSelectedItem();
                     if (sourceItem != null && targetItem != null) {
-                        fileTranslationController.translateFile(file.getAbsolutePath(), sourceItem.code, targetItem.code);
-                    } else {
+                        fileTranslationController.translateFile(file.getAbsolutePath(),
+                                sourceItem.code, targetItem.code);
+                    }
+                    else {
                         JOptionPane.showMessageDialog(this, "Select valid languages.");
                     }
-                } catch (Exception ex) {
+                }
+                catch (Exception ex) {
                     JOptionPane.showMessageDialog(this, "Error during file translation: " + ex.getMessage());
                 }
             }
@@ -231,16 +240,20 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
 
         voiceInputButton.addActionListener(e -> {
             if (voiceTranslationController != null) {
-                LanguageItem sourceItem = (LanguageItem) inputLanguageComboBox.getSelectedItem();
-                LanguageItem targetItem = (LanguageItem) outputLanguageComboBox.getSelectedItem();
-                if (sourceItem != null && sourceItem.code.equals("en") && targetItem != null &&
+                final LanguageItem sourceItem = (LanguageItem) inputLanguageComboBox.getSelectedItem();
+                final LanguageItem targetItem = (LanguageItem) outputLanguageComboBox.getSelectedItem();
+                if (sourceItem != null && sourceItem.code.equals("en") && targetItem != null
+                        &&
                         !sourceItem.code.equals(targetItem.code)) {
                     voiceTranslationController.speechToText();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Select valid and different source/target languages. \n" +
-                            "Voice Input only supports English!");
                 }
-            } else {
+                else {
+                    JOptionPane.showMessageDialog(this,
+                            "Select valid and different source/target languages. \n"
+                                    + "Voice Input only supports English!");
+                }
+            }
+            else {
                 JOptionPane.showMessageDialog(this, "Speech to Text is not available.");
             }
         });
@@ -286,7 +299,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if ("state".equals(evt.getPropertyName())) {
-            LoggedInState state = (LoggedInState) evt.getNewValue();
+            final LoggedInState state = (LoggedInState) evt.getNewValue();
             usernameLabel.setText("Hi, " + state.getUsername() + "!");
 
             setDefaultLanguage(state.getLanguage());

@@ -69,7 +69,9 @@ Personalize your YESlingo experience with user management features.
 - **Change Password:** Update your password securely.
 - **Change Preferred Language:** Set a default language for translation output.
 - **Logout:** Log out securely from your account.
-- **Screenshot:** 
+- **Screenshot:** ![signup_page.png](images/signup_page.png)
+![login_page.png](images/login_page.png)
+- ![profile.png](images/profile.png)
 
 ### Text Translation
 Translate any text input from one language to another with ease.
@@ -77,10 +79,10 @@ Translate any text input from one language to another with ease.
 - **Description:** Input text directly into the translation box, select your source and target language, and get instant translations.
 - **Use Case:** Ideal for users who want to translate phrases or paragraphs without uploading files.
 - **Example:** 
-  - Input: "Hello, how are you?"
-  - Target Language: French
-  - Output: "Bonjour, comment ça va ?"
-  - Screenshot: 
+  - Input: "hello"
+  - Target Language: Italian
+  - Output: "ciao"
+  - Screenshot: ![text_translation.png](images/text_translation.png)
 
 ### **File Translation**
 Upload `.txt` files and translate their contents seamlessly.
@@ -90,9 +92,9 @@ Upload `.txt` files and translate their contents seamlessly.
 - **Example:**
     - **Uploaded File Content:** "Nice to meet you."
     - **Target Language:** French
-    - **Output:** "Bienvenido a YESlingo."
-- **Screenshot:** *(Insert Screenshot Here)*
-
+    - **Output:** "Ravi de vous rencontrer !"
+- **Screenshot:** 
+![file_translation.png](images/file_translation.png)
 
 ### **Voice Translation**
 Translate spoken language in real time.
@@ -100,10 +102,10 @@ Translate spoken language in real time.
 - **Description:** Speak into your microphone to have your voice detected, transcribed, and translated into the desired language.
 - **Use Case:** Perfect for travelers, meetings, or real-time communication.
 - **Example:**
-    - **Input:** Speech: "Can you help me find a restaurant?"
+    - **Input:** Speech: "have a good night"
     - **Target Language:** Japanese
-    - **Output:** "レストランを見つけるのを手伝ってくれませんか？"
-- **Screenshot:** *(Insert Screenshot Here)*
+    - **Output:** "おやすみ。"
+- **Screenshot:** ![voice.png](images/voice.png)
 
 ### **Chatbox**
 Simulate real-time conversations with translation assistance.
@@ -123,8 +125,8 @@ Access and manage previous translations.
 - **Example:**
     - **Previous Input:** "Welcome to YESlingo."
     - **Output:** "Bienvenue à YESlingo."
-- **Screenshot:** *(Insert Screenshot Here)*
-
+- **Screenshot:** 
+![history.png](images/history.png)
 
 ## Installation Instructions
 1. **Install required packages:** Make sure you have the necessary dependencies installed. We recommend downloading one of the version 17 JDKs to get started, but anything 11+ will be sufficient for this project.
@@ -147,58 +149,16 @@ If you encounter a `java.lang.UnsupportedClassVersionError`, make sure you're us
     java -version
 ```
 If not, install or update to the correct version.
+
 2. Dependencies not found:\
-Use gradle dependencies to verify all required dependencies are installed. If not, add them to your build.gradle or pom.xml file.
+Use `gradle dependencies` to verify all required dependencies are installed. If not, add them to your `build.gradle` or `pom.xml` file.
 
 ## Usage
 1. Select your source and target language
 2. Choose your desired translation method
 3. Translate!
 
-## Use Cases
-
-The project has been organized into distinct use cases that cover all core functionalities:
-
-### User Management Use Cases
-
-_Signup:_ Registers new users and creates new Users.\
-_Login:_ Authenticates users.\
-_CheckProfile:_ Allows users to view their profile information, including username, password, and preferred language.\
-_ChangePassword:_ Enables users to update their passwords.\
-_ChangePreferredLanguage:_ Lets users change the default output language for translations.\
-_Logout:_ Logs users out of their account.
-
-### Translation Use Cases
-
-_ProcessTextTranslation:_ Handles the text translation.\
-_ProcessFileTranslation:_ Manages text extraction from files and translation.\
-_ProcessSpeechTranslation:_ Manages voice recognition and translation.
-
-### History Use Cases
-
-_ClearTranslationHistory:_ Clears all entries from the translation history.\
-
-### Chatbot Use Case
-
-_sentChat:_ Generates and displays a response to the user's input when the user clicks the sent button \
-_pullUser:_ Pull user information from DAO and update the chatBotView's state\
-
-## Views
-
-The application has a well-defined set of views that guide the user through various features:
-
-_SignUpView:_ Interface for new users to create an account.\
-_LogInView:_ Interface for existing users to log into their accounts.\
-_HomepageView:_ Main dashboard for logged-in users, offering various application features.\
-_ProfileView:_ Displays user's profile information.\
-_ChangePasswordView:_ Interface allowing users to change their passwords.\
-_ChangeLanguageView:_ Interface allowing users to update their default translation output language.\
-_HistoryView:_ Shows translation history.\
-_ChatbotView:_ Provides an interactive interface for engaging with the chatbot.\
-Navigation is handled by _ViewManager_, which manages transitions between views.
-
 ## Attributions
-
 API:
 1. Text to Text Translation: [https://libretranslate.com/](https://mymemory.translated.net/)
 2. File to Text API key: https://libretranslate.com/translate
@@ -209,4 +169,19 @@ API:
 ## License
 TODO
 
-## Feedback?
+## Feedback
+We value your feedback and want to hear from you! Your insights help us improve YESlingo and ensure it meets your needs.
+#### How to Provide Feedback
+Use our [Google Form](https://docs.google.com/forms/d/e/1FAIpQLSfZfxysArQexR1tMk6vHj7b4M8mF94QgHa5jpRuGNFG7fSVsg/viewform?usp=sf_link) to submit your feedback.\
+Feel free to share your thoughts on features, usability, or suggest improvements for the platform.
+#### To Provide a Valid Feedback
+Be specific: Clearly describe the issue, suggestion, or idea.
+Be respectful: Avoid offensive language or inappropriate content.
+Provide examples where possible: If reporting a bug, detail the steps to reproduce it.
+Stay relevant: Focus on feedback related to YESlingo.
+#### What to Expect
+All feedback will be reviewed by our team within 5 business days.
+Constructive suggestions may lead to updates or new features in future releases.
+If you provide your email in the form, we may reach out for clarification or updates regarding your feedback.
+
+Thank you for helping us make YESlingo even better!

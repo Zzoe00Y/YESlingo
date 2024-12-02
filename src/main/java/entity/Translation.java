@@ -26,9 +26,20 @@ public class Translation {
         this.sourceLang = sourceLang;
         this.targetLang = targetLang;
     }
-    // Getters
-    public String getSourceText() { return sourceText; }
-    public String getTranslatedText() { return translatedText; }
-    public String getSourceLang() { return sourceLang; }
-    public String getTargetLang() { return targetLang; }
+
+    public String getSourceText() {
+        return sourceText;
+    }
+
+    public String getTranslatedText() {
+        return translatedText;
+    }
+
+    public String getSourceLang() {
+        return sourceLang;
+    }
+
+    public String getTargetLang() {
+        return targetLang;
+    }
 }

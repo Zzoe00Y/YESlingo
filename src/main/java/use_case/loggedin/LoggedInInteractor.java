@@ -1,18 +1,13 @@
 package use_case.loggedin;
 
-import entity.UserFactory;
-
 /**
  * The LoggedIn Interactor.
  */
-public class LoggedInInteractor implements LoggedInInputBoundary{
+public class LoggedInInteractor implements LoggedInInputBoundary {
     private final LoggedInOutputBoundary loggedInPresenter;
-    private final UserFactory userFactory;
 
-    public LoggedInInteractor(LoggedInOutputBoundary loggedInOutputBoundary,
-                              UserFactory factory) {
+    public LoggedInInteractor(LoggedInOutputBoundary loggedInOutputBoundary) {
         this.loggedInPresenter = loggedInOutputBoundary;
-        this.userFactory = factory;
     }
 
     @Override
@@ -29,5 +24,4 @@ public class LoggedInInteractor implements LoggedInInputBoundary{
     public void switchToHistoryView(String username) {
         loggedInPresenter.switchToHistoryView(username);
     }
-
 }

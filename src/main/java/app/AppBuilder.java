@@ -14,6 +14,9 @@ import external_services.FileTranslationService;
 import external_services.SpeechToTextService;
 import external_services.TextTranslationService;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.chatbot.ChatBotController;
+import interface_adapter.chatbot.ChatBotPresenter;
+import interface_adapter.chatbot.ChatBotViewModel;
 import interface_adapter.file_translation.FileTranslationController;
 import interface_adapter.file_translation.FileTranslationPresenter;
 import interface_adapter.history.HistoryController;
@@ -22,9 +25,6 @@ import interface_adapter.history.HistoryViewModel;
 import interface_adapter.loggedin_homepage.LoggedInController;
 import interface_adapter.loggedin_homepage.LoggedInPresenter;
 import interface_adapter.loggedin_homepage.LoggedInViewModel;
-import interface_adapter.chatbot.ChatBotController;
-import interface_adapter.chatbot.ChatBotPresenter;
-import interface_adapter.chatbot.ChatBotViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
@@ -74,8 +74,6 @@ import use_case.text_translation.TextTranslationInteractor;
 import use_case.text_translation.TextTranslationOutputBoundary;
 import use_case.voice_translation.VoiceTranslationInteractor;
 import view.*;
-import use_case.voice_translation.VoiceTranslationInteractor;
-
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -92,12 +90,13 @@ public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
     // thought question: is the hard dependency below a problem?
-    private final UserFactory userFactory = new CommonUserFactory();
+    private final UserFactory userFactory;
+    // thought question: is the hard dependency below a problem?
+    private final InMemoryUserDataAccessObject userDataAccessObject;
+
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
-    // thought question: is the hard dependency below a problem?
-    private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
 
     private SignupView signupView;
     private SignupViewModel signupViewModel;
@@ -106,7 +105,7 @@ public class AppBuilder {
     private LoggedInView loggedInView;
     private LoginView loginView;
     private ChatBotViewModel chatBotViewModel;
-    private ChatBotDefaultView chatBotView;
+    private ChatBotView chatBotView;
     private ProfileViewModel profileViewModel;
     private ProfileView profileView;
     private ChangePasswordViewModel changePasswordViewModel;
@@ -116,7 +115,9 @@ public class AppBuilder {
     private HistoryViewModel historyViewModel;
     private HistoryView historyView;
 
-    public AppBuilder() {
+    public AppBuilder(UserFactory userFactory, InMemoryUserDataAccessObject userDataAccessObject) {
+        this.userFactory = userFactory;
+        this.userDataAccessObject = userDataAccessObject;
         cardPanel.setLayout(cardLayout);
     }
 
@@ -207,7 +208,7 @@ public class AppBuilder {
      */
     public AppBuilder addChatBotView() {
         chatBotViewModel = new ChatBotViewModel();
-        chatBotView = new ChatBotDefaultView(chatBotViewModel);
+        chatBotView = new ChatBotView(chatBotViewModel);
         cardPanel.add(chatBotView, chatBotView.getViewName());
         return this;
     }
@@ -232,9 +233,9 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addLoginUseCase() {
-        final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel, signupViewModel, profileViewModel, changePasswordViewModel, changeLanguageViewModel);
-      
+        final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loggedInViewModel,
+                loginViewModel, signupViewModel, profileViewModel, changePasswordViewModel, changeLanguageViewModel);
+
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, loginOutputBoundary);
 
@@ -248,9 +249,9 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addLoggedinUseCase() {
-        final LoggedInOutputBoundary loggedInOutputBoundary = new LoggedInPresenter(viewManagerModel,
-                loggedInViewModel, profileViewModel, historyViewModel, chatBotViewModel);
-        final LoggedInInputBoundary loggedInInteractor = new LoggedInInteractor(loggedInOutputBoundary, userFactory);
+        final LoggedInOutputBoundary loggedInOutputBoundary = new LoggedInPresenter(viewManagerModel, profileViewModel,
+                historyViewModel, chatBotViewModel);
+        final LoggedInInputBoundary loggedInInteractor = new LoggedInInteractor(loggedInOutputBoundary);
 
         final LoggedInController loggedInController = new LoggedInController(loggedInInteractor);
         loggedInView.setLoggedInController(loggedInController);
@@ -277,8 +278,10 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addChangePasswordUseCase() {
-        final ChangePasswordOutputBoundary changePasswordOutputBoundary = new ChangePasswordPresenter(viewManagerModel, changePasswordViewModel, profileViewModel, loginViewModel);
-        final ChangePasswordInputBoundary changePasswordInteractor = new ChangePasswordInteractor(changePasswordOutputBoundary, userDataAccessObject);
+        final ChangePasswordOutputBoundary changePasswordOutputBoundary = new ChangePasswordPresenter(viewManagerModel,
+                changePasswordViewModel, profileViewModel, loginViewModel);
+        final ChangePasswordInputBoundary changePasswordInteractor =
+                new ChangePasswordInteractor(changePasswordOutputBoundary, userDataAccessObject);
 
         final ChangePasswordController controller = new ChangePasswordController(changePasswordInteractor);
         changePasswordView.setChangePasswordController(controller);
@@ -290,21 +293,13 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addChangeLanguageUseCase() {
-        TextTranslationDataAccessInterface translationService = new TextTranslationService();
-
-        final ChangeLanguageOutputBoundary changeLanguageOutputBoundary = new ChangeLanguagePresenter(
-                viewManagerModel,
-                changeLanguageViewModel,
-                profileViewModel,
-                loggedInViewModel
-        );
-
+        final ChangeLanguageOutputBoundary changeLanguageOutputBoundary = new ChangeLanguagePresenter(viewManagerModel,
+                changeLanguageViewModel, profileViewModel, loggedInViewModel);
         final ChangeLanguageInputBoundary changeLanguageInteractor =
                 new ChangeLanguageInteractor(changeLanguageOutputBoundary, userDataAccessObject);
 
         final ChangeLanguageController controller = new ChangeLanguageController(changeLanguageInteractor);
         changeLanguageView.setChangeLanguageController(controller);
-
         return this;
     }
 
@@ -313,9 +308,10 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addHistoryUseCase() {
-        final HistoryOutputBoundary historyOutputBoundary = new HistoryPresenter(viewManagerModel, historyViewModel, loggedInViewModel);
-        final HistoryInputBoundary historyInteractor = new HistoryInteractor(userDataAccessObject, historyOutputBoundary, userFactory);
-
+        final HistoryOutputBoundary historyOutputBoundary = new HistoryPresenter(viewManagerModel, historyViewModel,
+                loggedInViewModel);
+        final HistoryInputBoundary historyInteractor = new HistoryInteractor(userDataAccessObject,
+                historyOutputBoundary, userFactory);
 
         final HistoryController controller = new HistoryController(historyInteractor);
         historyView.setHistoryController(controller);
@@ -329,8 +325,8 @@ public class AppBuilder {
     public AppBuilder addChatBotUseCase() {
         final ChatBotOutputBoundary chatBotOutputBoundary = new ChatBotPresenter(viewManagerModel,
                 chatBotViewModel, loggedInViewModel);
-        final ChatBotInputBoundary userChatBotInteractor = new ChatBotInteractor(
-                userDataAccessObject, chatBotOutputBoundary, userFactory);
+        final ChatBotInputBoundary userChatBotInteractor = new ChatBotInteractor(userDataAccessObject,
+                chatBotOutputBoundary, userFactory);
 
         final ChatBotController controller = new ChatBotController(userChatBotInteractor);
         chatBotView.setChatBotController(controller);
@@ -342,8 +338,9 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addFileTranslationUseCase() {
-        FileTranslationInteractor fileTranslationInteractor = createFileTranslationInteractor();
-        FileTranslationController fileTranslationController = new FileTranslationController(fileTranslationInteractor);
+        final FileTranslationInteractor fileTranslationInteractor = createFileTranslationInteractor();
+        final FileTranslationController fileTranslationController =
+                new FileTranslationController(fileTranslationInteractor);
 
         // Inject the controller into the LoggedInView
         loggedInView.setFileTranslationController(fileTranslationController);
@@ -356,8 +353,8 @@ public class AppBuilder {
             throw new IllegalStateException("LoggedInView is not initialized");
         }
 
-        FileTranslationService fileTranslationService = new FileTranslationService();
-        FileTranslationPresenter fileTranslationPresenter = new FileTranslationPresenter(loggedInView);
+        final FileTranslationService fileTranslationService = new FileTranslationService();
+        final FileTranslationPresenter fileTranslationPresenter = new FileTranslationPresenter(loggedInView);
 
         return new FileTranslationInteractor(fileTranslationService, fileTranslationPresenter);
     }
@@ -367,8 +364,8 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addTextTranslationUseCase() {
-        TextTranslationInteractor textTranslationInteractor = createTextTranslationInteractor();
-        TextTranslationController textTranslationController =
+        final TextTranslationInteractor textTranslationInteractor = createTextTranslationInteractor();
+        final TextTranslationController textTranslationController =
                 new TextTranslationController(textTranslationInteractor);
 
         loggedInView.setTextTranslationController(textTranslationController);
@@ -381,21 +378,26 @@ public class AppBuilder {
             throw new IllegalStateException("LoggedInView is not initialized");
         }
 
-        TextTranslationDataAccessInterface translationService = new TextTranslationService();
+        final TextTranslationDataAccessInterface translationService = new TextTranslationService();
 
-        TextTranslationOutputBoundary textTranslationPresenter =
+        final TextTranslationOutputBoundary textTranslationPresenter =
                 new TextTranslationPresenter(loggedInView);
 
         return new TextTranslationInteractor(
                 translationService,
-                textTranslationPresenter
+                textTranslationPresenter,
+                userDataAccessObject
         );
     }
 
+    /**
+     * Adds the Voice Translation Use Case to the application.
+     * @return this builder
+     */
     public AppBuilder addVoiceTranslationUseCase() throws IOException {
-        VoiceTranslationInteractor voiceTranslationInteractor = createVoiceTranslationInteractor();
-        VoiceTranslationController voiceTranslationController = new VoiceTranslationController(voiceTranslationInteractor);
-        // Inject the controller into the LoggedInView
+        final VoiceTranslationInteractor voiceTranslationInteractor = createVoiceTranslationInteractor();
+        final VoiceTranslationController voiceTranslationController =
+                new VoiceTranslationController(voiceTranslationInteractor);
         loggedInView.setVoiceTranslationController(voiceTranslationController);
         return this;
     }
@@ -406,9 +408,9 @@ public class AppBuilder {
             throw new IllegalStateException("LoggedInView is not initialized");
         }
 
-        SpeechToTextService speechToTextService = new SpeechToTextService();
+        final SpeechToTextService speechToTextService = new SpeechToTextService();
         // Initialize the presenter for the FileTranslationInteractor
-        VoiceTranslationPresenter voiceTranslationPresenter = new VoiceTranslationPresenter(loggedInView);
+        final VoiceTranslationPresenter voiceTranslationPresenter = new VoiceTranslationPresenter(loggedInView);
 
         // Create and return the FileTranslationInteractor with required dependencies
         return new VoiceTranslationInteractor(speechToTextService, voiceTranslationPresenter);
@@ -430,4 +432,3 @@ public class AppBuilder {
         return application;
     }
 }
-

@@ -1,9 +1,11 @@
 package interface_adapter.history;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.chatbot.ChatBotState;
 import interface_adapter.loggedin_homepage.LoggedInViewModel;
 import use_case.history.HistoryOutputBoundary;
+import use_case.history.HistoryOutputData;
+
+import java.util.ArrayList;
 
 /**
  * The Presenter for the History Use Case.
@@ -29,12 +31,18 @@ public class HistoryPresenter implements HistoryOutputBoundary {
     }
 
     @Override
-    public void pullUser(HistoryState newState) {
+    public void pullUser(HistoryOutputData outputData) {
+        // Transforming HistoryOutputData to HistoryState
+        HistoryState newState = new HistoryState(outputData.getUsername(),
+                new ArrayList<>(outputData.getHistoryMessages()));
         historyViewModel.setState(newState);
     }
 
     @Override
-    public void clearAll(HistoryState newState) {
+    public void clearAll(HistoryOutputData outputData) {
+        // Transforming HistoryOutputData to HistoryState
+        HistoryState newState = new HistoryState(outputData.getUsername(),
+                new ArrayList<>(outputData.getHistoryMessages()));
         historyViewModel.setState(newState);
         historyViewModel.firePropertyChanged("clearAll");
     }
