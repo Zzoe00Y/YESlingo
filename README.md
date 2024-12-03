@@ -70,7 +70,7 @@ Personalize your YESlingo experience with user management features.
 - **Change Preferred Language:** Set a default language for translation output.
 - **Logout:** Log out securely from your account.
 - **Screenshot:**
-- <img alt="Signup Page" src="images/signup_page.png" width="200"/>
+ <img alt="Signup Page" src="images/signup_page.png" width="200"/>
   <img alt="Login Page" src="images/login_page.png" width="200"/>
   <img alt="Profile Page" src="images/profile.png" width="200"/>
 
