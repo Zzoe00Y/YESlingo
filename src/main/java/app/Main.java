@@ -1,12 +1,12 @@
 package app;
 
-import data_access.InMemoryUserDataAccessObject;
-import entity.CommonUserFactory;
-import entity.UserFactory;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 
-import java.io.IOException;
+import data_access.InMemoryUserDataAccessObject;
+import entity.CommonUserFactory;
+import entity.UserFactory;
 
 /**
  * The Main class of our application.
