@@ -70,7 +70,7 @@ Personalize your YESlingo experience with user management features.
 - **Change Preferred Language:** Set a default language for translation output.
 - **Logout:** Log out securely from your account.
 - **Screenshot:**
-- <img alt="Signup Page" src="images/signup_page.png" width="200"/>
+ <img alt="Signup Page" src="images/signup_page.png" width="200"/>
   <img alt="Login Page" src="images/login_page.png" width="200"/>
   <img alt="Profile Page" src="images/profile.png" width="200"/>
 
@@ -168,7 +168,7 @@ If not, install or update to the correct version.
 
 ## Attributions
 API:
-1. Text to Text Translation: [https://libretranslate.com/](https://mymemory.translated.net/)
+1. Text to Text Translation: https://mymemory.translated.net
 2. File to Text API key: https://libretranslate.com/translate
 3. ChatBot Cohere API: https://docs.cohere.com/v1/reference/chat O40OXvNOKzdUtm6vQlpLiE7erjfv81ZeFUeHbvmg
 4. Speech to Text API - Sphinx4: https://cmusphinx.github.io/doc/sphinx4/javadoc/
