@@ -35,24 +35,24 @@ public class VoiceTranslationInteractor implements VoiceTranslationInputBoundary
     public void translate() {
         try {
             // Convert speech to text
-            final String recognizedText = speechToTextService.recognizeSpeech();
+            VoiceTranslationInputData inputData = new VoiceTranslationInputData(speechToTextService.recognizeSpeech());
 
-            if (recognizedText == null || recognizedText.isEmpty()) {
+            if (inputData.getRecognizedText() == null || inputData.getRecognizedText().isEmpty()) {
                 // Handle case where no speech was recognized
                 throw new IllegalStateException("No speech was recognized.");
             }
 
-            LOGGER.info("Speech recognized: " + recognizedText);
+            LOGGER.info("Speech recognized: " + inputData.getRecognizedText());
 
             // Prepare the output data and pass it to the output boundary (UI)
-            final VoiceTranslationOutputData outputData = new VoiceTranslationOutputData(recognizedText);
+            VoiceTranslationOutputData outputData = new VoiceTranslationOutputData(inputData.getRecognizedText());
             outputBoundary.prepareSuccessView(outputData);
 
-        }
-        catch (Exception exception) {
+        } catch (Exception e) {
             // Log and pass the error to the UI via the output boundary
-            LOGGER.severe("Error during voice translation: " + exception.getMessage());
-            outputBoundary.prepareFailView("Speech to text failed: " + exception.getMessage());
+            LOGGER.severe("Error during voice translation: " + e.getMessage());
+            outputBoundary.prepareFailView("Speech to text failed: " + e.getMessage());
         }
     }
+
 }
