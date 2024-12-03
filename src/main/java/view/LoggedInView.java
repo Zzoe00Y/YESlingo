@@ -143,7 +143,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
                 {"Chinese", "zh-CN"}, {"Japanese", "ja"}, {"Korean", "ko"},
                 {"Russian", "ru"}, {"Arabic", "ar"}, {"Dutch", "nl"},
                 {"Greek", "el"}, {"Hebrew", "he"}, {"Hindi", "hi"},
-                {"Polish", "pl"}, {"Turkish", "tr"}, {"Vietnamese", "vi"}
+                {"Polish", "pl"}, {"Turkish", "tr"}, {"Vietnamese", "vi"},
         };
 
         for (String[] lang : languages) {
@@ -160,7 +160,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
                 {"Chinese", "zh-CN"}, {"Japanese", "ja"}, {"Korean", "ko"},
                 {"Russian", "ru"}, {"Arabic", "ar"}, {"Dutch", "nl"},
                 {"Greek", "el"}, {"Hebrew", "he"}, {"Hindi", "hi"},
-                {"Polish", "pl"}, {"Turkish", "tr"}, {"Vietnamese", "vi"}
+                {"Polish", "pl"}, {"Turkish", "tr"}, {"Vietnamese", "vi"},
         };
 
         final String defaultLanguage = loggedInViewModel.getState().getLanguage();
@@ -306,26 +306,57 @@ public class LoggedInView extends JPanel implements PropertyChangeListener, Tran
         }
     }
 
+    /**
+     * Displays the recognized text in the text area.
+     * Updates the UI using SwingUtilities.invokeLater to ensure thread safety.
+     *
+     * @param recognizedText the text to display, must not be null
+     */
     public void displayRecognizedText(String recognizedText) {
         SwingUtilities.invokeLater(() -> textArea.setText(recognizedText));
     }
 
+    /**
+     * Gets the name of this view.
+     *
+     * @return the view name
+     */
     public String getViewName() {
         return viewName;
     }
 
+    /**
+     * Sets the logged in controller for this view.
+     *
+     * @param controller the controller to set, must not be null
+     */
     public void setLoggedInController(LoggedInController controller) {
         this.loggedInController = controller;
     }
 
+    /**
+     * Sets the text translation controller for this view.
+     *
+     * @param controller the controller to set, must not be null
+     */
     public void setTextTranslationController(TextTranslationController controller) {
         this.textTranslationController = controller;
     }
 
+    /**
+     * Sets the file translation controller for this view.
+     *
+     * @param controller the controller to set, must not be null
+     */
     public void setFileTranslationController(FileTranslationController controller) {
         this.fileTranslationController = controller;
     }
 
+    /**
+     * Sets the voice translation controller for this view.
+     *
+     * @param controller the controller to set, must not be null
+     */
     public void setVoiceTranslationController(VoiceTranslationController controller) {
         this.voiceTranslationController = controller;
     }

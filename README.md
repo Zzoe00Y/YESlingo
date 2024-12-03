@@ -69,18 +69,22 @@ Personalize your YESlingo experience with user management features.
 - **Change Password:** Update your password securely.
 - **Change Preferred Language:** Set a default language for translation output.
 - **Logout:** Log out securely from your account.
-- **Screenshot:** 
+- **Screenshot:**
+- <img alt="Signup Page" src="images/signup_page.png" width="200"/>
+  <img alt="Login Page" src="images/login_page.png" width="200"/>
+  <img alt="Profile Page" src="images/profile.png" width="200"/>
 
 ### Text Translation
 Translate any text input from one language to another with ease.
 
 - **Description:** Input text directly into the translation box, select your source and target language, and get instant translations.
 - **Use Case:** Ideal for users who want to translate phrases or paragraphs without uploading files.
-- **Example:** 
-  - Input: "Hello, how are you?"
-  - Target Language: French
-  - Output: "Bonjour, comment ça va ?"
+- **Example:**
+  - Input: "hello"
+  - Target Language: Italian
+  - Output: "ciao"
   - Screenshot: 
+  <img alt="Text translation" src="images/text_translation.png" width="200"/>
 
 ### **File Translation**
 Upload `.txt` files and translate their contents seamlessly.
@@ -88,11 +92,12 @@ Upload `.txt` files and translate their contents seamlessly.
 - **Description:** Upload a `.txt` file, select the source and target languages, and receive a translated version of the file.
 - **Use Case:** Best for users with large amounts of text or structured content they wish to translate in bulk.
 - **Example:**
-    - **Uploaded File Content:** "Nice to meet you."
-    - **Target Language:** French
-    - **Output:** "Bienvenido a YESlingo."
-- **Screenshot:** *(Insert Screenshot Here)*
-
+  - **Uploaded File Content:** "Nice to meet you."
+  - **Target Language:** French
+  - **Output:** "Ravi de vous rencontrer !"
+- **Screenshot:**
+  
+  <img alt="File translation" src="images/file_translation.png" width="200"/>
 
 ### **Voice Translation**
 Translate spoken language in real time.
@@ -100,20 +105,24 @@ Translate spoken language in real time.
 - **Description:** Speak into your microphone to have your voice detected, transcribed, and translated into the desired language.
 - **Use Case:** Perfect for travelers, meetings, or real-time communication.
 - **Example:**
-    - **Input:** Speech: "Can you help me find a restaurant?"
-    - **Target Language:** Japanese
-    - **Output:** "レストランを見つけるのを手伝ってくれませんか？"
-- **Screenshot:** *(Insert Screenshot Here)*
+  - **Input:** Speech: "have a good night"
+  - **Target Language:** Japanese
+  - **Output:** "おやすみ。"
+- **Screenshot:**
+  
+  <img alt="Voice translation" src="images/voice.png" width="200"/>
 
-### **Chatbox**
+### **Chatbot**
 Simulate real-time conversations with translation assistance.
 
 - **Description:** Interact with a chatbot to practice language learning or get translations for conversational inputs.
 - **Use Case:** Ideal for users who want an interactive, conversational translation experience.
 - **Example:**
-    - **Input:** "How do you say 'good morning' in German?"
-    - **Chatbot Output:** "Guten Morgen."
-- **Screenshot:** *(Insert Screenshot Here)*
+  - **Input:** "How do you say 'good morning' in German?"
+  - **Chatbot Output:** "Guten Morgen" auf Deutsch ist "Guten Morgen."
+- **Screenshot:**
+  
+<img alt="chatbot" src="images/chatbot.png" width="200"/>
 
 ### **Translation History**
 Access and manage previous translations.
@@ -121,10 +130,11 @@ Access and manage previous translations.
 - **Description:** Keep track of past translations, view their results, and reuse them if needed.
 - **Use Case:** Great for users who frequently translate similar content and need to refer back to prior work.
 - **Example:**
-    - **Previous Input:** "Welcome to YESlingo."
-    - **Output:** "Bienvenue à YESlingo."
-- **Screenshot:** *(Insert Screenshot Here)*
-
+  - **Previous Input:** "Welcome to YESlingo."
+  - **Output:** "Bienvenue à YESlingo."
+- **Screenshot:**
+  
+  <img alt="History" src="images/history.png" width="200"/>
 
 ## Installation Instructions
 1. **Install required packages:** Make sure you have the necessary dependencies installed. We recommend downloading one of the version 17 JDKs to get started, but anything 11+ will be sufficient for this project.
@@ -142,14 +152,14 @@ Access and manage previous translations.
 
 ### Common Issues & Solutions
 1. Java version mismatch:\
-If you encounter a `java.lang.UnsupportedClassVersionError`, make sure you're using Java 11 or above:
+   If you encounter a `java.lang.UnsupportedClassVersionError`, make sure you're using Java 11 or above:
 ```bash
     java -version
 ```
 If not, install or update to the correct version.
 
 2. Dependencies not found:\
-Use `gradle dependencies` to verify all required dependencies are installed. If not, add them to your `build.gradle` or `pom.xml` file.
+   Use `mvn dependency::tree` in your bash to verify all required dependencies are installed. If not, make sure your `pom.xml` file matches the one in this repository. Right-click the `pom.xml` file, go to maven, and select reload project if any dependencies appear red.
 
 ## Usage
 1. Select your source and target language
@@ -157,7 +167,6 @@ Use `gradle dependencies` to verify all required dependencies are installed. If 
 3. Translate!
 
 ## Attributions
-
 API:
 1. Text to Text Translation: [https://libretranslate.com/](https://mymemory.translated.net/)
 2. File to Text API key: https://libretranslate.com/translate
@@ -166,7 +175,18 @@ API:
 
 
 ## License
-TODO
+This project is licensed under the **MIT License**. For more information, refer to the [LICENSE](./LICENSE) file.
+
+### Third-Party Licenses and Attributions
+
+This project uses several third-party APIs and libraries, each with their own licenses:
+
+1. MyMemory Translation API - Used under their terms of service
+2. LibreTranslate - Open source under AGPL-3.0 license
+3. Cohere API - Used under commercial license
+4. CMU Sphinx4 - Licensed under CMU License
+
+Please refer to each project's respective documentation for detailed licensing information.
 
 ## Feedback
 We value your feedback and want to hear from you! Your insights help us improve YESlingo and ensure it meets your needs.
@@ -174,11 +194,11 @@ We value your feedback and want to hear from you! Your insights help us improve 
 Use our [Google Form](https://docs.google.com/forms/d/e/1FAIpQLSfZfxysArQexR1tMk6vHj7b4M8mF94QgHa5jpRuGNFG7fSVsg/viewform?usp=sf_link) to submit your feedback.\
 Feel free to share your thoughts on features, usability, or suggest improvements for the platform.
 #### To Provide a Valid Feedback
-Be specific: Clearly describe the issue, suggestion, or idea.\
-Be respectful: Avoid offensive language or inappropriate content.\
+Be specific: Clearly describe the issue, suggestion, or idea.
+Be respectful: Avoid offensive language or inappropriate content.
 Provide examples where possible: If reporting a bug, detail the steps to reproduce it.
-
-
+Stay relevant: Focus on feedback related to YESlingo.
+#### What to Expect
 All feedback will be reviewed by our team within 5 business days.
 Constructive suggestions may lead to updates or new features in future releases.
 If you provide your email in the form, we may reach out for clarification or updates regarding your feedback.

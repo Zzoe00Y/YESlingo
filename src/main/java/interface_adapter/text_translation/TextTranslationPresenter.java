@@ -1,8 +1,8 @@
 package interface_adapter.text_translation;
 
-import view.LoggedInView;
 import use_case.text_translation.TextTranslationOutputBoundary;
 import use_case.text_translation.TextTranslationOutputData;
+import view.LoggedInView;
 
 /**
  * Presenter for the Text Translation feature.
@@ -42,10 +42,10 @@ public class TextTranslationPresenter implements TextTranslationOutputBoundary {
             System.out.println("Preparing success view with translation: " + translatedText);
             view.displayTranslation(translatedText);
         }
-        catch (Exception e) {
-            System.err.println("Error in success view preparation: " + e.getMessage());
-            e.printStackTrace();
-            prepareFailView("Error displaying translation: " + e.getMessage());
+        catch (Exception exception) {
+            System.err.println("Error in success view preparation: " + exception.getMessage());
+            exception.printStackTrace();
+            prepareFailView("Error displaying translation: " + exception.getMessage());
         }
     }
 
@@ -61,9 +61,9 @@ public class TextTranslationPresenter implements TextTranslationOutputBoundary {
             System.err.println("Preparing fail view: " + errorMessage);
             view.displayError(errorMessage);
         }
-        catch (Exception e) {
-            System.err.println("Error in presenter error handling: " + e.getMessage());
-            e.printStackTrace();
+        catch (Exception exception) {
+            System.err.println("Error in presenter error handling: " + exception.getMessage());
+            exception.printStackTrace();
             try {
                 view.displayError("Critical error in translation system. Please try again.");
             }

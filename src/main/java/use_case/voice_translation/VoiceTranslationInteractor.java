@@ -1,16 +1,17 @@
 package use_case.voice_translation;
 
-import external_services.SpeechToTextService;
 import java.util.logging.Logger;
+
+import external_services.SpeechToTextService;
 
 /**
  * The interactor class for the Voice Translation use case.
- * This class coordinates the process of speech to text translation
- * and preparing the data for presentation via the UI.
+ * This class coordinates the process of receiving transcribed speech,
+ * performing text-to-text translation, and preparing the data for presentation via the UI.
  */
 public class VoiceTranslationInteractor implements VoiceTranslationInputBoundary {
 
-    private static final Logger logger = Logger.getLogger(VoiceTranslationInteractor.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(VoiceTranslationInteractor.class.getName());
 
     private final SpeechToTextService speechToTextService;
     private final VoiceTranslationOutputBoundary outputBoundary;
@@ -28,7 +29,7 @@ public class VoiceTranslationInteractor implements VoiceTranslationInputBoundary
     }
 
     /**
-     * Translates the recognized speech into text.
+     * Translates the recognized speech into text and then translates the text to the target language.
      */
     @Override
     public void translate() {
@@ -41,16 +42,17 @@ public class VoiceTranslationInteractor implements VoiceTranslationInputBoundary
                 throw new IllegalStateException("No speech was recognized.");
             }
 
-            logger.info("Speech recognized: " + recognizedText);
+            LOGGER.info("Speech recognized: " + recognizedText);
 
             // Prepare the output data and pass it to the output boundary (UI)
             final VoiceTranslationOutputData outputData = new VoiceTranslationOutputData(recognizedText);
             outputBoundary.prepareSuccessView(outputData);
 
-        } catch (Exception e) {
+        }
+        catch (Exception exception) {
             // Log and pass the error to the UI via the output boundary
-            logger.severe("Error during voice translation: " + e.getMessage());
-            outputBoundary.prepareFailView("Speech to text failed: " + e.getMessage());
+            LOGGER.severe("Error during voice translation: " + exception.getMessage());
+            outputBoundary.prepareFailView("Speech to text failed: " + exception.getMessage());
         }
     }
 }
